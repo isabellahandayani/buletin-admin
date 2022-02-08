@@ -1,10 +1,10 @@
 import './App.css';
-import { Heading } from '@chakra-ui/react'
+import DetailVideo from './Pages/DetailVideo';
 
 function App() {
   return (
     <div className="App">
-       <Heading>Welcome</Heading>;
+      <DetailVideo />
     </div>
   );
 }
