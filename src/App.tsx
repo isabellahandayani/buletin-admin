@@ -1,5 +1,5 @@
 import './App.css';
-import DetailVideo from './Pages/DetailVideo';
+import DetailVideo from './pages/DetailVideo';
 
 function App() {
   return (

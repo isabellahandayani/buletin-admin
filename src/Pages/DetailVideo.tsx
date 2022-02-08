@@ -5,8 +5,9 @@ import {
 	Text,
 	Avatar,
 	AspectRatio,
+	useMediaQuery
   } from "@chakra-ui/react";
-  import VideoCard from "../Components/VideoCard";
+  import VideoCard from "../components/Video/VideoCard";
   
   const dummy = {
 	id: "1",
@@ -17,15 +18,17 @@ import {
   };
   
   const DetailVideo = () => {
+	const [largeScreen] = useMediaQuery('(min-width: 1280px)')
+
 	return (
-	  <Box mt="5%" ml="10%">
-		<Flex>
-		  <Box w="70%" mr={20}>
+	  <Box mt={20} ml={20}>
+		<Flex direction={largeScreen ? "row" : "column"}>
+		  <Box w={largeScreen ? "70%" : "100%"} mr={largeScreen ? 20: 0}>
 			<VideoFrame url="https://www.youtube.com/embed/5rAKMVQm5n4" />
-			<Heading as="h2" size="lg" mt="2%">
+			<Heading as="h2" size="lg" mt={4}>
 			  Boleh Percaya Ramalan? Ini Kata Abi Quraish Shihab
 			</Heading>
-			<Heading as="h3" size="sm" mt="2%">
+			<Heading as="h3" size="sm">
 			  955 Views | 7 Feb 2022
 			</Heading>
   
@@ -50,8 +53,8 @@ import {
 			</Text>
 		  </Box>
   
-		  <Box w="45%">
-			<Heading as="h3" size="md" mb="5%">
+		  <Box w={largeScreen ? "45%" : "100%"} >
+			<Heading as="h3" size="md" mb="5%" mt={largeScreen ? 0: 10}>
 			  Uploaded Videos
 			</Heading>
 			<VideoCard {...dummy} />
