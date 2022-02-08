@@ -7,7 +7,7 @@ import {
 	AspectRatio,
 	useMediaQuery
   } from "@chakra-ui/react";
-  import VideoCard from "../components/Video/VideoCard";
+  import VideoCard from "../components/Video/VideoCardDetail";
   
   const dummy = {
 	id: "1",
@@ -33,7 +33,6 @@ import {
 			</Heading>
   
 			<Flex mt="3%">
-			  <Flex>
 				<Avatar src="https://bit.ly/sage-adebayo" />
 				<Box ml="3">
 				  <Text fontWeight="bold">
@@ -41,7 +40,6 @@ import {
 				  </Text>
 				  <Text fontSize="sm">12 Videos</Text>
 				</Box>
-			  </Flex>
 			</Flex>
   
 			<Text mt="3%">

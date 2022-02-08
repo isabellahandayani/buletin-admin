@@ -1,10 +1,20 @@
 import './App.css';
-import DetailVideo from './pages/DetailVideo';
+import VideoCard from './components/Video/VideoCardList';
+
+
+const dummy = {
+	id: "1",
+	photo: "https://bit.ly/naruto-sage",
+	title: "Naruto Sage Mode",
+	channel: "OAWKOAKWo",
+	view: "192",
+  };
+
 
 function App() {
   return (
     <div className="App">
-      <DetailVideo />
+       <VideoCard {...dummy} />
     </div>
   );
 }
