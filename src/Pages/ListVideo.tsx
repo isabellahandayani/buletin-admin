@@ -1,4 +1,4 @@
-import { Table, Thead, Tbody, Tr, Th, Center, Box } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Center } from "@chakra-ui/react";
 import VideoEntry from "../components/Video/VideoEntry";
 
 const dummy = {
@@ -13,7 +13,7 @@ const dummy = {
 const ListVideo = () => {
   return (
     <Center>
-      <Table variant='striped' size="md" maxW="95%">
+      <Table variant="striped" colorScheme="telegram" size="md" maxW="95%">
         <Thead>
           <Tr fontSize="lg">
             <Th>Video</Th>

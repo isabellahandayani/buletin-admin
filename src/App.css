@@ -3,3 +3,11 @@
 * {
   font-family: "Ubuntu", sans-serif;
 }
+
+h1, h2, h3, h4 {
+ color: #212427;
+}
+
+p {
+  color: #828282
+}

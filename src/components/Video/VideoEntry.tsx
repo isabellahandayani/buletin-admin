@@ -17,7 +17,7 @@ const VideoEntry: React.FC<EntryProps> = (props) => {
             <Image maxW={200} src={props.thumbnail} mr={10} />
             <Center>
               <Flex direction="column">
-                <Text fontWeight="bold">{props.title}</Text>
+                <Text color="blackAlpha.800" fontWeight="bold">{props.title}</Text>
                 <Text>{props.desc}</Text>
               </Flex>
             </Center>

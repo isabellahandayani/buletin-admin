@@ -17,10 +17,11 @@ import {
   
   const VideoCard: React.FC<VideoProps> = (props) => {
 	return (
-	  <Box mb={12}>
+	  <Box mb={5} bg="white" borderRadius="md" boxShadow='lg'>
 		<Flex>
 		  <Image
-			borderRadius="xl"
+			borderTopLeftRadius="md"
+			borderBottomLeftRadius="md"
 			maxW="200px"
 			src="https://bit.ly/naruto-sage"
 			alt="naruto"
