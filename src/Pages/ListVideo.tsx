@@ -1,4 +1,4 @@
-import { Table, Thead, Tbody, Tr, Th, Center } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Center, Box } from "@chakra-ui/react";
 import VideoEntry from "../components/Video/VideoEntry";
 
 const dummy = {

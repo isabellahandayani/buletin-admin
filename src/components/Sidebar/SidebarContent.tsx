@@ -12,12 +12,13 @@ import { IconType } from "react-icons";
 interface LinkItemProps {
   name: string;
   icon: IconType;
+  url: string;
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Content", icon: MdVideoLibrary },
-  { name: "Playlist", icon: MdViewList },
-  { name: "Channels", icon: MdSubscriptions },
+  { name: "Content", icon: MdVideoLibrary, url: "/" },
+  { name: "Playlist", icon: MdViewList, url: "playlist" },
+  { name: "Channels", icon: MdSubscriptions, url: "channel" },
 ];
 
 const SidebarContent = () => {
@@ -33,13 +34,13 @@ const SidebarContent = () => {
       <Flex direction="column" height="100%">
         <Box>
           {LinkItems.map((link) => (
-            <NavItem key={link.name} icon={link.icon}>
+            <NavItem key={link.name} icon={link.icon} url={link.url}>
               {link.name}
             </NavItem>
           ))}
         </Box>
         <Spacer />
-        <NavItem key="Logout" icon={MdLogout}>
+        <NavItem key="Logout" icon={MdLogout} url="logout">
           Logout
         </NavItem>
       </Flex>
