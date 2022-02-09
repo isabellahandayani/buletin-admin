@@ -20,7 +20,7 @@ interface VideoProps {
 
 const VideoCardLarge: React.FC<VideoProps> = (props) => {
   return (
-    <Flex direction="column" maxW="500px">
+    <Flex direction="column" maxW="500px" mr={10}>
       <Image
         borderRadius="xl"
         src="https://bit.ly/naruto-sage"

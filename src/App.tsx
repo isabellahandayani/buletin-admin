@@ -1,20 +1,12 @@
 import './App.css';
-import VideoCard from './components/Video/VideoCardList';
-
-
-const dummy = {
-	id: "1",
-	photo: "https://bit.ly/naruto-sage",
-	title: "Naruto Sage Mode",
-	channel: "OAWKOAKWo",
-	view: "192",
-  };
-
+import Sidebar from './components/Sidebar/Sidebar';
+import ListVideo from './pages/ListVideo';
+import DetailVideo from './pages/DetailVideo';
 
 function App() {
   return (
     <div className="App">
-       <VideoCard {...dummy} />
+       <Sidebar children={<ListVideo />} />
     </div>
   );
 }

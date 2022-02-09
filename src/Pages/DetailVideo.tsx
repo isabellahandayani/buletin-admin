@@ -21,7 +21,7 @@ import {
 	const [largeScreen] = useMediaQuery('(min-width: 1280px)')
 
 	return (
-	  <Box mt={20} ml={20}>
+	  <Box mt={10} ml={20}>
 		<Flex direction={largeScreen ? "row" : "column"}>
 		  <Box w={largeScreen ? "70%" : "100%"} mr={largeScreen ? 20: 0}>
 			<VideoFrame url="https://www.youtube.com/embed/5rAKMVQm5n4" />
