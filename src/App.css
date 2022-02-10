@@ -1,6 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
 
 * {
-  background-color: #edf2f7;
   font-family: "Ubuntu", sans-serif;
+}
+
+h1, h2, h3, h4 {
+ color: #212427;
+}
+
+p {
+  color: #828282
 }
