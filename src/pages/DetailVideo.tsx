@@ -6,6 +6,7 @@ import {
   Avatar,
   AspectRatio,
   Center,
+  Spinner,
 } from "@chakra-ui/react";
 import VideoCard from "../components/Video/VideoCardDetail";
 import moment from "moment";
@@ -65,18 +66,16 @@ const DetailVideo = () => {
           </Heading>
           {list ? (
             list.map((video) => {
-              return (
-                  <VideoCard key={video.video_id} {...video} />
-              );
+              return <VideoCard key={video.video_id} {...video} />;
             })
-          ) : (
-            <></>
-          )}
+          ) : null}
         </Box>
       </Flex>
     </Box>
   ) : (
-    <>Empty</>
+    <Center mt={300}>
+      <Spinner size='xl' />
+    </Center>
   );
 };
 

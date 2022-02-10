@@ -14,7 +14,7 @@ const VideoCard: React.FC<VideoProps> = (props) => {
             src={props.video_thumbnail}
             alt={props.video_title}
             objectFit="cover"
-            fallbackSrc="https://via.placeholder.com/150"
+            fallbackSrc="https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png"
           />
           <Center>
             <Box ml="23" maxW={200} maxH={200}>

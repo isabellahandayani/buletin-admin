@@ -1,26 +1,29 @@
 import { Tr, Td, Image, Text, Flex, Center } from "@chakra-ui/react";
-import { EntryProps } from "../../types";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
-const VideoEntry: React.FC<EntryProps> = (props) => {
+const VideoEntry: React.FC<any> = (props) => {
   return (
-    <>
-      <Tr>
-        <Td>
+    <Tr>
+      <Td maxW={400} onClick={() => console.table(props)}>
+        <Link to={`/video/${props.video_id}`}>
           <Flex>
-            <Image maxW={200} src={props.thumbnail} mr={10} />
+            <Image maxW={200} src={props.video_thumbnail} mr={10} fallbackSrc="https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png" />
             <Center>
               <Flex direction="column">
-                <Text color="blackAlpha.800" fontWeight="bold">{props.title}</Text>
-                <Text>{props.desc}</Text>
+                <Text color="blackAlpha.800" fontWeight="bold">
+                  {props.video_title}
+                </Text>
+                <Text>{props.video_desc}</Text>
               </Flex>
             </Center>
           </Flex>
-        </Td>
-        <Td>{props.channel}</Td>
-        <Td>{props.date}</Td>
-        <Td textAlign="right">{props.view}</Td>
-      </Tr>
-    </>
+        </Link>
+      </Td>
+      {/* <Td>{props.ChannelInfo.channel_name}</Td> */}
+      <Td>{moment(props.date_posted).format("D MMM YYYY")}</Td>
+      <Td textAlign="right">{props.video_view_count}</Td>
+    </Tr>
   );
 };
 

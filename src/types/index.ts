@@ -27,22 +27,3 @@ export interface VideoProps {
   channel_picture: string;
   created_at: string;
 }
-
-export interface EntryProps {
-  id: string;
-  thumbnail: string;
-  view: string;
-  title: string;
-  date: string;
-  desc: string;
-  channel: string;
-}
-
-export interface DetailProps {
-  title: string;
-  view: string;
-  channel: string;
-  channel_video: string;
-  desc: string;
-  date: string;
-}

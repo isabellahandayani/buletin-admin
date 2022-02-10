@@ -4,7 +4,7 @@ export const getList = async () => {
   let res = await fetch(`${baseUrl}/video/list`, {
     method: "get",
   });
-
+  
   return await res.json();
 };
 
@@ -13,6 +13,5 @@ export const get = async (id: any) => {
     method: "get",
   });
 
-  console.log(res)
   return await res.json();
 };
