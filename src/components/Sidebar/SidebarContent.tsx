@@ -7,13 +7,7 @@ import {
   MdSubscriptions,
   MdLogout,
 } from "react-icons/md";
-import { IconType } from "react-icons";
-
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-  url: string;
-}
+import { LinkItemProps } from "../../types";
 
 const LinkItems: Array<LinkItemProps> = [
   { name: "Content", icon: MdVideoLibrary, url: "/" },

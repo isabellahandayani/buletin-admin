@@ -10,13 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 import { BsShare } from "react-icons/bs";
-
-interface VideoProps {
-  id: string;
-  photo: string;
-  title: string;
-  channel: string;
-}
+import { VideoProps } from "../../types";
 
 const VideoCardLarge: React.FC<VideoProps> = (props) => {
   return (
@@ -33,11 +27,11 @@ const VideoCardLarge: React.FC<VideoProps> = (props) => {
         <Center>
           <Box ml="3">
             <Heading as="h3" fontSize="2xl">
-              {props.title}
+              {props.video_title}
             </Heading>
-            <Text fontSize="sm">{props.channel}</Text>
+            <Text fontSize="sm">{props.channel_name}</Text>
           </Box>
-          <Icon ml={2} as={BsShare}  />
+          <Icon ml={2} as={BsShare} />
         </Center>
       </Flex>
     </Flex>

@@ -1,15 +1,6 @@
 import { Table, Thead, Tbody, Tr, Th, Center } from "@chakra-ui/react";
 import VideoEntry from "../components/Video/VideoEntry";
 
-const dummy = {
-  thumbnail: "https://bit.ly/naruto-sage",
-  title: "Naruto Sage Mode",
-  date: "19 Dec 2021",
-  view: "192",
-  desc: "Test",
-  channel: "Naruto",
-};
-
 const ListVideo = () => {
   return (
     <Center>
@@ -23,14 +14,6 @@ const ListVideo = () => {
           </Tr>
         </Thead>
         <Tbody>
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
         </Tbody>
       </Table>
     </Center>

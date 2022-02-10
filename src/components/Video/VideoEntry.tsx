@@ -1,13 +1,6 @@
 import { Tr, Td, Image, Text, Flex, Center } from "@chakra-ui/react";
+import { EntryProps } from "../../types";
 
-interface EntryProps {
-  thumbnail: string;
-  view: string;
-  title: string;
-  date: string;
-  desc: string;
-  channel: string;
-}
 const VideoEntry: React.FC<EntryProps> = (props) => {
   return (
     <>

@@ -1,19 +1,12 @@
-import { IconType } from "react-icons";
-import { ReactText } from "react";
-
-import { Flex, Icon, Link } from "@chakra-ui/react";
+import { Flex, Icon, Box } from "@chakra-ui/react";
 
 import { Link as LinkRoute } from "react-router-dom";
+import { NavItemProps } from "../../types";
 
-interface NavItemProps {
-  icon: IconType;
-  children: ReactText;
-  url: string;
-}
 const NavItem = ({ icon, children, url }: NavItemProps) => {
   return (
     <LinkRoute to={url}>
-      <Link style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
+      <Box style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
         <Flex
           align="center"
           p="4"
@@ -39,7 +32,7 @@ const NavItem = ({ icon, children, url }: NavItemProps) => {
           )}
           {children}
         </Flex>
-      </Link>
+      </Box>
     </LinkRoute>
   );
 };
