@@ -5,80 +5,90 @@ import {
   Text,
   Avatar,
   AspectRatio,
-  useMediaQuery,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
 import VideoCard from "../components/Video/VideoCardDetail";
+import moment from "moment";
+import { useParams } from "react-router-dom";
+import { get, getList } from "../service/VideoServices";
+import { useEffect, useState } from "react";
 
-const dummy = {
-  id: "1",
-  photo: "https://bit.ly/naruto-sage",
-  title: "Naruto Sage Mode",
-  channel: "OAWKOAKWo",
-  view: "192",
-};
+const DetailVideo = () => {
+  const { videoId } = useParams();
+  const [video, setVideo] = useState<any>();
+  const [list, setList] = useState<any[]>([]);
 
-interface DetailProps {
+  useEffect(() => {
+    const fetchVideo = async () => {
+      let { data } = await get(videoId);
+      setVideo(data);
+    };
 
-	title: string;
-	view: string,
-	channel: string,
-	channel_video: string,
-	desc: string;
-	date: string
-}
+    const fetchList = async () => {
+      let { data } = await getList();
+      let filteredData = data.filter((item: any) => item.video_id !== videoId);
+      setList(filteredData);
+    };
 
-const DetailVideo:React.FC<DetailProps> = (props) => {
-  const [largeScreen] = useMediaQuery("(min-width: 1280px)");
+    fetchVideo();
+    fetchList();
+  }, [videoId]);
 
-  return (
+  return video ? (
     <Box mt={10} ml={20}>
-      <Flex direction={largeScreen ? "row" : "column"}>
-        <Box w={largeScreen ? "70%" : "100%"} mr={largeScreen ? 10 : 0}>
-          <VideoFrame url="https://www.youtube.com/embed/5rAKMVQm5n4" />
+      <Flex>
+        <Box w="70%" mr={10}>
+          <VideoFrame url={video.video_url} />
           <Heading as="h2" size="lg" mt={4}>
-            {props.title}
+            {video.video_title}
           </Heading>
           <Text size="sm">
-            {props.view} Views | {props.date}
+            {video.video_view_count} Views |{" "}
+            {moment(video.date_posted).format("DD-MM-YYYY")}
           </Text>
 
           <Flex mt="3%">
-            <Avatar src="https://bit.ly/sage-adebayo" />
-            <Box ml="3">
-              <Text color="blackAlpha.700" fontWeight="bold">{props.channel}</Text>
-              <Text fontSize="sm">{props.channel_video} Videos</Text>
-            </Box>
+            <Avatar src={video.ChannelInfo.channel_picture} />
+            <Center ml="3">
+              <Text color="blackAlpha.700" fontWeight="bold">
+                {video.ChannelInfo.channel_name}
+              </Text>
+            </Center>
           </Flex>
 
-          <Text mt="3%">
-            {props.desc}
-          </Text>
+          <Text mt="3%">{video.video_desc}</Text>
         </Box>
 
-        <Box w={largeScreen ? "45%" : "100%"}>
-          <Heading as="h3" size="md" mb="5%" mt={largeScreen ? 0 : 10}>
+        <Box w={"45%"}>
+          <Heading as="h3" size="md" mb="5%">
             Uploaded Videos
           </Heading>
-          <VideoCard {...dummy} />
-          <VideoCard {...dummy} />
-          <VideoCard {...dummy} />
-          <VideoCard {...dummy} />
-          <VideoCard {...dummy} />
-          <VideoCard {...dummy} />
-          <VideoCard {...dummy} />
-          <VideoCard {...dummy} />
+          {list ? (
+            list.map((video) => {
+              return <VideoCard key={video.video_id} {...video} />;
+            })
+          ) : null}
         </Box>
       </Flex>
     </Box>
+  ) : (
+    <Center mt={300}>
+      <Spinner size='xl' />
+    </Center>
   );
 };
 
 const VideoFrame: React.FC<any> = ({ url }) => {
+  const getCode = (url: string) => {
+    return url.split("=")[1];
+  };
+
   return (
     <AspectRatio ratio={16 / 9}>
       <iframe
         height={window.innerHeight - 300}
-        src={url}
+        src={`https://www.youtube.com/embed/${getCode(url)}`}
         title="YouTube video player"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

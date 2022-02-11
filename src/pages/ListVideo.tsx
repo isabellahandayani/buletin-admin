@@ -1,36 +1,45 @@
-import { Table, Thead, Tbody, Tr, Th, Center } from "@chakra-ui/react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Center,
+  Text,
+  Spinner,
+} from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 import VideoEntry from "../components/Video/VideoEntry";
-
-const dummy = {
-  thumbnail: "https://bit.ly/naruto-sage",
-  title: "Naruto Sage Mode",
-  date: "19 Dec 2021",
-  view: "192",
-  desc: "Test",
-  channel: "Naruto",
-};
+import { getList } from "../service/VideoServices";
 
 const ListVideo = () => {
+  const [list, setList] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchList = async () => {
+      let { data } = await getList();
+      setList(data);
+    };
+
+    fetchList();
+  }, []);
+
   return (
     <Center>
       <Table variant="striped" colorScheme="telegram" size="md" maxW="95%">
         <Thead>
           <Tr fontSize="lg">
-            <Th>Video</Th>
-            <Th>Channel</Th>
+            <Th onClick={() => console.table(list)}>Video</Th>
             <Th>Date</Th>
             <Th isNumeric>Views</Th>
           </Tr>
         </Thead>
         <Tbody>
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
-          <VideoEntry {...dummy} />
+          {list.length > 0
+            ? list.map((item: any) => (
+                <VideoEntry key={item.video_id} {...item} />
+              ))
+            : null}
         </Tbody>
       </Table>
     </Center>
