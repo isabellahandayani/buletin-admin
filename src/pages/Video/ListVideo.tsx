@@ -5,41 +5,49 @@ import {
   Tr,
   Th,
   Center,
-  Text,
   Spinner,
+  Heading,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import VideoEntry from "../components/Video/VideoEntry";
-import { getList } from "../service/VideoServices";
+import VideoEntry from "../../components/Video/VideoEntry";
+import { getList } from "../../service/VideoServices";
 
 const ListVideo = () => {
   const [list, setList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchList = async () => {
       let { data } = await getList();
-      setList(data);
+      setList(data.videos);
+      setLoading(false);
     };
 
     fetchList();
   }, []);
 
-  return (
+  return loading ? (
+    <Center mt={300}>
+      <Spinner size="xl" />
+    </Center>
+  ) : list.length === 0 ? (
+    <Center mt={300}>
+      <Heading  as="h2">There's No Video Yet</Heading>
+    </Center>
+  ) : (
     <Center>
       <Table variant="striped" colorScheme="telegram" size="md" maxW="95%">
         <Thead>
           <Tr fontSize="lg">
-            <Th onClick={() => console.table(list)}>Video</Th>
+            <Th>Video</Th>
             <Th>Date</Th>
             <Th isNumeric>Views</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {list.length > 0
-            ? list.map((item: any) => (
-                <VideoEntry key={item.video_id} {...item} />
-              ))
-            : null}
+          {list.map((item: any) => (
+            <VideoEntry key={item.video_id} {...item} />
+          ))}
         </Tbody>
       </Table>
     </Center>

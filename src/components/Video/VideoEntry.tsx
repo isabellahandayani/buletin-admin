@@ -5,7 +5,7 @@ import moment from "moment";
 const VideoEntry: React.FC<any> = (props) => {
   return (
     <Tr>
-      <Td maxW={400} onClick={() => console.table(props)}>
+      <Td maxW={400}>
         <Link to={`/video/${props.video_id}`}>
           <Flex>
             <Image maxW={200} src={props.video_thumbnail} mr={10} fallbackSrc="https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png" />

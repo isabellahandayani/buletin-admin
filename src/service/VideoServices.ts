@@ -1,7 +1,7 @@
 let baseUrl = "http://localhost:8080";
 
 export const getList = async () => {
-  let res = await fetch(`${baseUrl}/video/list`, {
+  let res = await fetch(`${baseUrl}/video`, {
     method: "get",
   });
   

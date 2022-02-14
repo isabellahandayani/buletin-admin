@@ -10,7 +10,7 @@ import {
 import { LinkItemProps } from "../../types";
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Content", icon: MdVideoLibrary, url: "/" },
+  { name: "Content", icon: MdVideoLibrary, url: "video" },
   { name: "Playlist", icon: MdViewList, url: "playlist" },
   { name: "Channels", icon: MdSubscriptions, url: "channel" },
 ];
