@@ -34,9 +34,9 @@ const SidebarContent = () => {
           ))}
         </Box>
         <Spacer />
-        <NavItem key="Logout" icon={MdLogout} url="logout">
-          Logout
-        </NavItem>
+          <NavItem key="Logout" icon={MdLogout} url="logout">
+            Logout
+          </NavItem>
       </Flex>
     </Box>
   );
