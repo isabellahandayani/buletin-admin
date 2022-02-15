@@ -5,10 +5,10 @@ import DetailVideo from "./pages/Video/DetailVideo";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import ListChannel from "./pages/Channel/ListChannel";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(localStorage.getItem("token"));
+  const [currentUser] = useState(localStorage.getItem("token"));
 
   return (
     <div className="App">
@@ -19,6 +19,7 @@ function App() {
               <Route path="/" element={<ListVideo />} />
               <Route path="channel/" element={<ListChannel />} />
               <Route path="video/" element={<ListVideo />} />
+              <Route path="video/:videoId" element={<DetailVideo />} />
               <Route path="video/:videoId" element={<DetailVideo />} />
             </Routes>
           }

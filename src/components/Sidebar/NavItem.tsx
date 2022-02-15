@@ -4,9 +4,20 @@ import { Link as LinkRoute } from "react-router-dom";
 import { NavItemProps } from "../../types";
 
 const NavItem = ({ icon, children, url }: NavItemProps) => {
+  const logout = () => {
+    if (url === "logout") {
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
+  };
+
   return (
     <LinkRoute to={url}>
-      <Box style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
+      <Box
+        style={{ textDecoration: "none" }}
+        _focus={{ boxShadow: "none" }}
+        onClick={() => logout()}
+      >
         <Flex
           align="center"
           p="4"
