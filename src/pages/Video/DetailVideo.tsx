@@ -8,10 +8,10 @@ import {
   Center,
   Spinner,
 } from "@chakra-ui/react";
-import VideoCard from "../components/Video/VideoCardDetail";
+import VideoCard from "../../components/Video/VideoCardDetail";
 import moment from "moment";
 import { useParams } from "react-router-dom";
-import { get, getList } from "../service/VideoServices";
+import { get, getList } from "../../service/VideoServices";
 import { useEffect, useState } from "react";
 
 const DetailVideo = () => {
@@ -27,7 +27,7 @@ const DetailVideo = () => {
 
     const fetchList = async () => {
       let { data } = await getList();
-      let filteredData = data.filter((item: any) => item.video_id !== videoId);
+      let filteredData = data['videos'].filter((item: any) => item.video_id !== videoId);
       setList(filteredData);
     };
 
@@ -49,10 +49,10 @@ const DetailVideo = () => {
           </Text>
 
           <Flex mt="3%">
-            <Avatar src={video.ChannelInfo.channel_picture} />
+            <Avatar src={video.channel_info.channel_picture} />
             <Center ml="3">
               <Text color="blackAlpha.700" fontWeight="bold">
-                {video.ChannelInfo.channel_name}
+                {video.channel_info.channel_name}
               </Text>
             </Center>
           </Flex>

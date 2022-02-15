@@ -1,21 +1,30 @@
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
-import ListVideo from "./pages/ListVideo";
-import DetailVideo from "./pages/DetailVideo";
+import ListVideo from "./pages/Video/ListVideo";
+import DetailVideo from "./pages/Video/DetailVideo";
 import { Routes, Route } from "react-router-dom";
-
+import Login from "./pages/Login";
+import ListChannel from "./pages/Channel/ListChannel";
 
 function App() {
+  const loggedIn = true;
   return (
     <div className="App">
-      <Sidebar
-        children={
-          <Routes>
-            <Route path="/" element={<ListVideo />} />
-            <Route path="video/:videoId" element={<DetailVideo />} />
-          </Routes>
-        }
-      />
+      {loggedIn ? (
+        <Sidebar
+          children={
+            <Routes>
+              <Route path="channel/" element={<ListChannel />} />
+              <Route path="video/" element={<ListVideo />} />
+              <Route path="video/:videoId" element={<DetailVideo />} />
+            </Routes>
+          }
+        />
+      ) : (
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      )}
     </div>
   );
 }
