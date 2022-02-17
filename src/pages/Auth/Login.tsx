@@ -9,7 +9,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { login } from "../service/UserServices"
+import { login } from "../../service/UserServices"
 
 const Login = () => {
   const [email, setEmail] = useState("");

@@ -3,9 +3,10 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import ListVideo from "./pages/Video/ListVideo";
 import DetailVideo from "./pages/Video/DetailVideo";
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./pages/Auth/Login";
 import ListChannel from "./pages/Channel/ListChannel";
 import { useState } from "react";
+import Register from "./pages/Auth/Register";
 
 function App() {
   const [currentUser] = useState(localStorage.getItem("token"));
@@ -20,7 +21,7 @@ function App() {
               <Route path="channel/" element={<ListChannel />} />
               <Route path="video/" element={<ListVideo />} />
               <Route path="video/:videoId" element={<DetailVideo />} />
-              <Route path="video/:videoId" element={<DetailVideo />} />
+              <Route path="register" element={<Register />} />
             </Routes>
           }
         />

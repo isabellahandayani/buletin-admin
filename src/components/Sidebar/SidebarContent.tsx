@@ -6,6 +6,8 @@ import {
   MdViewList,
   MdSubscriptions,
   MdLogout,
+  MdCategory,
+  MdPeople,
 } from "react-icons/md";
 import { LinkItemProps } from "../../types";
 
@@ -13,6 +15,8 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Content", icon: MdVideoLibrary, url: "video" },
   { name: "Playlist", icon: MdViewList, url: "playlist" },
   { name: "Channels", icon: MdSubscriptions, url: "channel" },
+  { name: "Categories", icon: MdCategory, url: "category" },
+  { name: "Register Admin", icon: MdPeople, url: "register" },
 ];
 
 const SidebarContent = () => {
@@ -34,9 +38,9 @@ const SidebarContent = () => {
           ))}
         </Box>
         <Spacer />
-          <NavItem key="Logout" icon={MdLogout} url="logout">
-            Logout
-          </NavItem>
+        <NavItem key="Logout" icon={MdLogout} url="logout">
+          Logout
+        </NavItem>
       </Flex>
     </Box>
   );

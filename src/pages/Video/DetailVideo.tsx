@@ -26,7 +26,7 @@ const DetailVideo = () => {
     };
 
     const fetchList = async () => {
-      let { data } = await getList();
+      let { data } = await getList(1, 6);
       let filteredData = data['videos'].filter((item: any) => item.video_id !== videoId);
       setList(filteredData);
     };
