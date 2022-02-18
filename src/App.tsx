@@ -9,15 +9,17 @@ import ListCategory from "./pages/Category/ListCategory";
 
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import jwt_decode, { JwtPayload } from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 function App() {
   const [currentUser] = useState(localStorage.getItem("token"));
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     try {
       if (currentUser) {
-        let data: JwtPayload = jwt_decode(currentUser);
+        let data: any = jwt_decode(currentUser);
+        setRole(data.role);
         if (Date.now() >= data.exp! * 1000) {
           localStorage.removeItem("token");
           window.location.reload();
@@ -29,18 +31,22 @@ function App() {
   return (
     <div className="App">
       {currentUser ? (
-        <Sidebar
-          children={
-            <Routes>
-              <Route path="/" element={<ListVideo />} />
-              <Route path="channel/" element={<ListChannel />} />
-              <Route path="video/" element={<ListVideo />} />
-              <Route path="video/:videoId" element={<DetailVideo />} />
-              <Route path="register" element={<Register />} />
-              <Route path="category" element={<ListCategory />} />
-            </Routes>
-          }
-        />
+        <Sidebar role={role}>
+          <Routes>
+            {role && role === "superadmin" ? (
+              <>
+                <Route path="register" element={<Register />} />
+                <Route path="category" element={<ListCategory />} />
+              </>
+            ) : (
+              <>
+                <Route path="channel/" element={<ListChannel />} />
+                <Route path="video/" element={<ListVideo />} />
+                <Route path="video/:videoId" element={<DetailVideo />} />
+              </>
+            )}
+          </Routes>
+        </Sidebar>
       ) : (
         <Routes>
           <Route path="/" element={<Login />} />

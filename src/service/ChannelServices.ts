@@ -18,3 +18,22 @@ export const get = async (id: any) => {
 
   return await res.json();
 };
+
+export const update = async (
+  owner_id: number,
+  category_id: number,
+  channel_name: string,
+  channel_picture: string
+) => {
+  let rest = await fetch(`${baseUrl}/channel`, {
+    method: "put",
+    body: JSON.stringify({
+      owner_id: owner_id,
+      category_id: category_id,
+      channel_name: channel_name,
+      channel_picture: channel_picture,
+    }),
+  });
+
+  return await rest.json();
+};
