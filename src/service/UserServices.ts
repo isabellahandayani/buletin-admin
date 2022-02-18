@@ -14,7 +14,7 @@ export const register = async (
   password: string,
   username: string,
   name: string,
-  phone_number: string,
+  phone_number: string
 ) => {
   let res = await fetch(`${baseUrl}/user`, {
     method: "post",
