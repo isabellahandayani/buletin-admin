@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import SidebarContent from "./SidebarContent";
 
-export default function SimpleSidebar({ children }: { children: ReactNode }) {
+const Sidebar = ({ children }: { children: ReactNode }) => {
   const { isOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -24,4 +24,6 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
       </Box>
     </Box>
   );
-}
+};
+
+export default Sidebar;
