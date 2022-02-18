@@ -2,15 +2,17 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
   Stack,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../service/UserServices";
+import bcrypt from "bcryptjs";
 
 export default function UserProfileEdit() {
   const [email, setEmail] = useState("");
@@ -18,32 +20,54 @@ export default function UserProfileEdit() {
   const [name, setName] = useState("");
   const [uname, setUname] = useState("");
   const [number, setNumber] = useState("");
-  const navigate = useNavigate()
-  const toast = useToast()
+  const [hashed, setHashed] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [passError, setPassError] = useState(false);
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  const handlePass = (pwd: any, hashedPass: any) => {
+    if (pwd.length < 8) {
+      setPassError(true);
+    } else setPassError(false);
+
+    setHashed(hashedPass);
+    setPass(pwd);
+  };
+
+  const handleEmail = (newEmail: any) => {
+    setEmail(newEmail);
+
+    const regex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (regex.test(email)) {
+      setEmailError(false);
+    } else setEmailError(true);
+  };
 
   const handleSubmit = async () => {
-	let { data } = await register(email, pass, uname, name, number)
+    let { data } = await register(email, hashed, uname, name, number);
 
     if (data) {
       toast({
-        title: 'Registration Succesful',
-        status: 'success',
+        title: "Registration Succesful",
+        status: "success",
         duration: 9000,
         isClosable: true,
-        position: 'top'
-      })
-	navigate("../video")
+        position: "top",
+      });
+      navigate("../video");
     } else {
       toast({
-        title: 'Registration Failed',
-        status: 'warning',
+        title: "Registration Failed",
+        status: "warning",
         duration: 9000,
         isClosable: true,
-        position: 'top'
-
-      })
+        position: "top",
+      });
     }
-  }
+  };
 
   return (
     <Flex minH={"100vh"} align={"center"} justify={"center"}>
@@ -70,15 +94,18 @@ export default function UserProfileEdit() {
             onChange={(e) => setUname(e.target.value)}
           />
         </FormControl>
-        <FormControl id="email" isRequired>
+        <FormControl id="email" isRequired isInvalid={emailError}>
           <FormLabel>Email</FormLabel>
           <Input
             placeholder="your-email@example.com"
             _placeholder={{ color: "gray.500" }}
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => handleEmail(e.target.value)}
           />
+          {!emailError ? null : (
+            <FormErrorMessage>Invalid Email</FormErrorMessage>
+          )}
         </FormControl>
         <FormControl id="name" isRequired>
           <FormLabel>Full Name</FormLabel>
@@ -100,15 +127,23 @@ export default function UserProfileEdit() {
             onChange={(e) => setNumber(e.target.value)}
           />
         </FormControl>
-        <FormControl id="password" isRequired>
+        <FormControl id="password" isRequired isInvalid={passError}>
           <FormLabel>Password</FormLabel>
           <Input
             placeholder="********"
             _placeholder={{ color: "gray.500" }}
             type="password"
             value={pass}
-            onChange={(e) => setPass(e.target.value)}
+            onChange={(e) =>
+              handlePass(
+                e.target.value,
+                bcrypt.hashSync(e.target.value, "$2a$10$CwTycUXWue0Thq9StjUM0u")
+              )
+            }
           />
+          {!passError ? null : (
+            <FormErrorMessage>Password must be at least 8 characters</FormErrorMessage>
+          )}
         </FormControl>
         <Stack spacing={6} direction={["column", "row"]}>
           <Button
@@ -118,7 +153,7 @@ export default function UserProfileEdit() {
             _hover={{
               bg: "red.500",
             }}
-			onClick={() => navigate("../video")}
+            onClick={() => navigate("../video")}
           >
             Cancel
           </Button>
@@ -129,8 +164,18 @@ export default function UserProfileEdit() {
             _hover={{
               bg: "blue.500",
             }}
-            isDisabled={email && pass && name && uname && number ? false : true}
-			onClick={handleSubmit}
+            isDisabled={
+              email &&
+              pass &&
+              name &&
+              uname &&
+              number &&
+              !emailError &&
+              !passError
+                ? false
+                : true
+            }
+            onClick={handleSubmit}
           >
             Submit
           </Button>

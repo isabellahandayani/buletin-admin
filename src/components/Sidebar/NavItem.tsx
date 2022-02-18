@@ -1,12 +1,16 @@
 import { Flex, Icon, Box } from "@chakra-ui/react";
 
-import { Link as LinkRoute } from "react-router-dom";
+import { Link as LinkRoute, useNavigate } from "react-router-dom";
 import { NavItemProps } from "../../types";
 
+
 const NavItem = ({ icon, children, url }: NavItemProps) => {
+  const navigate = useNavigate();
+
   const logout = () => {
     if (url === "logout") {
       localStorage.removeItem("token");
+      navigate("../")
       window.location.reload();
     }
   };

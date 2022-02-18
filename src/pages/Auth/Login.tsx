@@ -10,14 +10,21 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { login } from "../../service/UserServices"
+import bcrypt from 'bcryptjs'
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [hashed, setHashed] = useState("");
   const toast = useToast()
   
+  const handlePass = (pwd: any, hashedPas: any) => {
+    setPass(pwd)
+    setHashed(hashedPas)
+  }
+
   const handleSubmit = async () => {
-    let { data } = await login(email, pass)
+    let { data } = await login(email, hashed)
 
     if (data) {
       localStorage.setItem("token", data.token)
@@ -69,7 +76,7 @@ const Login = () => {
             <FormLabel bg="white">Password</FormLabel>
             <Input
               value={pass}
-              onChange={(e) => setPass(e.target.value)}
+              onChange={(e) => handlePass(e.target.value, bcrypt.hashSync(e.target.value, '$2a$10$CwTycUXWue0Thq9StjUM0u'))}
               type="password"
             />
           </FormControl>
