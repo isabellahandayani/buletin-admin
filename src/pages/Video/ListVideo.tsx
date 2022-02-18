@@ -18,7 +18,7 @@ const ListVideo = () => {
 
   useEffect(() => {
     const fetchList = async () => {
-      let { data } = await getList();
+      let { data } = await getList(1, 6);
       setList(data.videos);
       setLoading(false);
     };
@@ -30,7 +30,7 @@ const ListVideo = () => {
     <Center mt={300}>
       <Spinner size="xl" />
     </Center>
-  ) : list.length === 0 ? (
+  ) : list && list.length === 0 ? (
     <Center mt={300}>
       <Heading  as="h2">There's No Video Yet</Heading>
     </Center>
@@ -45,7 +45,7 @@ const ListVideo = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {list.map((item: any) => (
+          {list && list.map((item: any) => (
             <VideoEntry key={item.video_id} {...item} />
           ))}
         </Tbody>
