@@ -5,6 +5,8 @@ import DetailVideo from "./pages/Video/DetailVideo";
 import Login from "./pages/Auth/Login";
 import ListChannel from "./pages/Channel/ListChannel";
 import Register from "./pages/Auth/Register";
+import ListCategory from "./pages/Category/ListCategory";
+
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import jwt_decode, { JwtPayload } from "jwt-decode";
@@ -35,6 +37,7 @@ function App() {
               <Route path="video/" element={<ListVideo />} />
               <Route path="video/:videoId" element={<DetailVideo />} />
               <Route path="register" element={<Register />} />
+              <Route path="category" element={<ListCategory />} />
             </Routes>
           }
         />
