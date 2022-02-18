@@ -37,3 +37,30 @@ export const update = async (
 
   return await rest.json();
 };
+
+export const deleteChannel = async (id: number) => {
+  let res = await fetch(`${baseUrl}/channel/${id}`, {
+    method: "delete",
+  });
+
+  return await res.json();
+};
+
+export const create = async (
+  owner_id: number,
+  category_id: number,
+  channel_name: String,
+  channel_picture: String
+) => {
+  let res = await fetch(`${baseUrl}/channel`, {
+    method: "post",
+    body: JSON.stringify({
+      owner_id: owner_id,
+      category_id: category_id,
+      channel_name: channel_name,
+      channel_picture: channel_picture,
+    }),
+  });
+
+  return await res.json();
+};
