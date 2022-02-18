@@ -1,51 +1,36 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Center,
-  Spinner,
-  Heading,
-} from "@chakra-ui/react";
+import { Center, Spinner, Heading, Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import ChannelEntry from "../../components/Channel/ChannelEntry";
+import ChannelCard from "../../components/Channel/ChannelCard";
+import { getList } from "../../service/ChannelServices";
 
-const ListVideo = () => {
+const ListChannel = () => {
   const [list, setList] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const fetchList = async () => {
-  //     setLoading(false);
-  //   };
+  useEffect(() => {
+    const fetchList = async () => {
+      let { data } = await getList(1, 6);
+      setList(data.channels);
+      setLoading(false);
+    };
 
-  //   fetchList();
-  // }, []);
+    fetchList();
+  }, []);
 
-  const dummy = {
-    channel_name: "Narasi.tv",
-    channel_picture: "placeholder",
-    created_at: "10 Feb 2021"
-  }
-
-  return <>
-    <Center>
-      <Table variant="striped" colorScheme="telegram" size="md" maxW="95%">
-        <Thead>
-          <Tr fontSize="lg">
-            <Th>Channel</Th>
-            <Th isNumeric>Created At</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          <ChannelEntry {...dummy} />
-          <ChannelEntry {...dummy} />
-          <ChannelEntry {...dummy} />
-        </Tbody>
-      </Table>
-    </Center></>
-  ;
+  return (
+    <Center mt={100}>
+      {loading ? (
+        <Spinner size="xl" />
+      ) : list && list.length === 0 ? (
+        <Heading as="h2">No Channel Yet</Heading>
+      ) : (
+        <Grid templateColumns="repeat(3, 1fr)" gap={10}>
+          {list &&
+            list.map((item: any) => <ChannelCard key={item.id} {...item} />)}
+        </Grid>
+      )}
+    </Center>
+  );
 };
 
-export default ListVideo;
+export default ListChannel;

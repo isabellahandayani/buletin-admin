@@ -45,7 +45,7 @@ const DetailVideo = () => {
           </Heading>
           <Text size="sm">
             {video.video_view_count} Views |{" "}
-            {moment(video.date_posted).format("DD-MM-YYYY")}
+            {moment(video.date_posted).format("D MMM YYYY")}
           </Text>
 
           <Flex mt="3%">
