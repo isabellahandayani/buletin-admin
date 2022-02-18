@@ -7,48 +7,67 @@ import {
   Button,
   Heading,
   useToast,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { login } from "../../service/UserServices"
-import bcrypt from 'bcryptjs'
+import { login } from "../../service/UserServices";
+import bcrypt from "bcryptjs";
+import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [hashed, setHashed] = useState("");
-  const toast = useToast()
-  
+  const [emailError, setEmailError] = useState(false);
+
+  const toast = useToast();
+  const navigate = useNavigate();
+
   const handlePass = (pwd: any, hashedPas: any) => {
-    setPass(pwd)
-    setHashed(hashedPas)
-  }
+    setPass(pwd);
+    setHashed(hashedPas);
+  };
+
+  const handleEmail = (newEmail: any) => {
+    setEmail(newEmail);
+
+    const regex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (regex.test(email)) {
+      setEmailError(false);
+    } else setEmailError(true);
+  };
 
   const handleSubmit = async () => {
-    let { data } = await login(email, hashed)
-
-    if (data) {
-      localStorage.setItem("token", data.token)
+    const getToast = () => {
       toast({
-        title: 'Login Succesful',
-        status: 'success',
+        title: "Login Failed",
+        status: "error",
         duration: 9000,
         isClosable: true,
-        position: 'top'
-      })
+        position: "top",
+      });
+    };
 
-      window.location.reload()
-    } else {
-      toast({
-        title: 'Login Failed',
-        description: "Account is not recognized",
-        status: 'warning',
-        duration: 9000,
-        isClosable: true,
-        position: 'top'
+    try {
+      let { data } = await login(email, hashed);
 
-      })
+      let decoded: any = jwt_decode(data.token);
+      if (decoded.role === "superadmin" || decoded.role === "admin") {
+        localStorage.setItem("token", data);
+
+        navigate("video");
+        window.location.reload();
+      } else {
+        getToast();
+      }
+    } catch (e) {
+      console.log(e);
+      getToast();
     }
-  }
+  };
 
   return (
     <Stack
@@ -64,25 +83,39 @@ const Login = () => {
       </Stack>
       <Box rounded={"lg"} bg="white" boxShadow={"lg"} p={8}>
         <Stack spacing={4} bg="white">
-          <FormControl bg="white">
-            <FormLabel bg="white">Email address</FormLabel>
+          <FormControl id="email" isRequired isInvalid={emailError}>
+            <FormLabel>Email</FormLabel>
             <Input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your-email@example.com"
+              _placeholder={{ color: "gray.500" }}
               type="email"
+              value={email}
+              onChange={(e) => handleEmail(e.target.value)}
             />
+            {!emailError ? null : (
+              <FormErrorMessage>Invalid Email</FormErrorMessage>
+            )}
           </FormControl>
           <FormControl bg="white">
             <FormLabel bg="white">Password</FormLabel>
             <Input
+              placeholder="*******"
               value={pass}
-              onChange={(e) => handlePass(e.target.value, bcrypt.hashSync(e.target.value, '$2a$10$CwTycUXWue0Thq9StjUM0u'))}
+              onChange={(e) =>
+                handlePass(
+                  e.target.value,
+                  bcrypt.hashSync(
+                    e.target.value,
+                    "$2a$10$CwTycUXWue0Thq9StjUM0u"
+                  )
+                )
+              }
               type="password"
             />
           </FormControl>
           <Stack spacing={10}>
             <Button
-              isDisabled={email && pass ? false : true}
+              isDisabled={email && pass && !emailError ? false : true}
               bg={"blue.400"}
               color={"white"}
               _hover={{
