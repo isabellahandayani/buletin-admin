@@ -5,17 +5,12 @@ import {
   Text,
   Flex,
   Spacer,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
 } from "@chakra-ui/react";
 import moment from "moment";
-
-import { HiDotsVertical } from "react-icons/hi";
+import ChannelMenu from "./ChannelMenu";
 
 const ChannelCard = (props: any) => {
+
   return (
     <Box
       maxW={300}
@@ -45,21 +40,7 @@ const ChannelCard = (props: any) => {
         </Flex>
 
         <Spacer />
-        <Box mt={25}>
-          <Menu direction="rtl">
-            <MenuButton
-              as={IconButton}
-              aria-label="Options"
-              icon={<HiDotsVertical />}
-              variant="link"
-              _focus={{ boxShadow: "none" }}
-            />
-            <MenuList>
-              <MenuItem>Edit Channel</MenuItem>
-              <MenuItem>Delete Channel</MenuItem>
-            </MenuList>
-          </Menu>
-        </Box>
+        <ChannelMenu {...props} />
       </Flex>
     </Box>
   );
