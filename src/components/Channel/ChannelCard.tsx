@@ -1,13 +1,21 @@
-import { Heading, Box, Image, Text, Flex } from "@chakra-ui/react";
+import {
+  Heading,
+  Box,
+  Image,
+  Text,
+  Flex,
+  Spacer,
+} from "@chakra-ui/react";
 import moment from "moment";
+import ChannelMenu from "./ChannelMenu";
 
 const ChannelCard = (props: any) => {
+
   return (
     <Box
       maxW={300}
       w={"full"}
       _hover={{
-        transform: "translateY(-2px)",
         boxShadow: "lg",
       }}
       bg="white"
@@ -23,11 +31,16 @@ const ChannelCard = (props: any) => {
         objectFit={"cover"}
       />
 
-      <Flex flexDirection="column" p={30}>
-        <Heading fontSize={"2xl"} as="h2">
-          {props.channel_name}
-        </Heading>
-        <Text>{moment(props.created_at).format("D MMM YYYY")}</Text>
+      <Flex flexDirection="row">
+        <Flex flexDirection="column" p={30} h="100%">
+          <Heading fontSize={"2xl"} as="h2">
+            {props.channel_name}
+          </Heading>
+          <Text>Since {moment(props.created_at).format("D MMM YYYY")}</Text>
+        </Flex>
+
+        <Spacer />
+        <ChannelMenu {...props} />
       </Flex>
     </Box>
   );
