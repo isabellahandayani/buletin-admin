@@ -1,4 +1,11 @@
-import { Box, useColorModeValue, Flex, Spacer } from "@chakra-ui/react";
+import {
+  Box,
+  useColorModeValue,
+  Flex,
+  Spacer,
+  Spinner,
+  Center
+} from "@chakra-ui/react";
 import NavItem from "./NavItem";
 
 import {
@@ -37,17 +44,26 @@ const SidebarContent = (props: any) => {
     >
       <Flex direction="column" height="100%">
         <Box>
-          {props.role === "superadmin"
-            ? SuperAdminLink.map((link) => (
+          
+          {props.role && props.role.length > 0 ? (
+            props.role === "superadmin" ? (
+              SuperAdminLink.map((link) => (
                 <NavItem key={link.name} icon={link.icon} url={link.url}>
                   {link.name}
                 </NavItem>
               ))
-            : AdminLink.map((link) => (
+            ) : (
+              AdminLink.map((link) => (
                 <NavItem key={link.name} icon={link.icon} url={link.url}>
                   {link.name}
                 </NavItem>
-              ))}
+              ))
+            )
+          ) : (
+            <Center>
+            <Spinner />
+            </Center>
+          )}
         </Box>
         <Spacer />
         <NavItem key="Logout" icon={MdLogout} url="logout">

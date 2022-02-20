@@ -23,9 +23,10 @@ export const update = async (
   owner_id: number,
   category_id: number,
   channel_name: string,
-  channel_picture: string
+  channel_picture: string,
+  channel_id: number
 ) => {
-  let rest = await fetch(`${baseUrl}/channel`, {
+  let rest = await fetch(`${baseUrl}/channel/${channel_id}`, {
     method: "put",
     body: JSON.stringify({
       owner_id: owner_id,

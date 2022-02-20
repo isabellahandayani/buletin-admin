@@ -13,7 +13,6 @@ import { useState } from "react";
 import { login } from "../../service/UserServices";
 import bcrypt from "bcryptjs";
 import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +21,6 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
 
   const toast = useToast();
-  const navigate = useNavigate();
 
   const handlePass = (pwd: any, hashedPas: any) => {
     setPass(pwd);
@@ -56,9 +54,8 @@ const Login = () => {
 
       let decoded: any = jwt_decode(data.token);
       if (decoded.role === "superadmin" || decoded.role === "admin") {
-        localStorage.setItem("token", data);
+        localStorage.setItem("token", data.token);
 
-        navigate("video");
         window.location.reload();
       } else {
         getToast();
