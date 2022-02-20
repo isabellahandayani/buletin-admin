@@ -1,10 +1,58 @@
-import { Heading, Box, Center, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Image,
+  Editable,
+  EditableInput,
+  EditablePreview,
+  ButtonGroup,
+  Flex,
+  IconButton,
+  useEditableControls,
+} from "@chakra-ui/react";
+
+import { MdMode, MdCheck, MdClose } from "react-icons/md";
 
 const CategoryCard = () => {
+  const Control = () => {
+    const {
+      isEditing,
+      getSubmitButtonProps,
+      getCancelButtonProps,
+      getEditButtonProps,
+    } = useEditableControls();
+
+    return isEditing ? (
+      <ButtonGroup justifyContent="center" size="sm">
+        <IconButton
+          variant="solid"
+          aria-label="Md"
+          icon={<MdCheck />}
+          {...getSubmitButtonProps()}
+        />
+        <IconButton
+          variant="solid"
+          aria-label="Md"
+          icon={<MdClose />}
+          {...getCancelButtonProps()}
+        />
+      </ButtonGroup>
+    ) : (
+      <Flex justifyContent="center">
+        <IconButton
+          variant="solid"
+          aria-label="Md"
+          size="sm"
+          icon={<MdMode />}
+          {...getEditButtonProps()}
+        />
+      </Flex>
+    );
+  }
+
   return (
     <Box
-      maxW={300}
-      w={"full"}
+      w={300}
       _hover={{
         transform: "translateY(-2px)",
         boxShadow: "lg",
@@ -22,9 +70,16 @@ const CategoryCard = () => {
       />
 
       <Center p={30}>
-        <Heading fontSize={"2xl"} as="h2">
-          Entertainment
-        </Heading>
+        <Editable
+          textAlign="center"
+          defaultValue="Entertainment"
+          fontSize="2xl"
+          isPreviewFocusable={false}
+        >
+          <EditablePreview />
+          <EditableInput />
+          <Control />
+        </Editable>
       </Center>
     </Box>
   );
