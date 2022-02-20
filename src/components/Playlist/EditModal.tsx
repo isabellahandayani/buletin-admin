@@ -13,23 +13,21 @@ import {
   Center,
   Stack,
   useToast,
+  Select,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { update } from "../../service/ChannelServices";
+import { update } from "../../service/PlaylistServices";
 
 const EditModal = (props: any) => {
-  const [cname, setCname] = useState("");
+  const [pname, setPname] = useState("");
   const toast = useToast();
 
   const handleUpdate = async (
-    owner_id: any,
     category_id: any,
-    channel_name: any,
-    channel_picture: any,
-    channel_id: any
+    playlist_id: any,
   ) => {
     try {
-      await update(owner_id, category_id, channel_name, channel_picture, channel_id);
+      await update(category_id, playlist_id, pname);
       toast({
         title: "Update Succesful",
         status: "success",
@@ -57,21 +55,26 @@ const EditModal = (props: any) => {
           <Stack spacing={4}>
             <FormControl id="picture" mt={10}>
               <Center>
-                <Avatar
-                  size="2xl"
-                  name={props.channel_name}
-                  src={props.channel_picture}
-                />
+                <Avatar size="2xl" name={props.playlist_name} />
               </Center>
             </FormControl>
-            <FormControl id="cname">
-              <FormLabel>Channel Name</FormLabel>
+            <FormControl id="pname">
+              <FormLabel>Playlist Name</FormLabel>
               <Input
+			  	placeholder = {props.playlist_name}
                 _placeholder={{ color: "gray.500" }}
                 type="text"
-                value={cname}
-                onChange={(e) => setCname(e.target.value)}
+                value={pname}
+                onChange={(e) => setPname(e.target.value)}
               />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Category</FormLabel>
+              <Select>
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+              </Select>
             </FormControl>
           </Stack>
         </ModalBody>
@@ -97,13 +100,7 @@ const EditModal = (props: any) => {
                 bg: "blue.500",
               }}
               onClick={() =>
-                handleUpdate(
-                  props.owner_id,
-                  props.category_id,
-                  cname,
-                  props.channel_picture,
-                  props.channel_id
-                )
+                handleUpdate(props.category_id, props.playlist_id)
               }
             >
               Save
