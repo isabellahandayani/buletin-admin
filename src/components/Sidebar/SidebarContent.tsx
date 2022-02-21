@@ -18,6 +18,8 @@ import {
   MdSettings,
 } from "react-icons/md";
 import { LinkItemProps } from "../../types";
+import { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode";
 
 const AdminLink: Array<LinkItemProps> = [
   { name: "Content", icon: MdVideoLibrary, url: "video" },
@@ -27,12 +29,21 @@ const AdminLink: Array<LinkItemProps> = [
 
 const SuperAdminLink: Array<LinkItemProps> = [
   { name: "Categories", icon: MdCategory, url: "category" },
-  { name: "Register Admin", icon: MdPeople, url: "register" },
   { name: "Playlist", icon: MdViewList, url: "playlist" },
+  { name: "Register Admin", icon: MdPeople, url: "register" },
   { name: "Settings", icon: MdSettings, url: "settings" },
 ];
 
-const SidebarContent = (props: any) => {
+const SidebarContent = () => {
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      let data: any = jwt_decode(localStorage.getItem("token")!);
+      setRole(data.role);
+    }
+  }, []);
+
   return (
     <Box
       bg={useColorModeValue("white", "gray.900")}
@@ -45,8 +56,8 @@ const SidebarContent = (props: any) => {
       <Flex direction="column" height="100%">
         <Box>
           
-          {props.role && props.role.length > 0 ? (
-            props.role === "superadmin" ? (
+          {role ? (
+            role === "superadmin" ? (
               SuperAdminLink.map((link) => (
                 <NavItem key={link.name} icon={link.icon} url={link.url}>
                   {link.name}
@@ -66,7 +77,7 @@ const SidebarContent = (props: any) => {
           )}
         </Box>
         <Spacer />
-        <NavItem key="Logout" icon={MdLogout} url="logout">
+        <NavItem key="Logout" icon={MdLogout} url="/">
           Logout
         </NavItem>
       </Flex>

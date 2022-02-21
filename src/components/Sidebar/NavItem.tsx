@@ -8,7 +8,7 @@ const NavItem = ({ icon, children, url }: NavItemProps) => {
   const navigate = useNavigate();
 
   const logout = () => {
-    if (url === "logout") {
+    if (url === "/") {
       localStorage.removeItem("token");
       navigate("../")
       window.location.reload();

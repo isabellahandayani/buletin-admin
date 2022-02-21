@@ -7,11 +7,11 @@ import {
 } from "@chakra-ui/react";
 import SidebarContent from "./SidebarContent";
 
-const Sidebar = ({ children, role }: { children: ReactNode; role: any }) => {
+const Sidebar = ({ children }: { children: ReactNode }) => {
   const { isOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
-      {role && <SidebarContent {...role} />}
+      <SidebarContent  />
       <Drawer
         isOpen={isOpen}
         placement="left"

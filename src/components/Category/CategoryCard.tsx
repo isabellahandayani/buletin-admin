@@ -76,7 +76,7 @@ const CategoryCard = () => {
           fontSize="2xl"
           isPreviewFocusable={false}
         >
-          <EditablePreview />
+          <EditablePreview fontFamily={"ubuntu"}/>
           <EditableInput />
           <Control />
         </Editable>
