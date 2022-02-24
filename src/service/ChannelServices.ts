@@ -21,7 +21,6 @@ export const get = async (id: any) => {
 
 export const update = async (
   owner_id: number,
-  category_id: number,
   channel_name: string,
   channel_picture: string,
   channel_id: number
@@ -30,7 +29,6 @@ export const update = async (
     method: "put",
     body: JSON.stringify({
       owner_id: owner_id,
-      category_id: category_id,
       channel_name: channel_name,
       channel_picture: channel_picture,
     }),
@@ -49,7 +47,6 @@ export const deleteChannel = async (id: number) => {
 
 export const create = async (
   owner_id: number,
-  category_id: number,
   channel_name: String,
   channel_picture: String
 ) => {
@@ -57,7 +54,6 @@ export const create = async (
     method: "post",
     body: JSON.stringify({
       owner_id: owner_id,
-      category_id: category_id,
       channel_name: channel_name,
       channel_picture: channel_picture,
     }),

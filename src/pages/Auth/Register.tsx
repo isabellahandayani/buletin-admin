@@ -153,7 +153,7 @@ export default function UserProfileEdit() {
             _hover={{
               bg: "red.500",
             }}
-            onClick={() => navigate("../video")}
+            onClick={() => navigate("/")}
           >
             Cancel
           </Button>

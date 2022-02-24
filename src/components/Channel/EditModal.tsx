@@ -23,13 +23,12 @@ const EditModal = (props: any) => {
 
   const handleUpdate = async (
     owner_id: any,
-    category_id: any,
     channel_name: any,
     channel_picture: any,
     channel_id: any
   ) => {
     try {
-      await update(owner_id, category_id, channel_name, channel_picture, channel_id);
+      await update(owner_id, channel_name, channel_picture, channel_id);
       toast({
         title: "Update Succesful",
         status: "success",
@@ -99,7 +98,6 @@ const EditModal = (props: any) => {
               onClick={() =>
                 handleUpdate(
                   props.owner_id,
-                  props.category_id,
                   cname,
                   props.channel_picture,
                   props.channel_id
