@@ -19,15 +19,14 @@ import { useState } from "react";
 import { update } from "../../service/PlaylistServices";
 
 const EditModal = (props: any) => {
-  const [pname, setPname] = useState("");
+  const [pname, setPname] = useState(props.playlist_name);
+  const [id, setId] = useState(props.category_id);
+
   const toast = useToast();
 
-  const handleUpdate = async (
-    category_id: any,
-    playlist_id: any,
-  ) => {
+  const handleUpdate = async () => {
     try {
-      await update(category_id, playlist_id, pname);
+      await update(id, props.playlist_id, pname);
       toast({
         title: "Update Succesful",
         status: "success",
@@ -61,7 +60,7 @@ const EditModal = (props: any) => {
             <FormControl id="pname">
               <FormLabel>Playlist Name</FormLabel>
               <Input
-			  	placeholder = {props.playlist_name}
+                placeholder={props.playlist_name}
                 _placeholder={{ color: "gray.500" }}
                 type="text"
                 value={pname}
@@ -70,10 +69,16 @@ const EditModal = (props: any) => {
             </FormControl>
             <FormControl>
               <FormLabel>Category</FormLabel>
-              <Select>
-                <option>Option 1</option>
-                <option>Option 2</option>
-                <option>Option 3</option>
+              <Select
+                defaultValue={props.name}
+                onChange={(e) => setId(parseInt(e.target.value))}
+              >
+                {props &&
+                  props.categories.map((category: any) => (
+                    <option value={category.category_id}>
+                      {category.category_name}
+                    </option>
+                  ))}
               </Select>
             </FormControl>
           </Stack>
@@ -99,9 +104,7 @@ const EditModal = (props: any) => {
               _hover={{
                 bg: "blue.500",
               }}
-              onClick={() =>
-                handleUpdate(props.category_id, props.playlist_id)
-              }
+              onClick={() => handleUpdate()}
             >
               Save
             </Button>

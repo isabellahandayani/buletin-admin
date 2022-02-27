@@ -8,10 +8,15 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { HiDotsVertical } from "react-icons/hi";
+import { deleteList } from "../../service/PlaylistServices";
 import EditModal from "./EditModal";
 
 const PlaylistMenu = (props: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleDelete = async (id: number) => {
+    return await deleteList(id);
+  };
 
   return (
     <Box mt={25}>
@@ -25,7 +30,7 @@ const PlaylistMenu = (props: any) => {
         />
         <MenuList>
           <MenuItem onClick={onOpen}>Edit Playlist</MenuItem>
-          <MenuItem>Delete Playlist</MenuItem>
+          <MenuItem onClick={() => handleDelete(props.playlist_id)}>Delete Playlist</MenuItem>
         </MenuList>
       </Menu>
       <EditModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} {...props} />
