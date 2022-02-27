@@ -1,4 +1,10 @@
-import { Grid, Center, Heading, Spinner, useDisclosure } from "@chakra-ui/react";
+import {
+  Grid,
+  Center,
+  Heading,
+  Spinner,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { getList } from "../../service/CategoryServices";
 import { useState, useEffect } from "react";
 import AddButton from "../../components/AddButton";
@@ -10,7 +16,6 @@ const ListCategory = () => {
   const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-
   useEffect(() => {
     const fetchList = async () => {
       let { data } = await getList();
@@ -19,7 +24,7 @@ const ListCategory = () => {
     };
 
     fetchList();
-  }, []);
+  }, [list]);
 
   return (
     <>

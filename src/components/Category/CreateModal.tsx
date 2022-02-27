@@ -10,9 +10,40 @@ import {
   FormLabel,
   Input,
   ButtonGroup,
+  useToast,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { create } from "../../service/CategoryServices";
 
 const CreateModal = (props: any) => {
+  const [category, setCategory] = useState<string>("");
+  const Toast = useToast();
+
+  const handleSubmit = async () => {
+    let { data } = await create(category, "placeholder");
+    if (data) {
+      Toast({
+        title: "Success",
+        description: "Category created successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
+      props.onClose();
+    } else {
+      Toast({
+        title: "Error",
+        description: "Category creation failed",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+    setCategory("");
+  };
+
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
@@ -25,6 +56,8 @@ const CreateModal = (props: any) => {
               placeholder="category-name"
               _placeholder={{ color: "gray.500" }}
               type="text"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
             />
           </FormControl>
         </ModalBody>
@@ -48,6 +81,8 @@ const CreateModal = (props: any) => {
               _hover={{
                 bg: "blue.500",
               }}
+              isDisabled={!category}
+              onClick={handleSubmit}
             >
               Save
             </Button>
