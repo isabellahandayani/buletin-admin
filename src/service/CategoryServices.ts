@@ -47,13 +47,12 @@ export const create = async (
   category_name: string,
   category_picture: string
 ) => {
-  let res = await fetch(`${baseUrl}/cateogory`, {
+  let res = await fetch(`${baseUrl}/category`, {
     method: "post",
     body: JSON.stringify({
       category_name: category_name,
 	  category_picture: category_picture
     }),
   });
-
   return await res.json();
 };
