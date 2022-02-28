@@ -35,17 +35,20 @@ const Login = () => {
       });
     };
 
-    bcrypt.hash(pass, "$2a$10$CwTycUXWue0Thq9StjUM0u", async function (err, hash) {
-      console.log(hash)
-      let { data } = await login(email, hash);
-      if (data) {
-        localStorage.setItem("token", data.token);
-        navigate("/");
-        window.location.reload();
-      } else {
-        getToast();
+    bcrypt.hash(
+      pass,
+      "$2a$10$CwTycUXWue0Thq9StjUM0u",
+      async function (err, hash) {
+        try {
+          let { data } = await login(email, hash);
+          localStorage.setItem("token", data.token);
+          navigate("/");
+          window.location.reload();
+        } catch (e) {
+          getToast();
+        }
       }
-    });
+    );
   };
 
   return (
