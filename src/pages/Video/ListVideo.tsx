@@ -49,7 +49,7 @@ const ListVideo = () => {
         </Thead>
         <Tbody>
           {list && list.map((item: any) => (
-            <VideoEntry key={item.video_id} {...item} {...channelId} />
+            <VideoEntry key={item.video_id} {...item} {...channelId}/>
           ))}
         </Tbody>
       </Table>

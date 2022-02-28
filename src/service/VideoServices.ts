@@ -49,9 +49,10 @@ export const create = async (
 export const update = async (
   video_title: String,
   video_desc: String,
-  video_url: String
+  video_url: String,
+  video_id: Number
 ) => {
-  let res = await fetch(`${baseUrl}/video`, {
+  let res = await fetch(`${baseUrl}/video/${video_id}`, {
     method: "put",
     body: JSON.stringify({
       video_title: video_title,
