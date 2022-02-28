@@ -10,20 +10,46 @@ import {
   IconButton,
   useEditableControls,
   Skeleton,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-import { MdMode, MdCheck, MdClose } from "react-icons/md";
-import { update } from "../../service/CategoryServices";
+import { MdMode, MdCheck, MdClose, MdDelete } from "react-icons/md";
+import { deleteCategory, update } from "../../service/CategoryServices";
 
 const CategoryCard = (props: any) => {
   const name = props.category_name;
+  const toast = useToast();
   const [current, setCurrent] = useState(props.category_name);
 
   const handleSubmit = async () => {
-    await update(name, "placeholder", props.category_id)
-  }
+    await update(name, "placeholder", props.category_id);
+    setCurrent("");
+  };
 
+  const handleDelete = async () => {
+    let { data } = await deleteCategory(props.category_id);
+
+    if (data) {
+      toast({
+        title: "Success",
+        description: "Category deleted successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Category deletion failed",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
 
   const Control = () => {
     const {
@@ -59,6 +85,13 @@ const CategoryCard = (props: any) => {
           icon={<MdMode />}
           {...getEditButtonProps()}
         />
+        <IconButton
+          onClick={handleDelete}
+          size="sm"
+          ml={2}
+          aria-label="delete"
+          icon={<MdDelete />}
+        />
       </Flex>
     );
   };
@@ -91,7 +124,7 @@ const CategoryCard = (props: any) => {
             isPreviewFocusable={false}
           >
             <EditablePreview as="h2" />
-            <EditableInput onChange={(e) => setCurrent(e.target.value)}/>
+            <EditableInput onChange={(e) => setCurrent(e.target.value)} />
             <Control />
           </Editable>
         </Center>
