@@ -7,13 +7,16 @@ import {
   Center,
   IconButton,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { deleteVideo } from "../../service/VideoServices";
+import EditModal from "./EditModal";
 
 const VideoEntry: React.FC<any> = (props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
   const handleDelete = async () => {
@@ -41,13 +44,15 @@ const VideoEntry: React.FC<any> = (props) => {
   };
 
   return (
+    <>
+      <EditModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} {...props} />
     <Tr
       _hover={{
         boxShadow: "lg",
       }}
     >
       <Td maxW={500}>
-        <Link to={`/channel/${props.channel_id}/${props.video_id}`}>
+        <Link to={`/channel/${props.channelId}/${props.video_id}`}>
           <Flex>
             <Image
               maxW={200}
@@ -61,7 +66,7 @@ const VideoEntry: React.FC<any> = (props) => {
                 <Text color="blackAlpha.800" fontWeight="bold">
                   {props.video_title}
                 </Text>
-                <Text>{props.video_desc}</Text>
+                <Text fontWeight="thin">{props.video_desc}</Text>
               </Flex>
             </Center>
           </Flex>
@@ -79,13 +84,15 @@ const VideoEntry: React.FC<any> = (props) => {
           color="white"
         />
         <IconButton
-          aria-label="delete"
+          aria-label="edit"
           icon={<MdEdit />}
           bg={"blue.500"}
           color="white"
+          onClick={onOpen}
         />
       </Td>
     </Tr>
+    </>
   );
 };
 
