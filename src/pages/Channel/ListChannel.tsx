@@ -1,21 +1,33 @@
-import { Center, Spinner, Heading, Grid } from "@chakra-ui/react";
+import {
+  Center,
+  Spinner,
+  Heading,
+  Grid,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import jwt_decode from "jwt-decode";
+
+import AddButton from "../../components/AddButton";
+import CreateModal from "../../components/Channel/CreateModal";
 import ChannelCard from "../../components/Channel/ChannelCard";
 import { getList } from "../../service/ChannelServices";
 
 const ListChannel = () => {
   const [list, setList] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const fetchList = async () => {
-      let { data } = await getList(1, 6);
+      let decoded: any = jwt_decode(localStorage.getItem("token")!!);
+      let { data } = await getList(1, 6, decoded.account_id);
       setList(data.channels);
       setLoading(false);
     };
 
     fetchList();
-  }, []);
+  }, [list]);
 
   return (
     <Center mt={100}>
@@ -29,6 +41,8 @@ const ListChannel = () => {
             list.map((item: any) => <ChannelCard key={item.id} {...item} />)}
         </Grid>
       )}
+      <AddButton onOpen={onOpen} />
+      <CreateModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </Center>
   );
 };
