@@ -20,7 +20,7 @@ const ListChannel = () => {
   return (
     <Center mt={100}>
       {loading ? (
-        <Spinner mt={300} size="xl" />
+        <Spinner mt={200} size="xl" />
       ) : list && list.length === 0 ? (
         <Heading as="h2">No Channel Yet</Heading>
       ) : (

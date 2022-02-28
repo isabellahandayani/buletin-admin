@@ -17,12 +17,12 @@ import { create } from "../../service/CategoryServices";
 
 const CreateModal = (props: any) => {
   const [category, setCategory] = useState<string>("");
-  const Toast = useToast();
+  const toast = useToast();
 
   const handleSubmit = async () => {
     let { data } = await create(category, "placeholder");
     if (data) {
-      Toast({
+      toast({
         title: "Success",
         description: "Category created successfully",
         status: "success",
@@ -32,7 +32,7 @@ const CreateModal = (props: any) => {
       });
       props.onClose();
     } else {
-      Toast({
+      toast({
         title: "Error",
         description: "Category creation failed",
         status: "error",

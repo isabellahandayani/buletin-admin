@@ -1,8 +1,8 @@
 let baseUrl = "http://localhost:8080";
 
-export const getList = async (pageNo: number, pageSize: number) => {
+export const getVideoChannel = async (pageNo: number, pageSize: number, channel_id: any) => {
   let res = await fetch(
-    `${baseUrl}/video?page_no=${pageNo}&page_size=${pageSize}`,
+    `${baseUrl}/video?page_no=${pageNo}&page_size=${pageSize}&channel_id=${channel_id}`,
     {
       method: "get",
     }

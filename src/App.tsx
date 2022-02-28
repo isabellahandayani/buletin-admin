@@ -45,10 +45,10 @@ function App() {
               </>
             ) : (
               <>
-                <Route path="video/:videoId" element={<DetailVideo />} />
+                <Route path="channel/:channelId/:videoId" element={<DetailVideo />} /> 
+                <Route path="channel/:channelId/" element={<ListVideo />} />
                 <Route path="channel" element={<ListChannel />} />
-                <Route path="video/" element={<ListVideo />} />
-                <Route path="/" element={<ListVideo />} />
+                <Route path="/" element={<ListChannel />} />
                 <Route path="*" element={<NotFound />} />
               </>
             )}

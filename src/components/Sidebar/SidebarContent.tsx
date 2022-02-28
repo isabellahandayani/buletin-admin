@@ -9,7 +9,6 @@ import {
 import NavItem from "./NavItem";
 
 import {
-  MdVideoLibrary,
   MdViewList,
   MdSubscriptions,
   MdLogout,
@@ -22,7 +21,6 @@ import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 
 const AdminLink: Array<LinkItemProps> = [
-  { name: "Content", icon: MdVideoLibrary, url: "video" },
   { name: "Channels", icon: MdSubscriptions, url: "channel" },
   { name: "Settings", icon: MdSettings, url: "settings" },
 ];
