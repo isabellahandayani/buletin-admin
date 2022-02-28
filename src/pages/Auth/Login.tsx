@@ -1,5 +1,4 @@
 import {
-  Box,
   FormControl,
   FormLabel,
   Input,
@@ -7,38 +6,23 @@ import {
   Button,
   Heading,
   useToast,
-  FormErrorMessage,
+  Link,
+  Image,
+  Flex,
+  Center,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { login } from "../../service/UserServices";
 import bcrypt from "bcryptjs";
-import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import LoginImage from "../../assets/login_image.svg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [hashed, setHashed] = useState("");
-  const [emailError, setEmailError] = useState(false);
   const navigate = useNavigate();
 
   const toast = useToast();
-
-  const handlePass = (pwd: any, hashedPas: any) => {
-    setPass(pwd);
-    setHashed(hashedPas);
-  };
-
-  const handleEmail = (newEmail: any) => {
-    setEmail(newEmail);
-
-    const regex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (regex.test(email)) {
-      setEmailError(false);
-    } else setEmailError(true);
-  };
 
   const handleSubmit = async () => {
     const getToast = () => {
@@ -51,82 +35,64 @@ const Login = () => {
       });
     };
 
-    try {
-      let { data } = await login(email, hashed);
-
-      let decoded: any = jwt_decode(data.token);
-      if (decoded.role === "superadmin" || decoded.role === "admin") {
+    bcrypt.hash(pass, "$2a$10$CwTycUXWue0Thq9StjUM0u", async function (err, hash) {
+      console.log(hash)
+      let { data } = await login(email, hash);
+      if (data) {
         localStorage.setItem("token", data.token);
-        navigate("/")
+        navigate("/");
         window.location.reload();
       } else {
         getToast();
       }
-    } catch (e) {
-      console.log(e);
-      getToast();
-    }
+    });
   };
 
   return (
-    <Stack
-      spacing={8}
-      mx={"auto"}
-      py={12}
-      px={6}
-      maxW="30vw"
-      mt={window.innerHeight / 8}
-    >
-      <Stack align={"center"}>
-        <Heading fontSize={"4xl"}>Buletin.id</Heading>
-      </Stack>
-      <Box rounded={"lg"} bg="white" boxShadow={"lg"} p={8}>
-        <Stack spacing={4} bg="white">
-          <FormControl id="email" isRequired isInvalid={emailError}>
+    <Stack minH="100vh" direction="row" borderRadius={20}>
+      <Flex flex={2} bg="blue.400">
+        <Image
+          mx="auto"
+          alt={"Login Image"}
+          maxW="70%"
+          objectFit={"scale-down"}
+          src={LoginImage}
+        />
+      </Flex>
+      <Flex p={10} flex={1} align={"center"} justify={"center"}>
+        <Stack spacing={4} w={"full"} maxW={"md"}>
+          <Center>
+            <Heading fontSize={"2xl"}>Buletin Admin</Heading>
+          </Center>
+          <FormControl id="email">
             <FormLabel>Email</FormLabel>
             <Input
-              placeholder="your-email@example.com"
-              _placeholder={{ color: "gray.500" }}
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
-              onChange={(e) => handleEmail(e.target.value)}
             />
-            {!emailError ? null : (
-              <FormErrorMessage>Invalid Email</FormErrorMessage>
-            )}
           </FormControl>
-          <FormControl bg="white">
-            <FormLabel bg="white">Password</FormLabel>
+          <FormControl id="password">
+            <FormLabel>Password</FormLabel>
             <Input
-              placeholder="*******"
-              value={pass}
-              onChange={(e) =>
-                handlePass(
-                  e.target.value,
-                  bcrypt.hashSync(
-                    e.target.value,
-                    "$2a$10$CwTycUXWue0Thq9StjUM0u"
-                  )
-                )
-              }
               type="password"
+              onChange={(e) => setPass(e.target.value)}
+              value={pass}
             />
           </FormControl>
-          <Stack spacing={10}>
+          <Stack spacing={6}>
+            <Link color={"blue.500"}>Forgot password?</Link>
             <Button
-              isDisabled={email && pass && !emailError ? false : true}
-              bg={"blue.400"}
-              color={"white"}
-              _hover={{
-                bg: "blue.500",
-              }}
+              colorScheme={"blue"}
+              variant={"solid"}
               onClick={handleSubmit}
+              isDisabled={!email || !pass}
             >
               Sign in
             </Button>
           </Stack>
         </Stack>
-      </Box>
+      </Flex>
     </Stack>
   );
 };
