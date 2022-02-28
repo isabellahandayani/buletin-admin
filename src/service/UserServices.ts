@@ -1,6 +1,7 @@
 let baseUrl = "http://localhost:8080";
 
 export const login = async (email: string, pass: string) => {
+  console.log("MSK")
   let res = await fetch(`${baseUrl}/login`, {
     method: "post",
     body: JSON.stringify({ email: email, password: pass }),
