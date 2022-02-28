@@ -6,13 +6,14 @@ import ListChannel from "./pages/Channel/ListChannel";
 import Register from "./pages/Auth/Register";
 import ListCategory from "./pages/Category/ListCategory";
 import ListPlaylist from "./pages/Playlist/ListPlaylist";
+import Profile from "./pages/Auth/Profile";
+
+import Sidebar from "./components/Sidebar/Sidebar";
+import NotFound from "./components/NotFound";
 
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import Sidebar from "./components/Sidebar/Sidebar";
-import NotFound from "./components/NotFound";
-import Profile from "./pages/Auth/Profile";
 
 function App() {
   const [currentUser] = useState(localStorage.getItem("token"));

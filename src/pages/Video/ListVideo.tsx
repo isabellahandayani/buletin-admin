@@ -16,7 +16,7 @@ import VideoEntry from "../../components/Video/VideoEntry";
 const ListVideo = () => {
   const [list, setList] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const { channelId } = useParams()
+  const { channelId } = useParams();
 
   useEffect(() => {
     const fetchList = async () => {
@@ -32,13 +32,16 @@ const ListVideo = () => {
     <Center mt={300}>
       <Spinner size="xl" />
     </Center>
-  ) : list && list.length === 0 ? (
-    <Center mt={300}>
-      <Heading  as="h2">There's No Video Yet</Heading>
-    </Center>
-  ) : (
+  ) : list && list.length > 0 ? (
     <Center>
-      <Table bg={"#f1f1f1"} variant="striped" colorScheme="telegram" size="md" maxW="95%" boxShadow="lg">
+      <Table
+        bg={"#f1f1f1"}
+        variant="striped"
+        colorScheme="telegram"
+        size="md"
+        maxW="95%"
+        boxShadow="lg"
+      >
         <Thead>
           <Tr fontSize="lg">
             <Th>Video</Th>
@@ -48,11 +51,16 @@ const ListVideo = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {list && list.map((item: any) => (
-            <VideoEntry key={item.video_id} {...item} {...channelId}/>
-          ))}
+          {list &&
+            list.map((item: any) => (
+              <VideoEntry key={item.video_id} {...item} {...channelId} />
+            ))}
         </Tbody>
       </Table>
+    </Center>
+  ) : (
+    <Center mt={300}>
+      <Heading>There's no video yet</Heading>
     </Center>
   );
 };
