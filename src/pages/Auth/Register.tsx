@@ -57,7 +57,7 @@ export default function UserProfileEdit() {
         isClosable: true,
         position: "top",
       });
-      navigate("../video");
+      navigate("../");
     } else {
       toast({
         title: "Registration Failed",

@@ -8,16 +8,14 @@ import {
   Center,
   Spinner,
 } from "@chakra-ui/react";
-import VideoCard from "../../components/Video/VideoCardDetail";
 import moment from "moment";
 import { useParams } from "react-router-dom";
-import { get, getList } from "../../service/VideoServices";
+import { get } from "../../service/VideoServices";
 import { useEffect, useState } from "react";
 
 const DetailVideo = () => {
   const { videoId } = useParams();
   const [video, setVideo] = useState<any>();
-  const [list, setList] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -25,14 +23,7 @@ const DetailVideo = () => {
       setVideo(data);
     };
 
-    const fetchList = async () => {
-      let { data } = await getList(1, 6);
-      let filteredData = data['videos'].filter((item: any) => item.video_id !== videoId);
-      setList(filteredData);
-    };
-
     fetchVideo();
-    fetchList();
   }, [videoId]);
 
   return video ? (
@@ -49,7 +40,10 @@ const DetailVideo = () => {
           </Text>
 
           <Flex mt="3%">
-            <Avatar src={video.channel_info.channel_picture} />
+            <Avatar
+              src={video.channel_info.channel_picture}
+              name={video.channel_info.channel_name}
+            />
             <Center ml="3">
               <Text color="blackAlpha.700" fontWeight="bold">
                 {video.channel_info.channel_name}
@@ -59,22 +53,11 @@ const DetailVideo = () => {
 
           <Text mt="3%">{video.video_desc}</Text>
         </Box>
-
-        <Box w={"45%"}>
-          <Heading as="h3" size="md" mb="5%">
-            Uploaded Videos
-          </Heading>
-          {list ? (
-            list.map((video) => {
-              return <VideoCard key={video.video_id} {...video} />;
-            })
-          ) : null}
-        </Box>
       </Flex>
     </Box>
   ) : (
     <Center mt={300}>
-      <Spinner size='xl' />
+      <Spinner size="xl" />
     </Center>
   );
 };
