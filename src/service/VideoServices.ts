@@ -31,7 +31,7 @@ export const create = async (
   video_title: String,
   video_desc: String,
   video_url: String,
-  channel_id: String
+  channel_id: Number
 ) => {
   let res = await fetch(`${baseUrl}/video`, {
     method: "post",
