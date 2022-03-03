@@ -23,7 +23,8 @@ const CategoryCard = (props: any) => {
   const [current, setCurrent] = useState(props.category_name);
 
   const handleSubmit = async () => {
-    await update(name, "placeholder", props.category_id);
+    await update(current, "placeholder", props.category_id);
+    props.fetchList();
     setCurrent("");
   };
 
@@ -39,6 +40,7 @@ const CategoryCard = (props: any) => {
         isClosable: true,
         position: "top",
       });
+      props.fetchList()
     } else {
       toast({
         title: "Error",
@@ -65,9 +67,9 @@ const CategoryCard = (props: any) => {
           variant="solid"
           aria-label="Md"
           icon={<MdCheck />}
-          {...getSubmitButtonProps()}
-          onClick={handleSubmit}
           isDisabled={name === "" || name === current}
+          {...getSubmitButtonProps}
+          onClick={handleSubmit}
         />
         <IconButton
           variant="solid"
@@ -121,7 +123,6 @@ const CategoryCard = (props: any) => {
             textAlign="center"
             defaultValue={props.category_name}
             fontSize="2xl"
-            isPreviewFocusable={false}
           >
             <EditablePreview as="h2" />
             <EditableInput onChange={(e) => setCurrent(e.target.value)} />

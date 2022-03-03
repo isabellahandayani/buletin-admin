@@ -16,15 +16,15 @@ const ListCategory = () => {
   const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  useEffect(() => {
-    const fetchList = async () => {
-      let { data } = await getList();
-      setList(data);
-      setLoading(false);
-    };
+  const fetchList = async () => {
+    let { data } = await getList();
+    setList(data);
+    setLoading(false);
+  };
 
+  useEffect(() => {
     fetchList();
-  }, [list]);
+  }, []);
 
   return (
     <>
@@ -37,13 +37,13 @@ const ListCategory = () => {
           <Grid templateColumns="repeat(3, 1fr)" gap={10}>
             {list &&
               list.map((item: any) => (
-                <CategoryCard key={item.category_id} {...item} />
+                <CategoryCard key={item.category_id} {...item} fetchList={fetchList} />
               ))}
           </Grid>
         )}
       </Center>
       <AddButton onOpen={onOpen} />
-      <CreateModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      <CreateModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} fetchList={fetchList} />
     </>
   );
 };

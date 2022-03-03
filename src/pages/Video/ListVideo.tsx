@@ -30,7 +30,7 @@ const ListVideo = () => {
     };
 
     fetchList();
-  }, [channelId, list]);
+  }, [channelId]);
 
   return (
     <Center>

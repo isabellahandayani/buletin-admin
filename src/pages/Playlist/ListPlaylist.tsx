@@ -17,12 +17,17 @@ const ListPlaylist = () => {
 
     const fetchCategory = async () => {
       let { data } = await getCategory();
+      console.table(data)
       setCategory(data);
       setLoading(false);
     };
     fetchList();
     fetchCategory()
   }, []);
+
+  const getName = (id: number) => {
+    return category.filter((item: any) => item.category_id === id)[0].category_name
+  }
 
   return (
     <Center mt={100}>
@@ -34,7 +39,7 @@ const ListPlaylist = () => {
         <Grid templateColumns="repeat(3, 1fr)" gap={10}>
           {category &&
             list.map((item: any) => (
-              <PlaylistCard key={item.playlist_id} {...item} name={category[item.category_id - 1].category_name} categories={category} />
+              <PlaylistCard key={item.playlist_id} {...item} categories={category} name={getName(item.category_id)} />
             ))}
         </Grid>
       )}

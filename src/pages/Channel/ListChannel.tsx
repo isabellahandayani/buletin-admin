@@ -27,7 +27,7 @@ const ListChannel = () => {
     };
 
     fetchList();
-  }, [list]);
+  }, []);
 
   return (
     <Center mt={100}>

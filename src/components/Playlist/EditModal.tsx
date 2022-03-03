@@ -70,12 +70,11 @@ const EditModal = (props: any) => {
             <FormControl>
               <FormLabel>Category</FormLabel>
               <Select
-                defaultValue={props.name}
                 onChange={(e) => setId(parseInt(e.target.value))}
               >
                 {props &&
                   props.categories.map((category: any) => (
-                    <option value={category.category_id}>
+                    <option key={category.category_id} value={category.category_id}>
                       {category.category_name}
                     </option>
                   ))}
