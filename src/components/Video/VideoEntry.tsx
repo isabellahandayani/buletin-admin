@@ -31,6 +31,7 @@ const VideoEntry: React.FC<any> = (props) => {
         isClosable: true,
         position: "top",
       });
+      props.fetchList()
     } else {
       toast({
         title: "Error",

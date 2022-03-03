@@ -35,6 +35,8 @@ const EditModal = (props: any) => {
         isClosable: true,
         position: "top",
       });
+      props.fetchList();
+      props.onClose();
     } else {
       toast({
         title: "Error",

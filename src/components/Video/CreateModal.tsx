@@ -36,6 +36,7 @@ const CreateModal = (props: any) => {
         isClosable: true,
         position: "top",
       });
+      props.fetchList();
       props.onClose();
     } else {
       toast({
