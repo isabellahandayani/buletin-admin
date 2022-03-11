@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import ChannelMenu from "./ChannelMenu";
+import ChannelMenu from "./Menu";
 
 const ChannelCard = (props: any) => {
   return (
