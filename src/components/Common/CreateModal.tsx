@@ -10,59 +10,34 @@ import {
   FormLabel,
   Input,
   ButtonGroup,
-  useToast,
 } from "@chakra-ui/react";
-import jwt_decode from "jwt-decode"
-import { useState } from "react";
-import { create } from "../../service/ChannelServices";
 
 const CreateModal = (props: any) => {
-  const [channel, setChannel] = useState<string>("");
-  const toast = useToast();
-
-  const handleSubmit = async () => {
-    let decoded: any = jwt_decode(localStorage.getItem("token")!!);
-
-    let { data } = await create(decoded.account_id, channel, "placeholder");
-    if (data) {
-      toast({
-        title: "Success",
-        description: "Channel created successfully",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-        position: "top",
-      });
-      props.onClose();
-    } else {
-      toast({
-        title: "Error",
-        description: "Channel creation failed",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "top",
-      });
-    }
-    setChannel("");
-  };
-
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Add Channel</ModalHeader>
         <ModalBody>
-          <FormControl id="category" isRequired>
-            <FormLabel>Channel Name</FormLabel>
-            <Input
-              placeholder="channel-name"
-              _placeholder={{ color: "gray.500" }}
-              type="text"
-              value={channel}
-              onChange={(e) => setChannel(e.target.value)}
-            />
-          </FormControl>
+          {props &&
+            props.form.map((item: any) => {
+              return (
+                <FormControl
+                  key={item.placeholder}
+                  id={item.placeholder}
+                  isRequired
+                >
+                  <FormLabel>{item.name}</FormLabel>
+                  <Input
+                    placeholder={item.placeholder}
+                    _placeholder={{ color: "gray.500" }}
+                    type="text"
+                    value={item.value}
+                    onChange={(e) => item.onChange(e.target.value)}
+                  />
+                </FormControl>
+              );
+            })}
         </ModalBody>
         <ModalFooter mx="auto">
           <ButtonGroup>
@@ -84,8 +59,8 @@ const CreateModal = (props: any) => {
               _hover={{
                 bg: "blue.500",
               }}
-              isDisabled={!channel}
-              onClick={handleSubmit}
+              isDisabled={props.form.some((item: any) => item.value === "")}
+              onClick={props.handleSubmit}
             >
               Save
             </Button>
@@ -97,4 +72,3 @@ const CreateModal = (props: any) => {
 };
 
 export default CreateModal;
-

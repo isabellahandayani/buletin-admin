@@ -6,32 +6,43 @@ import {
   MenuList,
   MenuItem,
   useDisclosure,
+  Skeleton,
 } from "@chakra-ui/react";
 import { HiDotsVertical } from "react-icons/hi";
 import EditModal from "./EditModal";
 
-const ChannelMenu = (props: any) => {
+const CardMenu = (props: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box mt={25}>
-      <Menu direction="rtl">
-        <MenuButton
-          as={IconButton}
-          aria-label="Options"
-          icon={<HiDotsVertical />}
-          variant="link"
-          _focus={{ boxShadow: "none" }}
-        />
-        <MenuList>
-          <MenuItem onClick={onOpen}>Edit Channel</MenuItem>
-          <MenuItem>Delete Channel</MenuItem>
-        </MenuList>
-      </Menu>
-
-      <EditModal isOpen={isOpen} onClose={onClose} {...props} />
-    </Box>
+    <Skeleton isLoaded={props}>
+      <Box mt={25}>
+        <Menu direction="rtl">
+          <MenuButton
+            as={IconButton}
+            aria-label="Options"
+            icon={<HiDotsVertical />}
+            variant="link"
+            _focus={{ boxShadow: "none" }}
+          />
+          <MenuList>
+            <MenuItem onClick={onOpen}>Edit {props.type}</MenuItem>
+            <MenuItem onClick={() => props.handleDelete(props.channel_id)}>
+              Delete {props.type}
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
+      <EditModal
+        channel_id={props.channel_id}
+        form={props.form}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        handleSubmit={props.handleUpdate}
+      />
+    </Skeleton>
   );
 };
 
-export default ChannelMenu;
+export default CardMenu;

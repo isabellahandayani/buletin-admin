@@ -9,9 +9,9 @@ import {
 } from "@chakra-ui/react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import ChannelMenu from "./Menu";
+import Menu from "./Menu";
 
-const ChannelCard = (props: any) => {
+const Card = (props: any) => {
   return (
     <Skeleton isLoaded={props}>
       <Box
@@ -44,11 +44,17 @@ const ChannelCard = (props: any) => {
           </Flex>
 
           <Spacer />
-          <ChannelMenu {...props} />
+          <Menu
+            type={props.type}
+            {...props.menuControl}
+            channel_id={props.channel_id}
+            form={props.form}
+            handleUpdate={props.handleUpdate}
+          />
         </Flex>
       </Box>
     </Skeleton>
   );
 };
 
-export default ChannelCard;
+export default Card;

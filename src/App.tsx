@@ -39,20 +39,16 @@ function App() {
           <Routes>
             {role === "superadmin" ? (
               <>
-                <Route path="register" element={<Register />} />
+                {/* <Route path="register" element={<Register />} />
                 <Route path="category" element={<ListCategory />} />
                 <Route path="playlist" element={<ListPlaylist />} />
-                <Route path="settings" element={<Profile />} />
+                <Route path="settings" element={<Profile />} /> */}
                 <Route path="/" element={<ListPlaylist />} />
                 <Route path="*" element={<NotFound />} />
               </>
             ) : (
               <>
-                <Route
-                  path="channel/:channelId/:videoId"
-                  element={<DetailVideo />}
-                />
-                <Route path="channel/:channelId/" element={<ListVideo />} />
+                {/* <Route path="channel/:channelId/" element={<ListVideo />} /> */}
                 <Route path="channel" element={<ListChannel />} />
                 <Route path="settings" element={<Profile />} />
                 <Route path="/" element={<ListChannel />} />

@@ -8,8 +8,8 @@ import {
 import { getList } from "../../service/CategoryServices";
 import { useState, useEffect } from "react";
 import AddButton from "../../components/AddButton";
-import CreateModal from "../../components/Category/CreateModal";
-import CategoryCard from "../../components/Category/CategoryCard";
+// import CreateModal from "../../components/Category/CreateModal";
+// import CategoryCard from "../../components/Category/CategoryCard";
 
 const ListCategory = () => {
   const [list, setList] = useState([]);
@@ -28,7 +28,7 @@ const ListCategory = () => {
 
   return (
     <>
-      <Center mt={100}>
+      {/* <Center mt={100}>
         {loading ? (
           <Spinner mt={200} size="xl" />
         ) : list && list.length === 0 ? (
@@ -43,7 +43,7 @@ const ListCategory = () => {
         )}
       </Center>
       <AddButton onOpen={onOpen} />
-      <CreateModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} fetchList={fetchList} />
+      <CreateModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} fetchList={fetchList} /> */}
     </>
   );
 };

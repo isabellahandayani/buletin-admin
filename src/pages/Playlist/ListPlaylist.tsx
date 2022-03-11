@@ -1,6 +1,6 @@
 import { Center, Spinner, Heading, Grid } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import PlaylistCard from "../../components/Playlist/PlaylistCard";
+// import PlaylistCard from "../../components/Playlist/PlaylistCard";
 import { getList } from "../../service/PlaylistServices";
 import { getList as getCategory } from "../../service/CategoryServices";
 
@@ -31,7 +31,7 @@ const ListPlaylist = () => {
 
   return (
     <Center mt={100}>
-      {loading ? (
+      {/* {loading ? (
         <Spinner mt={200} size="xl" />
       ) : category && list.length === 0 ? (
         <Heading as="h2">No Playlists Yet</Heading>
@@ -42,7 +42,7 @@ const ListPlaylist = () => {
               <PlaylistCard key={item.playlist_id} {...item} categories={category} name={getName(item.category_id)} />
             ))}
         </Grid>
-      )}
+      )} */}
     </Center>
   );
 };
