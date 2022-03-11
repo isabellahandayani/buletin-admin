@@ -9,11 +9,10 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import moment from "moment";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { deleteVideo } from "../../service/VideoServices";
-import EditModal from "./EditModal";
+import EditModal from "../Common/EditModal";
 
 const VideoEntry: React.FC<any> = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,7 +30,7 @@ const VideoEntry: React.FC<any> = (props) => {
         isClosable: true,
         position: "top",
       });
-      props.fetchList()
+      props.fetchList();
     } else {
       toast({
         title: "Error",
@@ -46,14 +45,21 @@ const VideoEntry: React.FC<any> = (props) => {
 
   return (
     <>
-      <EditModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} {...props} />
-    <Tr
-      _hover={{
-        boxShadow: "lg",
-      }}
-    >
-      <Td maxW={500}>
-        <Link to={`/channel/${props.channelId}/${props.video_id}`}>
+      <EditModal
+        id={props.id}
+        form={props.form}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        type="Video"
+        handleSubmit={props.handleSubmit}
+      />
+      <Tr
+        _hover={{
+          boxShadow: "lg",
+        }}
+      >
+        <Td maxW={500}>
           <Flex>
             <Image
               maxW={200}
@@ -71,28 +77,27 @@ const VideoEntry: React.FC<any> = (props) => {
               </Flex>
             </Center>
           </Flex>
-        </Link>
-      </Td>
-      <Td>{moment(props.date_posted).format("D MMM YYYY")}</Td>
-      <Td isNumeric>{props.video_view_count}</Td>
-      <Td isNumeric>
-        <IconButton
-          mr={2}
-          aria-label="delete"
-          icon={<MdDelete />}
-          onClick={handleDelete}
-          bg={"red.500"}
-          color="white"
-        />
-        <IconButton
-          aria-label="edit"
-          icon={<MdEdit />}
-          bg={"blue.500"}
-          color="white"
-          onClick={onOpen}
-        />
-      </Td>
-    </Tr>
+        </Td>
+        <Td>{moment(props.date_posted).format("D MMM YYYY")}</Td>
+        <Td isNumeric>{props.video_view_count}</Td>
+        <Td isNumeric>
+          <IconButton
+            mr={2}
+            aria-label="delete"
+            icon={<MdDelete />}
+            onClick={handleDelete}
+            bg={"red.500"}
+            color="white"
+          />
+          <IconButton
+            aria-label="edit"
+            icon={<MdEdit />}
+            bg={"blue.500"}
+            color="white"
+            onClick={onOpen}
+          />
+        </Td>
+      </Tr>
     </>
   );
 };

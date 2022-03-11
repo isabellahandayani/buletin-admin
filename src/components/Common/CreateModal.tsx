@@ -10,6 +10,7 @@ import {
   FormLabel,
   Input,
   ButtonGroup,
+  Stack
 } from "@chakra-ui/react";
 
 const CreateModal = (props: any) => {
@@ -17,27 +18,29 @@ const CreateModal = (props: any) => {
     <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Add Channel</ModalHeader>
+        <ModalHeader>Add {props.type}</ModalHeader>
         <ModalBody>
-          {props &&
-            props.form.map((item: any) => {
-              return (
-                <FormControl
-                  key={item.placeholder}
-                  id={item.placeholder}
-                  isRequired
-                >
-                  <FormLabel>{item.name}</FormLabel>
-                  <Input
-                    placeholder={item.placeholder}
-                    _placeholder={{ color: "gray.500" }}
-                    type="text"
-                    value={item.value}
-                    onChange={(e) => item.onChange(e.target.value)}
-                  />
-                </FormControl>
-              );
-            })}
+          <Stack spacing={2}>
+            {props &&
+              props.form.map((item: any) => {
+                return (
+                  <FormControl
+                    key={item.placeholder}
+                    id={item.placeholder}
+                    isRequired
+                  >
+                    <FormLabel>{item.name}</FormLabel>
+                    <Input
+                      placeholder={item.placeholder}
+                      _placeholder={{ color: "gray.500" }}
+                      type="text"
+                      value={item.value}
+                      onChange={(e) => item.onChange(e.target.value)}
+                    />
+                  </FormControl>
+                );
+              })}
+          </Stack>
         </ModalBody>
         <ModalFooter mx="auto">
           <ButtonGroup>

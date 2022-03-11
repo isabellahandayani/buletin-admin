@@ -1,10 +1,9 @@
 import { Flex, Icon, Box } from "@chakra-ui/react";
 
 import { Link as LinkRoute, useNavigate } from "react-router-dom";
-import { NavItemProps } from "../../types";
 
 
-const NavItem = ({ icon, children, url }: NavItemProps) => {
+const NavItem = ({ icon, children, url }: any) => {
   const navigate = useNavigate();
 
   const logout = () => {

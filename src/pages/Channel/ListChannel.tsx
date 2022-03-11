@@ -62,9 +62,9 @@ const ListChannel = () => {
     );
 
     if (data) {
+      createToast("Success", "Update Successful");
       fetchList();
       setChannel("");
-      createToast("Success", "Update Successful");
     } else {
       createToast("Error", "Update Failed");
     }
@@ -118,7 +118,7 @@ const ListChannel = () => {
               <Card
                 key={item.channel_id}
                 {...item}
-                type="channel"
+                type="Channel"
                 menuControl={menuControl}
                 handleUpdate={handleUpdate}
                 form={form}
@@ -133,6 +133,7 @@ const ListChannel = () => {
         onClose={onClose}
         form={form}
         handleSubmit={handleSubmit}
+        type="Channel"
       />
     </Center>
   );

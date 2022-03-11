@@ -34,12 +34,13 @@ const CardMenu = (props: any) => {
         </Menu>
       </Box>
       <EditModal
-        channel_id={props.channel_id}
+        id={props.channel_id}
         form={props.form}
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
         handleSubmit={props.handleUpdate}
+        type={props.type}
       />
     </Skeleton>
   );
