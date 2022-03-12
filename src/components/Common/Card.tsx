@@ -15,7 +15,7 @@ const Card = (props: any) => {
   return (
     <Skeleton isLoaded={props}>
       <Box
-        maxW={300}
+        minW={300}
         w={"full"}
         _hover={{
           boxShadow: "lg",
@@ -24,11 +24,11 @@ const Card = (props: any) => {
         boxShadow={"2xl"}
         rounded={"md"}
       >
-        <Link to={`/channel/${props.channel_id}`}>
+        <Link to={props.link}>
           <Image
             h={"120px"}
             w={"full"}
-            src={props.channel_picture}
+            src={props.picture}
             fallbackSrc="https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png"
             objectFit={"cover"}
             cursor="pointer"
@@ -38,18 +38,19 @@ const Card = (props: any) => {
         <Flex flexDirection="row">
           <Flex flexDirection="column" p={30} h="100%">
             <Heading fontSize={"2xl"} as="h2">
-              {props.channel_name}
+              {props.name}
             </Heading>
-            <Text>Since {moment(props.created_at).format("D MMM YYYY")}</Text>
+            {props.created_at && (
+              <Text>Since {moment(props.created_at).format("D MMM YYYY")}</Text>
+            )}
           </Flex>
 
           <Spacer />
           <Menu
             type={props.type}
             {...props.menuControl}
-            channel_id={props.channel_id}
+            id={props.id}
             form={props.form}
-            handleUpdate={props.handleUpdate}
           />
         </Flex>
       </Box>

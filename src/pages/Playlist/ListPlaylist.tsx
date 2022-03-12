@@ -17,7 +17,6 @@ const ListPlaylist = () => {
 
     const fetchCategory = async () => {
       let { data } = await getCategory();
-      console.table(data)
       setCategory(data);
       setLoading(false);
     };

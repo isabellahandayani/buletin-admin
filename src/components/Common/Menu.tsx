@@ -27,14 +27,14 @@ const CardMenu = (props: any) => {
           />
           <MenuList>
             <MenuItem onClick={onOpen}>Edit {props.type}</MenuItem>
-            <MenuItem onClick={() => props.handleDelete(props.channel_id)}>
+            <MenuItem onClick={() => props.handleDelete(props.id)}>
               Delete {props.type}
             </MenuItem>
           </MenuList>
         </Menu>
       </Box>
       <EditModal
-        id={props.channel_id}
+        id={props.id}
         form={props.form}
         isOpen={isOpen}
         onOpen={onOpen}

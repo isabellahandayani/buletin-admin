@@ -63,7 +63,7 @@ const CreateModal = (props: any) => {
                 bg: "blue.500",
               }}
               isDisabled={props.form.some((item: any) => item.value === "")}
-              onClick={props.handleSubmit}
+              onClick={props.menuControl.handleSubmit}
             >
               Save
             </Button>

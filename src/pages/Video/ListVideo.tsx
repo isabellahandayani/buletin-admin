@@ -18,7 +18,7 @@ import {
   update,
 } from "../../service/VideoServices";
 import VideoEntry from "../../components/Video/VideoEntry";
-import AddButton from "../../components/AddButton";
+import AddButton from "../../components/Common/AddButton";
 import CreateModal from "../../components/Common/CreateModal";
 
 const ListVideo = () => {

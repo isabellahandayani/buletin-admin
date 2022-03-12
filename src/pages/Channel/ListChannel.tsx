@@ -9,7 +9,7 @@ import {
 import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 
-import AddButton from "../../components/AddButton";
+import AddButton from "../../components/Common/AddButton";
 import Card from "../../components/Common/Card";
 import CreateModal from "../../components/Common/CreateModal";
 
@@ -120,7 +120,11 @@ const ListChannel = () => {
                 {...item}
                 type="Channel"
                 menuControl={menuControl}
+                name={item.channel_name}
+                picture={item.channel_picture}
+                created_at={item.created_at}
                 handleUpdate={handleUpdate}
+                link={`/channel/${item.channel_id}`}
                 form={form}
               />
             ))}

@@ -9,7 +9,7 @@ import ListPlaylist from "./pages/Playlist/ListPlaylist";
 import Profile from "./pages/Auth/Profile";
 
 import Sidebar from "./components/Sidebar/Sidebar";
-import NotFound from "./components/NotFound";
+import NotFound from "./components/Common/NotFound";
 
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -39,10 +39,10 @@ function App() {
           <Routes>
             {role === "superadmin" ? (
               <>
-                {/* <Route path="register" element={<Register />} />
+                <Route path="register" element={<Register />} />
                 <Route path="category" element={<ListCategory />} />
-                <Route path="playlist" element={<ListPlaylist />} />
-                <Route path="settings" element={<Profile />} /> */}
+                {/* <Route path="playlist" element={<ListPlaylist />} /> */}
+                <Route path="settings" element={<Profile />} />
                 <Route path="/" element={<ListPlaylist />} />
                 <Route path="*" element={<NotFound />} />
               </>
