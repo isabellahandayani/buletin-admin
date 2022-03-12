@@ -6,6 +6,7 @@ import {
   Flex,
   Spacer,
   Skeleton,
+  Tag,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { Link } from "react-router-dom";
@@ -43,6 +44,9 @@ const Card = (props: any) => {
             {props.created_at && (
               <Text>Since {moment(props.created_at).format("D MMM YYYY")}</Text>
             )}
+            {props.category && (
+              <Tag colorScheme="telegram">{props.category}</Tag>
+            )}
           </Flex>
 
           <Spacer />
@@ -51,6 +55,8 @@ const Card = (props: any) => {
             {...props.menuControl}
             id={props.id}
             form={props.form}
+            name={props.name}
+            category={props.category}
           />
         </Flex>
       </Box>

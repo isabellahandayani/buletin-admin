@@ -1,6 +1,5 @@
 import "./App.css";
 import ListVideo from "./pages/Video/ListVideo";
-import DetailVideo from "./pages/Video/DetailVideo";
 import Login from "./pages/Auth/Login";
 import ListChannel from "./pages/Channel/ListChannel";
 import Register from "./pages/Auth/Register";
@@ -41,7 +40,7 @@ function App() {
               <>
                 <Route path="register" element={<Register />} />
                 <Route path="category" element={<ListCategory />} />
-                {/* <Route path="playlist" element={<ListPlaylist />} /> */}
+                <Route path="playlist" element={<ListPlaylist />} />
                 <Route path="settings" element={<Profile />} />
                 <Route path="/" element={<ListPlaylist />} />
                 <Route path="*" element={<NotFound />} />

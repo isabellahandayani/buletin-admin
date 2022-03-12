@@ -73,6 +73,7 @@ const ListCategory = () => {
     } else {
       createToast("Error", "Update Failed");
     }
+    setCategory("");
   };
 
   const form = [

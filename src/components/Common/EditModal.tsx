@@ -11,6 +11,7 @@ import {
   Input,
   ButtonGroup,
   Stack,
+  Select,
 } from "@chakra-ui/react";
 
 const EditModal = (props: any) => {
@@ -35,13 +36,28 @@ const EditModal = (props: any) => {
                     isRequired
                   >
                     <FormLabel>{item.name}</FormLabel>
-                    <Input
-                      placeholder={item.placeholder}
-                      _placeholder={{ color: "gray.500" }}
-                      type="text"
-                      value={item.value}
-                      onChange={(e) => item.onChange(e.target.value)}
-                    />
+                    {item.selection ? (
+                      <Select
+                        defaultValue={props.category}
+                        onChange={(e) =>
+                          item.onChange(parseInt(e.target.value))
+                        }
+                      >
+                        {item.selection.map((category: any) => (
+                          <option value={category.category_id}>
+                            {category.category_name}
+                          </option>
+                        ))}
+                      </Select>
+                    ) : (
+                      <Input
+                        placeholder={props.name ? props.name : item.placeholder}
+                        _placeholder={{ color: "gray.500" }}
+                        type="text"
+                        value={item.value}
+                        onChange={(e) => item.onChange(e.target.value)}
+                      />
+                    )}
                   </FormControl>
                 );
               })}

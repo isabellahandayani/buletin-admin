@@ -92,6 +92,7 @@ const ListChannel = () => {
   const menuControl = {
     handleDelete: handleDelete,
     handleUpdate: handleUpdate,
+    handleSubmit: handleSubmit,
   };
 
   const fetchList = async () => {
@@ -117,13 +118,12 @@ const ListChannel = () => {
             list.map((item: any) => (
               <Card
                 key={item.channel_id}
-                {...item}
+                id={item.channel_id}
                 type="Channel"
                 menuControl={menuControl}
                 name={item.channel_name}
                 picture={item.channel_picture}
                 created_at={item.created_at}
-                handleUpdate={handleUpdate}
                 link={`/channel/${item.channel_id}`}
                 form={form}
               />
@@ -136,7 +136,7 @@ const ListChannel = () => {
         onOpen={onOpen}
         onClose={onClose}
         form={form}
-        handleSubmit={handleSubmit}
+        menuControl={menuControl}
         type="Channel"
       />
     </Center>

@@ -10,7 +10,8 @@ import {
   FormLabel,
   Input,
   ButtonGroup,
-  Stack
+  Stack,
+  Select,
 } from "@chakra-ui/react";
 
 const CreateModal = (props: any) => {
@@ -25,18 +26,32 @@ const CreateModal = (props: any) => {
               props.form.map((item: any) => {
                 return (
                   <FormControl
-                    key={item.placeholder}
+                    key={item.placeholder ? item.placeholder : item.name}
                     id={item.placeholder}
                     isRequired
                   >
                     <FormLabel>{item.name}</FormLabel>
-                    <Input
-                      placeholder={item.placeholder}
-                      _placeholder={{ color: "gray.500" }}
-                      type="text"
-                      value={item.value}
-                      onChange={(e) => item.onChange(e.target.value)}
-                    />
+                    {item.selection ? (
+                      <Select
+                        onChange={(e) =>
+                          item.onChange(parseInt(e.target.value))
+                        }
+                      >
+                        {item.selection.map((category: any) => (
+                          <option value={category.category_id}>
+                            {category.category_name}
+                          </option>
+                        ))}
+                      </Select>
+                    ) : (
+                      <Input
+                        placeholder={item.placeholder}
+                        _placeholder={{ color: "gray.500" }}
+                        type="text"
+                        value={item.value}
+                        onChange={(e) => item.onChange(e.target.value)}
+                      />
+                    )}
                   </FormControl>
                 );
               })}
