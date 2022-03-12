@@ -12,7 +12,6 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../service/UserServices";
-import bcrypt from "bcryptjs";
 
 export default function UserProfileEdit() {
   const [email, setEmail] = useState("");
@@ -20,18 +19,16 @@ export default function UserProfileEdit() {
   const [name, setName] = useState("");
   const [uname, setUname] = useState("");
   const [number, setNumber] = useState("");
-  const [hashed, setHashed] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passError, setPassError] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
 
-  const handlePass = (pwd: any, hashedPass: any) => {
+  const handlePass = (pwd: any) => {
     if (pwd.length < 8) {
       setPassError(true);
     } else setPassError(false);
 
-    setHashed(hashedPass);
     setPass(pwd);
   };
 
@@ -47,7 +44,7 @@ export default function UserProfileEdit() {
   };
 
   const handleSubmit = async () => {
-    let { data } = await register(email, hashed, uname, name, number);
+    let { data } = await register(email, pass, uname, name, number);
 
     if (data) {
       toast({
@@ -134,12 +131,7 @@ export default function UserProfileEdit() {
             _placeholder={{ color: "gray.500" }}
             type="password"
             value={pass}
-            onChange={(e) =>
-              handlePass(
-                e.target.value,
-                bcrypt.hashSync(e.target.value, "$2a$10$CwTycUXWue0Thq9StjUM0u")
-              )
-            }
+            onChange={(e) => handlePass(e.target.value)}
           />
           {!passError ? null : (
             <FormErrorMessage>Password must be at least 8 characters</FormErrorMessage>

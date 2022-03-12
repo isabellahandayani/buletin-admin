@@ -1,6 +1,5 @@
 import "./App.css";
 import ListVideo from "./pages/Video/ListVideo";
-import DetailVideo from "./pages/Video/DetailVideo";
 import Login from "./pages/Auth/Login";
 import ListChannel from "./pages/Channel/ListChannel";
 import Register from "./pages/Auth/Register";
@@ -9,7 +8,7 @@ import ListPlaylist from "./pages/Playlist/ListPlaylist";
 import Profile from "./pages/Auth/Profile";
 
 import Sidebar from "./components/Sidebar/Sidebar";
-import NotFound from "./components/NotFound";
+import NotFound from "./components/Common/NotFound";
 
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -48,10 +47,6 @@ function App() {
               </>
             ) : (
               <>
-                <Route
-                  path="channel/:channelId/:videoId"
-                  element={<DetailVideo />}
-                />
                 <Route path="channel/:channelId/" element={<ListVideo />} />
                 <Route path="channel" element={<ListChannel />} />
                 <Route path="settings" element={<Profile />} />

@@ -35,20 +35,15 @@ const Login = () => {
       });
     };
 
-    bcrypt.hash(
-      pass,
-      "$2a$10$CwTycUXWue0Thq9StjUM0u",
-      async function (err, hash) {
+
         try {
-          let { data } = await login(email, hash);
+          let { data } = await login(email, pass);
           localStorage.setItem("token", data.token);
           navigate("/");
           window.location.reload();
         } catch (e) {
           getToast();
         }
-      }
-    );
   };
 
   return (

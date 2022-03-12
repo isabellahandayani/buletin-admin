@@ -16,16 +16,15 @@ import {
   MdPeople,
   MdSettings,
 } from "react-icons/md";
-import { LinkItemProps } from "../../types";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 
-const AdminLink: Array<LinkItemProps> = [
+const AdminLink: any = [
   { name: "Channels", icon: MdSubscriptions, url: "channel" },
   { name: "Settings", icon: MdSettings, url: "settings" },
 ];
 
-const SuperAdminLink: Array<LinkItemProps> = [
+const SuperAdminLink: any = [
   { name: "Categories", icon: MdCategory, url: "category" },
   { name: "Playlist", icon: MdViewList, url: "playlist" },
   { name: "Register Admin", icon: MdPeople, url: "register" },
@@ -56,13 +55,13 @@ const SidebarContent = () => {
           
           {role ? (
             role === "superadmin" ? (
-              SuperAdminLink.map((link) => (
+              SuperAdminLink.map((link : any) => (
                 <NavItem key={link.name} icon={link.icon} url={link.url}>
                   {link.name}
                 </NavItem>
               ))
             ) : (
-              AdminLink.map((link) => (
+              AdminLink.map((link : any) => (
                 <NavItem key={link.name} icon={link.icon} url={link.url}>
                   {link.name}
                 </NavItem>
