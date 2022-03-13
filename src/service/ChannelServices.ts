@@ -25,7 +25,7 @@ export const update = async (
   channel_picture: string,
   channel_id: number
 ) => {
-  let rest = await fetch(`${BASE_URL}/${channel_id}`, {
+  let rest = await fetch(`${BASE_URL}/channel/${channel_id}`, {
     method: "put",
     body: JSON.stringify({
       owner_id: owner_id,
@@ -38,7 +38,7 @@ export const update = async (
 };
 
 export const deleteChannel = async (id: number) => {
-  let res = await fetch(`${BASE_URL}/${id}`, {
+  let res = await fetch(`${BASE_URL}/channel/${id}`, {
     method: "delete",
   });
 
@@ -50,7 +50,7 @@ export const create = async (
   channel_name: String,
   channel_picture: String
 ) => {
-  let res = await fetch(`${BASE_URL}`, {
+  let res = await fetch(`${BASE_URL}/channel`, {
     method: "post",
     body: JSON.stringify({
       owner_id: owner_id,

@@ -122,8 +122,8 @@ const ListPlaylist = () => {
     <Center mt={100}>
       {loading ? (
         <Spinner mt={200} size="xl" />
-      ) : category && list.length === 0 ? (
-        <Heading as="h2">No Playlists Yet</Heading>
+      ) : category && list && list.length === 0 ? (
+        <Heading mt={200} as="h2">No Playlists Yet</Heading>
       ) : (
         <Grid templateColumns="repeat(3, 1fr)" gap={10}>
           {category &&

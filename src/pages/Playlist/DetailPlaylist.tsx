@@ -41,8 +41,8 @@ const DetailPlaylist = () => {
   return (
     <Box maxW={"95%"} mx="auto">
       <Box bg="white" borderRadius={20} p={4} boxShadow="md" mt={4}>
-        <Skeleton borderRadius={10} w="-moz-fit-content" isLoaded={!loading}>
-          <Heading as="h2">{name}</Heading>
+        <Skeleton borderRadius={10} w="-moz-fit-content" isLoaded={!loading && name.length > 0} fadeDuration={2}>
+          <Heading as="h2">{name ? name : "==.=="}</Heading>
         </Skeleton>
       </Box>
       {loading ? (

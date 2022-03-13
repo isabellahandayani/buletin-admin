@@ -49,7 +49,7 @@ function App() {
                 <Route path="category" element={<ListCategory />} />
                 <Route path="playlist" element={<ListPlaylist />} />
                 <Route path="settings" element={<Profile />} />
-                <Route path="/" element={<ListPlaylist />} />
+                <Route path="/" element={<ListCategory />} />
                 <Route path="*" element={<NotFound />} />
               </>
             ) : (
