@@ -11,7 +11,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-const Forget = () => {
+const Reset = () => {
   return (
     <Flex
       minH={"100vh"}
@@ -26,7 +26,7 @@ const Forget = () => {
         rounded={"xl"}
         boxShadow={"lg"}
         direction="row"
-        h={{ md: "80vh", base: "60vh" }}
+        h="80vh"
       >
         <Box
           flex={3}
@@ -39,14 +39,18 @@ const Forget = () => {
           mx="auto"
           align={"center"}
           justify={"center"}
-          spacing={10}
+          spacing={5}
         >
           <Center>
-            <Heading fontSize={"2xl"}>Forget Password</Heading>
+            <Heading fontSize={"2xl"}>Reset Password</Heading>
           </Center>
-          <FormControl id="email">
-            <FormLabel>Email</FormLabel>
-            <Input type="email" />
+          <FormControl id="password">
+            <FormLabel>Password</FormLabel>
+            <Input type="password" />
+          </FormControl>
+          <FormControl id="confirm-password">
+            <FormLabel>Confirm Password</FormLabel>
+            <Input type="password" />
           </FormControl>
           <Button
             w="full"
@@ -56,9 +60,9 @@ const Forget = () => {
             _hover={{
               bg: "blue.500",
             }}
-            h={{lg: "6vh", base: "8vh"}}
+            h={{md: "6vh", base: "8vh"}}
           >
-            Forget Password
+            Reset Password
           </Button>
         </Stack>
       </Flex>
@@ -66,4 +70,4 @@ const Forget = () => {
   );
 };
 
-export default Forget;
+export default Reset;
