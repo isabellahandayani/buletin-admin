@@ -136,7 +136,7 @@ const ListPlaylist = () => {
                 name={item.playlist_name}
                 category={getName(item.category_id)}
                 picture={item.playlist_picture}
-                link="#"
+                link={`/playlist/${item.playlist_id}`}
                 form={form}
               />
             ))}

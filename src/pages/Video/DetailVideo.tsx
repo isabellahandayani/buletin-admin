@@ -10,12 +10,14 @@ import {
 } from "@chakra-ui/react";
 import moment from "moment";
 import { useParams } from "react-router-dom";
-import { get } from "../../service/VideoServices";
+import { get, getAll } from "../../service/VideoServices";
 import { useEffect, useState } from "react";
+import VideoCard from "../../components/Video/VideoCardDetail";
 
 const DetailVideo = () => {
   const { videoId } = useParams();
   const [video, setVideo] = useState<any>();
+  const [list, setList] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -23,7 +25,14 @@ const DetailVideo = () => {
       setVideo(data);
     };
 
+    const fetchList = async () => {
+      let { data } = await getAll();
+      var filteredData = data['videos'].filter((item: any) => item.video_id !== videoId);
+      setList(filteredData.slice(0, 5));
+    };
+
     fetchVideo();
+    fetchList();
   }, [videoId]);
 
   return video ? (
@@ -53,6 +62,16 @@ const DetailVideo = () => {
 
           <Text mt="3%">{video.video_desc}</Text>
         </Box>
+        <Box w={"45%"}>
+          <Heading as="h3" size="md" mb="5%">
+            Uploaded Videos
+          </Heading>
+          {list
+            ? list.map((video) => {
+                return <VideoCard key={video.video_id} {...video} />;
+              })
+            : null}
+        </Box>
       </Flex>
     </Box>
   ) : (
@@ -62,7 +81,7 @@ const DetailVideo = () => {
   );
 };
 
-const VideoFrame: React.FC<any> = ({ url }) => {
+const VideoFrame = (props: any) => {
   const getCode = (url: string) => {
     return url.split("=")[1];
   };
@@ -71,7 +90,7 @@ const VideoFrame: React.FC<any> = ({ url }) => {
     <AspectRatio ratio={16 / 9}>
       <iframe
         height={window.innerHeight - 300}
-        src={`https://www.youtube.com/embed/${getCode(url)}`}
+        src={`https://www.youtube.com/embed/${getCode(props.url)}`}
         title="YouTube video player"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -37,18 +37,21 @@ const ListVideo = () => {
       placeholder: "video-title",
       value: title,
       onChange: setTitle,
+      defaultValue:""
     },
     {
       name: "Description",
       placeholder: "video-description",
       value: desc,
       onChange: setDesc,
+      defaultValue:""
     },
     {
       name: "Video URL",
       placeholder: "www.youtube.com/watch?v=RKueSD3gLJQ&t=15s",
       value: url,
       onChange: setUrl,
+      defaultValue:""
     },
   ];
 
@@ -94,6 +97,11 @@ const ListVideo = () => {
     setUrl("");
   };
 
+  const menuControl = {
+    handleUpdate: handleUpdate,
+    handleSubmit: handleSubmit
+  }
+
   const fetchList = async () => {
     let { data } = await getVideo(1, 6, channelId);
     setList(data.videos);
@@ -133,7 +141,7 @@ const ListVideo = () => {
                   key={item.video_id}
                   {...item}
                   {...channelId}
-                  handleSubmit={handleUpdate}
+                  menuControl={menuControl}
                   fetchList={fetchList}
                   form={form}
                   id={item.video_id}
@@ -151,7 +159,7 @@ const ListVideo = () => {
         onOpen={onOpen}
         onClose={onClose}
         form={form}
-        handleSubmit={handleSubmit}
+        menuControl={menuControl}
       />
     </Center>
   );

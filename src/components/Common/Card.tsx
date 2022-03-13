@@ -7,14 +7,22 @@ import {
   Spacer,
   Skeleton,
   Tag,
+  Stack
 } from "@chakra-ui/react";
 import moment from "moment";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
 
 const Card = (props: any) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   return (
-    <Skeleton isLoaded={props}>
+    <Skeleton isLoaded={!loading}>
       <Box
         minW={300}
         w={"full"}
@@ -38,15 +46,19 @@ const Card = (props: any) => {
 
         <Flex flexDirection="row">
           <Flex flexDirection="column" p={30} h="100%">
-            <Heading fontSize={"2xl"} as="h2">
-              {props.name}
-            </Heading>
-            {props.created_at && (
-              <Text>Since {moment(props.created_at).format("D MMM YYYY")}</Text>
-            )}
-            {props.category && (
-              <Tag colorScheme="telegram">{props.category}</Tag>
-            )}
+            <Stack spacing={2}>
+              <Heading fontSize={"2xl"} as="h2">
+                {props.name}
+              </Heading>
+              {props.created_at && (
+                <Text>
+                  Since {moment(props.created_at).format("D MMM YYYY")}
+                </Text>
+              )}
+              {props.category && (
+                <Tag colorScheme="telegram">{props.category}</Tag>
+              )}
+            </Stack>
           </Flex>
 
           <Spacer />

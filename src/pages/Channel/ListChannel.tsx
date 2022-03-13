@@ -97,7 +97,7 @@ const ListChannel = () => {
 
   const fetchList = async () => {
     let decoded: any = jwt_decode(localStorage.getItem("token")!!);
-    let { data } = await getList(1, 6, decoded.account_id);
+    let { data } = await getList( decoded.account_id);
     setList(data.channels);
     setLoading(false);
   };
@@ -110,9 +110,7 @@ const ListChannel = () => {
     <Center mt={100}>
       {loading ? (
         <Spinner mt={200} size="xl" />
-      ) : list && list.length === 0 ? (
-        <Heading as="h2">No Channel Yet</Heading>
-      ) : (
+      ) : list && list.length > 0 ? (
         <Grid templateColumns="repeat(3, 1fr)" gap={10}>
           {list &&
             list.map((item: any) => (
@@ -129,6 +127,8 @@ const ListChannel = () => {
               />
             ))}
         </Grid>
+      ) : (
+        <Heading as="h2">No Channel Yet</Heading>
       )}
       <AddButton onOpen={onOpen} />
       <CreateModal
