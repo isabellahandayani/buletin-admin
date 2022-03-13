@@ -63,7 +63,7 @@ const VideoEntry = (props: any) => {
       >
         <Td maxW={500}>
           <Link
-            to={`${props.video_id}`}
+            to={`/video/${props.video_id}`}
           >
             <Flex>
               <Image

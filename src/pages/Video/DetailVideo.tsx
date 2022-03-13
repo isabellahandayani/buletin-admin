@@ -7,6 +7,7 @@ import {
   AspectRatio,
   Center,
   Spinner,
+  Skeleton,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { useParams } from "react-router-dom";
@@ -18,6 +19,7 @@ const DetailVideo = () => {
   const { videoId } = useParams();
   const [video, setVideo] = useState<any>();
   const [list, setList] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -27,15 +29,24 @@ const DetailVideo = () => {
 
     const fetchList = async () => {
       let { data } = await getAll();
-      var filteredData = data['videos'].filter((item: any) => item.video_id !== videoId);
+      var filteredData = data["videos"].filter(
+        (item: any) => item.video_id !== videoId
+      );
       setList(filteredData.slice(0, 5));
     };
 
     fetchVideo();
     fetchList();
-  }, [videoId]);
+    setLoading(false);
+  }, [videoId, loading]);
 
-  return video ? (
+  const handleChange = () => {
+    setLoading(true);
+    setVideo(null);
+    setList([]);
+  }
+
+  return video && !loading ? (
     <Box mt={10} ml={20}>
       <Flex>
         <Box w="70%" mr={10}>
@@ -66,11 +77,10 @@ const DetailVideo = () => {
           <Heading as="h3" size="md" mb="5%">
             Uploaded Videos
           </Heading>
-          {list
-            ? list.map((video) => {
-                return <VideoCard key={video.video_id} {...video} />;
-              })
-            : null}
+          {list &&
+            list.map((video) => {
+              return <VideoCard key={video.video_id} {...video} handleChange={handleChange} />;
+            })}
         </Box>
       </Flex>
     </Box>
@@ -87,16 +97,18 @@ const VideoFrame = (props: any) => {
   };
 
   return (
-    <AspectRatio ratio={16 / 9}>
-      <iframe
-        height={window.innerHeight - 300}
-        src={`https://www.youtube.com/embed/${getCode(props.url)}`}
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
-    </AspectRatio>
+    <Skeleton isLoaded>
+      <AspectRatio ratio={16 / 9}>
+        <iframe
+          height={window.innerHeight - 300}
+          src={`https://www.youtube.com/embed/${getCode(props.url)}`}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </AspectRatio>
+    </Skeleton>
   );
 };
 

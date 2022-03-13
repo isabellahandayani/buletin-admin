@@ -54,7 +54,7 @@ function App() {
               </>
             ) : (
               <>
-                <Route path="channel/:channelId/:videoId" element={<DetailVideo />} />
+                <Route path="video/:videoId" element={<DetailVideo />} />
                 <Route path="channel/:channelId/" element={<ListVideo />} />
                 <Route path="channel" element={<ListChannel />} />
                 <Route path="settings" element={<Profile />} />
