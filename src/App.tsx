@@ -16,6 +16,7 @@ import NotFound from "./components/Common/NotFound";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import Forget from "./pages/Auth/Forget";
 
 function App() {
   const [currentUser] = useState(localStorage.getItem("token"));
@@ -64,6 +65,7 @@ function App() {
         </Sidebar>
       ) : (
         <Routes>
+          <Route path="/forgot" element={<Forget />} />
           <Route path="/" element={<Login />} />
           <Route path="*" element={<Login />} />
         </Routes>
