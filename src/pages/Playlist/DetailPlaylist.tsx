@@ -5,18 +5,22 @@ import {
   Center,
   Heading,
   Grid,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { getVideoPlaylist as getVideo } from "../../service/VideoServices";
 import { get } from "../../service/PlaylistServices";
 import { useParams } from "react-router-dom";
 import VideoCard from "../../components/Video/VideoCard";
+import AddButton from "../../components/Common/AddButton";
+import AddVideo from "../../components/Playlist/AddVideo";
 
 const DetailPlaylist = () => {
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState([]);
   const [name, setName] = useState("");
   const { playlistId } = useParams();
+  const {isOpen, onOpen, onClose} = useDisclosure();
 
   useEffect(() => {
     const fetchList = async () => {
@@ -57,6 +61,8 @@ const DetailPlaylist = () => {
           <Heading>No Video Yet</Heading>
         </Center>
       )}
+      <AddButton onOpen={onOpen}/>
+      <AddVideo isOpen={isOpen} onOpen={onOpen} onClose={onClose} list={list}/>
     </Box>
   );
 };
