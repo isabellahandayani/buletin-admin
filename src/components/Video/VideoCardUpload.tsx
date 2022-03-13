@@ -1,4 +1,5 @@
 import { Box, Heading, Image, Center, Flex, Text } from "@chakra-ui/react";
+import { FALLBACK_IMG } from "../../const";
 
 const VideoCardUpload = (props: any) => {
   return (
@@ -19,7 +20,7 @@ const VideoCardUpload = (props: any) => {
           src={props.video_thumbnail}
           alt={props.video_title}
           objectFit="cover"
-          fallbackSrc="https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png"
+          fallbackSrc={FALLBACK_IMG}
         />
         <Center>
           <Box ml={4} maxW={280} maxH={200}>

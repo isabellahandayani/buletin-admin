@@ -1,8 +1,8 @@
-let baseUrl = "http://localhost:8080";
+import { BASE_URL } from "../const";
 
 export const getList = async () => {
   let res = await fetch(
-    `${baseUrl}/category`,
+    `${BASE_URL}/category`,
     {
       method: "get",
     }
@@ -12,7 +12,7 @@ export const getList = async () => {
 };
 
 export const get = async (id: any) => {
-  let res = await fetch(`${baseUrl}/category/${id}`, {
+  let res = await fetch(`${BASE_URL}/category/${id}`, {
     method: "get",
   });
 
@@ -24,7 +24,7 @@ export const update = async (
   category_picture: string,
   category_id: number
 ) => {
-  let rest = await fetch(`${baseUrl}/category/${category_id}`, {
+  let rest = await fetch(`${BASE_URL}/category/${category_id}`, {
     method: "put",
     body: JSON.stringify({
       category_name: category_name,
@@ -36,7 +36,7 @@ export const update = async (
 };
 
 export const deleteCategory = async (id: number) => {
-  let res = await fetch(`${baseUrl}/category/${id}`, {
+  let res = await fetch(`${BASE_URL}/category/${id}`, {
     method: "delete",
   });
 
@@ -47,7 +47,7 @@ export const create = async (
   category_name: string,
   category_picture: string
 ) => {
-  let res = await fetch(`${baseUrl}/category`, {
+  let res = await fetch(`${BASE_URL}/category`, {
     method: "post",
     body: JSON.stringify({
       category_name: category_name,

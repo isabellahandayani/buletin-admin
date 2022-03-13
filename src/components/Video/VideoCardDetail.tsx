@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { FALLBACK_IMG } from "../../const";
 
 const VideoCardDetail = (props: any) => {
   return (
@@ -33,7 +34,7 @@ const VideoCardDetail = (props: any) => {
             src={props.video_thumbnail}
             alt={props.video_title}
             objectFit="cover"
-            fallbackSrc="https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png"
+            fallbackSrc={FALLBACK_IMG}
           />
           <Center ml={4} maxW="100%" maxH={200}>
             <Flex direction="row">

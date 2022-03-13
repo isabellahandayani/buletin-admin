@@ -119,7 +119,7 @@ const ListVideo = () => {
         <Spinner mt={300} size="xl" />
       ) : list && list.length > 0 ? (
         <Table
-          bg={"#f1f1f1"}
+          bg={"#ffffff"}
           variant="striped"
           colorScheme="telegram"
           size="md"

@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080";
+import { BASE_URL } from "../const";
 
 export const getList = async () => {
   let res = await fetch(`${BASE_URL}/playlist`, {

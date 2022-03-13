@@ -96,7 +96,6 @@ const ListCategory = () => {
   }, []);
 
   return (
-    <>
       <Center mt={100}>
         {loading ? (
           <Spinner mt={200} size="xl" />
@@ -119,7 +118,6 @@ const ListCategory = () => {
               ))}
           </Grid>
         )}
-      </Center>
       <AddButton onOpen={onOpen} />
       <CreateModal
         type="Category"
@@ -129,7 +127,7 @@ const ListCategory = () => {
         form={form}
         menuControl={menuControl}
       />
-    </>
+      </Center>
   );
 };
 

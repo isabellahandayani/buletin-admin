@@ -6,10 +6,19 @@ import {
   FormLabel,
   Input,
   Button,
+  Center,
+  Spinner,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
-  return (
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  return !loading ? (
     <Flex minH={"100vh"} align={"center"} justify={"center"}>
       <Stack
         bg="white"
@@ -80,6 +89,10 @@ const Profile = () => {
         </Stack>
       </Stack>
     </Flex>
+  ) : (
+    <Center mt={300}>
+      <Spinner size="xl"/>
+    </Center>
   );
 };
 
