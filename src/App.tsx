@@ -1,4 +1,5 @@
 import "./App.css";
+
 import ListVideo from "./pages/Video/ListVideo";
 import Login from "./pages/Auth/Login";
 import ListChannel from "./pages/Channel/ListChannel";
@@ -6,15 +7,15 @@ import Register from "./pages/Auth/Register";
 import ListCategory from "./pages/Category/ListCategory";
 import ListPlaylist from "./pages/Playlist/ListPlaylist";
 import Profile from "./pages/Auth/Profile";
+import DetailPlaylist from "./pages/Playlist/DetailPlaylist";
+import DetailVideo from "./pages/Video/DetailVideo";
 
 import Sidebar from "./components/Sidebar/Sidebar";
 import NotFound from "./components/Common/NotFound";
 
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import DetailPlaylist from "./pages/Playlist/DetailPlaylist";
-import DetailVideo from "./pages/Video/DetailVideo";
+import jwtDecode from "jwt-decode";
 
 function App() {
   const [currentUser] = useState(localStorage.getItem("token"));
@@ -23,7 +24,7 @@ function App() {
   useEffect(() => {
     try {
       if (currentUser) {
-        let data: any = jwt_decode(currentUser);
+        let data: any = jwtDecode(currentUser);
         setRole(data.role);
         if (Date.now() >= data.exp! * 1000) {
           localStorage.removeItem("token");

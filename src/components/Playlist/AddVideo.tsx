@@ -13,9 +13,10 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getAll } from "../../service/VideoServices";
-import VideoCard from "../Video/VideoCard";
+import VideoCard from "../Video/VideoCardUpload";
 
 const AddVideo = (props: any) => {
+  const [selected, setSelected] = useState<any>(null);
   const [list, setList] = useState<any[]>([]);
   const [search, setSearch] = useState<any[]>([]);
 
@@ -51,7 +52,6 @@ const AddVideo = (props: any) => {
           />
         </ModalHeader>
         <ModalBody
-          overflow="scroll"
           sx={{
             "overflow-x": "hidden",
           }}
@@ -59,7 +59,7 @@ const AddVideo = (props: any) => {
           <FormControl>
             {search &&
               search.map((item: any) => (
-                <VideoCard key={item.video_id} {...item} />
+                <VideoCard key={item.video_id} {...item} setSelected={setSelected} selected={selected} />
               ))}
             {search && search.length === 0 && (
               <Center>

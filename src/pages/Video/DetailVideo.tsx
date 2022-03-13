@@ -12,7 +12,7 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import { get, getAll } from "../../service/VideoServices";
 import { useEffect, useState } from "react";
-import VideoCard from "../../components/Video/VideoCard";
+import VideoCard from "../../components/Video/VideoCardDetail";
 
 const DetailVideo = () => {
   const { videoId } = useParams();

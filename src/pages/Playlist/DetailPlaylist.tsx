@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { getVideoPlaylist as getVideo } from "../../service/VideoServices";
 import { get } from "../../service/PlaylistServices";
 import { useParams } from "react-router-dom";
-import VideoCard from "../../components/Video/VideoCard";
+import VideoCard from "../../components/Video/VideoCardDetail";
 import AddButton from "../../components/Common/AddButton";
 import AddVideo from "../../components/Playlist/AddVideo";
 
@@ -53,7 +53,7 @@ const DetailPlaylist = () => {
         <Grid templateColumns="repeat(2, 1fr)" gap={10} mt={10}>
           {list &&
             list.map((item: any) => (
-              <VideoCard key={item.video_id} {...item} />
+              <VideoCard key={item.video_id} {...item} type="detail" />
             ))}
         </Grid>
       ) : (
