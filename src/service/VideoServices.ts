@@ -1,6 +1,19 @@
 let baseUrl = "http://localhost:8080";
 
-export const getVideoChannel = async (pageNo: number, pageSize: number, channel_id: any) => {
+
+export const getAll = async () => {
+  let res = await fetch(`${baseUrl}/video?page_no=1&page_size=100`, {
+    method: "get",
+  });
+
+  return await res.json();
+}
+
+export const getVideoChannel = async (
+  pageNo: number,
+  pageSize: number,
+  channel_id: any
+) => {
   let res = await fetch(
     `${baseUrl}/video?page_no=${pageNo}&page_size=${pageSize}&channel_id=${channel_id}`,
     {
@@ -8,6 +21,20 @@ export const getVideoChannel = async (pageNo: number, pageSize: number, channel_
     }
   );
 
+  return await res.json();
+};
+
+export const getVideoPlaylist = async (
+  pageNo: number,
+  pageSize: number,
+  playlist_id: any
+) => {
+  let res = await fetch(
+    `${baseUrl}/video?page_no=${pageNo}&page_size=${pageSize}&playlist_id=${playlist_id}`,
+    {
+      method: "get",
+    }
+  );
   return await res.json();
 };
 
