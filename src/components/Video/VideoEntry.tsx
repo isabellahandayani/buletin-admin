@@ -14,7 +14,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { deleteVideo } from "../../service/VideoServices";
 import EditModal from "../Common/EditModal";
 
-const VideoEntry: React.FC<any> = (props) => {
+const VideoEntry = (props: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -52,7 +52,7 @@ const VideoEntry: React.FC<any> = (props) => {
         onOpen={onOpen}
         onClose={onClose}
         type="Video"
-        handleSubmit={props.handleSubmit}
+        handleSubmit={props.menuControl.handleUpdate}
       />
       <Tr
         _hover={{

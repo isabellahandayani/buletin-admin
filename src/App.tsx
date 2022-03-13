@@ -13,6 +13,8 @@ import NotFound from "./components/Common/NotFound";
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import DetailPlaylist from "./pages/Playlist/DetailPlaylist";
+import DetailVideo from "./pages/Video/DetailVideo";
 
 function App() {
   const [currentUser] = useState(localStorage.getItem("token"));
@@ -38,6 +40,8 @@ function App() {
           <Routes>
             {role === "superadmin" ? (
               <>
+                <Route path="playlist/:playlistId" element={<DetailPlaylist />} />
+                <Route path="video/:videoId" element={<DetailVideo />} />
                 <Route path="register" element={<Register />} />
                 <Route path="category" element={<ListCategory />} />
                 <Route path="playlist" element={<ListPlaylist />} />
@@ -47,6 +51,7 @@ function App() {
               </>
             ) : (
               <>
+                <Route path="channel/:channelId/:videoId" element={<DetailVideo />} />
                 <Route path="channel/:channelId/" element={<ListVideo />} />
                 <Route path="channel" element={<ListChannel />} />
                 <Route path="settings" element={<Profile />} />

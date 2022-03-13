@@ -15,6 +15,11 @@ import {
 } from "@chakra-ui/react";
 
 const CreateModal = (props: any) => {
+  const handleClose = () => {
+    props.form.filter((item: any) => item.onChange(""));
+    props.onClose();
+  };
+
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
@@ -33,12 +38,13 @@ const CreateModal = (props: any) => {
                     <FormLabel>{item.name}</FormLabel>
                     {item.selection ? (
                       <Select
+                        placeholder="Select Category"
                         onChange={(e) =>
                           item.onChange(parseInt(e.target.value))
                         }
                       >
                         {item.selection.map((category: any) => (
-                          <option value={category.category_id}>
+                          <option key={category.category_id} value={category.category_id}>
                             {category.category_name}
                           </option>
                         ))}
@@ -66,7 +72,7 @@ const CreateModal = (props: any) => {
               _hover={{
                 bg: "red.500",
               }}
-              onClick={props.onClose}
+              onClick={handleClose}
             >
               Cancel
             </Button>

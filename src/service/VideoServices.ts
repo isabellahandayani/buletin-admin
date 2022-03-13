@@ -25,12 +25,10 @@ export const getVideoChannel = async (
 };
 
 export const getVideoPlaylist = async (
-  pageNo: number,
-  pageSize: number,
   playlist_id: any
 ) => {
   let res = await fetch(
-    `${baseUrl}/video?page_no=${pageNo}&page_size=${pageSize}&playlist_id=${playlist_id}`,
+    `${baseUrl}/video?page_no=1&page_size=999&playlist_id=${playlist_id}`,
     {
       method: "get",
     }

@@ -20,6 +20,11 @@ const EditModal = (props: any) => {
     props.handleSubmit(props.id);
   };
 
+  const handleClose = () => {
+    props.form.filter((item: any) => item.onChange(""));
+    props.onClose();
+  };
+
   return (
     <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
       <ModalOverlay />
@@ -38,7 +43,7 @@ const EditModal = (props: any) => {
                     <FormLabel>{item.name}</FormLabel>
                     {item.selection ? (
                       <Select
-                        defaultValue={props.category}
+                        placeholder="Select Category"
                         onChange={(e) =>
                           item.onChange(parseInt(e.target.value))
                         }
@@ -72,7 +77,7 @@ const EditModal = (props: any) => {
               _hover={{
                 bg: "red.500",
               }}
-              onClick={props.onClose}
+              onClick={handleClose}
             >
               Cancel
             </Button>
