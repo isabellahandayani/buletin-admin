@@ -35,15 +35,14 @@ const Login = () => {
       });
     };
 
-
-        try {
-          let { data } = await login(email, pass);
-          localStorage.setItem("token", data.token);
-          navigate("/");
-          window.location.reload();
-        } catch (e) {
-          getToast();
-        }
+    try {
+      let { data } = await login(email, pass);
+      localStorage.setItem("token", data.token);
+      navigate("/");
+      window.location.reload();
+    } catch (e) {
+      getToast();
+    }
   };
 
   return (
@@ -79,7 +78,9 @@ const Login = () => {
             />
           </FormControl>
           <Stack spacing={6}>
-            <Link color={"blue.500"}>Forgot password?</Link>
+            <Link color={"blue.500"} onClick={() => navigate("/forgot")}>
+              Forgot password?
+            </Link>
             <Button
               colorScheme={"blue"}
               variant={"solid"}
