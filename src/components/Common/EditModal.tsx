@@ -38,7 +38,6 @@ const EditModal = (props: any) => {
                   <FormControl
                     key={item.placeholder}
                     id={item.placeholder}
-                    isRequired
                   >
                     <FormLabel>{item.name}</FormLabel>
                     {item.selection ? (

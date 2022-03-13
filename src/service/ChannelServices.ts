@@ -2,7 +2,7 @@ let baseUrl = "http://localhost:8080/channel";
 
 export const getList = async (owner_id: number) => {
   let res = await fetch(
-    `${baseUrl}/?page_no=1&page_size=999&owner_id=${owner_id}`,
+    `${baseUrl}?page_no=1&page_size=999&owner_id=${owner_id}`,
     {
       method: "get",
     }
@@ -12,7 +12,7 @@ export const getList = async (owner_id: number) => {
 };
 
 export const get = async (id: any) => {
-  let res = await fetch(`/${id}`, {
+  let res = await fetch(`${baseUrl}/${id}`, {
     method: "get",
   });
 
@@ -25,7 +25,7 @@ export const update = async (
   channel_picture: string,
   channel_id: number
 ) => {
-  let rest = await fetch(`/${channel_id}`, {
+  let rest = await fetch(`${baseUrl}/${channel_id}`, {
     method: "put",
     body: JSON.stringify({
       owner_id: owner_id,
@@ -38,7 +38,7 @@ export const update = async (
 };
 
 export const deleteChannel = async (id: number) => {
-  let res = await fetch(`/${id}`, {
+  let res = await fetch(`${baseUrl}/${id}`, {
     method: "delete",
   });
 
@@ -50,7 +50,7 @@ export const create = async (
   channel_name: String,
   channel_picture: String
 ) => {
-  let res = await fetch(`/channel`, {
+  let res = await fetch(`${baseUrl}`, {
     method: "post",
     body: JSON.stringify({
       owner_id: owner_id,

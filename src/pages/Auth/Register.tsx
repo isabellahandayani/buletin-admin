@@ -6,10 +6,12 @@ import {
   FormLabel,
   Heading,
   Input,
+  Spinner,
   Stack,
   useToast,
+  Center
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../service/UserServices";
 
@@ -21,6 +23,7 @@ export default function UserProfileEdit() {
   const [number, setNumber] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passError, setPassError] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -66,7 +69,12 @@ export default function UserProfileEdit() {
     }
   };
 
-  return (
+  useEffect(() => {
+    setLoading(false);
+  }, [loading])
+  
+
+  return !loading ? (
     <Flex minH={"100vh"} align={"center"} justify={"center"}>
       <Stack
         bg="white"
@@ -174,5 +182,9 @@ export default function UserProfileEdit() {
         </Stack>
       </Stack>
     </Flex>
+  ) : (
+    <Center mt={300}>
+      <Spinner size="xl"/> 
+    </Center>
   );
 }
