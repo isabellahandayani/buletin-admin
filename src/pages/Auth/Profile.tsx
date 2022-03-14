@@ -19,7 +19,7 @@ const Profile = () => {
   }, []);
 
   return !loading ? (
-    <Flex minH={"100vh"} align={"center"} justify={"center"}>
+    <Flex minH={"90vh"} align={"center"} justify={"center"}>
       <Stack
         bg="white"
         spacing={4}
