@@ -40,7 +40,11 @@ const ListPlaylist = () => {
 
   const fetchList = async () => {
     let { data } = await getList();
-    setList(data.playlists);
+    if(data.playlists) {
+      setList(data.playlists);
+    } else {
+      setList([]);
+    }
   };
 
   useEffect(() => {
@@ -126,7 +130,7 @@ const ListPlaylist = () => {
         <Heading mt={200} as="h2">No Playlists Yet</Heading>
       ) : (
         <Grid templateColumns="repeat(3, 1fr)" gap={10}>
-          {category &&
+          {category && list &&
             list.map((item: any) => (
               <Card
                 key={item.playlist_id}

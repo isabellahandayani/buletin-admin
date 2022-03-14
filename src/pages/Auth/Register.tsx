@@ -9,21 +9,27 @@ import {
   Spinner,
   Stack,
   useToast,
-  Center
+  Center,
+  InputGroup,
+  InputRightElement,
+  IconButton,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BiShow, BiHide } from "react-icons/bi";
+import { generatePass } from "../../const";
 import { register } from "../../service/UserServices";
 
-export default function UserProfileEdit() {
+const Register = () => {
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+  const [pass, setPass] = useState(generatePass());
   const [name, setName] = useState("");
   const [uname, setUname] = useState("");
   const [number, setNumber] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passError, setPassError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -71,11 +77,10 @@ export default function UserProfileEdit() {
 
   useEffect(() => {
     setLoading(false);
-  }, [loading])
-  
+  }, [loading]);
 
   return !loading ? (
-    <Flex minH={"100vh"} align={"center"} justify={"center"}>
+    <Flex minH={"90vh"} align={"center"} justify={"center"}>
       <Stack
         bg="white"
         spacing={4}
@@ -134,16 +139,25 @@ export default function UserProfileEdit() {
         </FormControl>
         <FormControl id="password" isRequired isInvalid={passError}>
           <FormLabel>Password</FormLabel>
-          <Input
-            placeholder="********"
-            _placeholder={{ color: "gray.500" }}
-            type="password"
-            value={pass}
-            onChange={(e) => handlePass(e.target.value)}
-          />
-          {!passError ? null : (
-            <FormErrorMessage>Password must be at least 8 characters</FormErrorMessage>
-          )}
+          <InputGroup size="md">
+            <Input
+              placeholder="********"
+              _placeholder={{ color: "gray.500" }}
+              type={show ? "text" : "password"}
+              value={pass}
+              onChange={(e) => handlePass(e.target.value)}
+            />
+            {!passError ? null : (
+              <FormErrorMessage>
+                Password must be at least 8 characters
+              </FormErrorMessage>
+            )}
+            <InputRightElement>
+              <IconButton size="sm" aria-label="show-password" icon={ show ? <BiHide /> : <BiShow />} onClick={() => setShow(!show)}>
+                {show ? "Hide" : "Show"}
+              </IconButton>
+            </InputRightElement>
+          </InputGroup>
         </FormControl>
         <Stack spacing={6} direction={["column", "row"]}>
           <Button
@@ -184,7 +198,9 @@ export default function UserProfileEdit() {
     </Flex>
   ) : (
     <Center mt={300}>
-      <Spinner size="xl"/> 
+      <Spinner size="xl" />
     </Center>
   );
-}
+};
+
+export default Register;
