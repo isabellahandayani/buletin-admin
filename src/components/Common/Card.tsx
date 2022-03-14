@@ -12,6 +12,7 @@ import {
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FALLBACK_IMG } from "../../const";
 import Menu from "./Menu";
 
 const Card = (props: any) => {
@@ -38,7 +39,7 @@ const Card = (props: any) => {
             h={"120px"}
             w={"full"}
             src={props.picture}
-            fallbackSrc="https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png"
+            fallbackSrc={FALLBACK_IMG}
             objectFit={"cover"}
             cursor="pointer"
           />

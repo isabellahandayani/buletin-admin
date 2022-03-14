@@ -13,7 +13,6 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { login } from "../../service/UserServices";
-import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 import LoginImage from "../../assets/login_image.svg";
 

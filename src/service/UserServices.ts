@@ -1,7 +1,7 @@
-let baseUrl = "http://localhost:8080";
+import { BASE_URL } from "../const";
 
 export const login = async (email: string, pass: string) => {
-  let res = await fetch(`${baseUrl}/login`, {
+  let res = await fetch(`${BASE_URL}/login`, {
     method: "post",
     body: JSON.stringify({ email: email, password: pass }),
   });
@@ -16,7 +16,7 @@ export const register = async (
   name: string,
   phone_number: string
 ) => {
-  let res = await fetch(`${baseUrl}/user`, {
+  let res = await fetch(`${BASE_URL}/user`, {
     method: "post",
     body: JSON.stringify({
       email: email,

@@ -13,6 +13,8 @@ import moment from "moment";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { deleteVideo } from "../../service/VideoServices";
 import EditModal from "../Common/EditModal";
+import { Link } from "react-router-dom";
+import { FALLBACK_IMG } from "../../const";
 
 const VideoEntry = (props: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -60,23 +62,27 @@ const VideoEntry = (props: any) => {
         }}
       >
         <Td maxW={500}>
-          <Flex>
-            <Image
-              maxW={200}
-              src={props.video_thumbnail}
-              mr={10}
-              boxShadow="sm"
-              fallbackSrc="https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png"
-            />
-            <Center>
-              <Flex direction="column">
-                <Text color="blackAlpha.800" fontWeight="bold">
-                  {props.video_title}
-                </Text>
-                <Text fontWeight="thin">{props.video_desc}</Text>
-              </Flex>
-            </Center>
-          </Flex>
+          <Link
+            to={`/video/${props.video_id}`}
+          >
+            <Flex>
+              <Image
+                maxW={200}
+                src={props.video_thumbnail}
+                mr={10}
+                boxShadow="sm"
+                fallbackSrc={FALLBACK_IMG}
+              />
+              <Center>
+                <Flex direction="column">
+                  <Text color="blackAlpha.800" fontWeight="bold">
+                    {props.video_title}
+                  </Text>
+                  <Text fontWeight="thin">{props.video_desc}</Text>
+                </Flex>
+              </Center>
+            </Flex>
+          </Link>
         </Td>
         <Td>{moment(props.date_posted).format("D MMM YYYY")}</Td>
         <Td isNumeric>{props.video_view_count}</Td>
@@ -86,13 +92,19 @@ const VideoEntry = (props: any) => {
             aria-label="delete"
             icon={<MdDelete />}
             onClick={handleDelete}
-            bg={"red.500"}
+            bg={"red.400"}
+            _hover={{
+              bg: "red.500",
+            }}
             color="white"
           />
           <IconButton
             aria-label="edit"
             icon={<MdEdit />}
-            bg={"blue.500"}
+            bg={"blue.400"}
+            _hover={{
+              bg: "blue.500",
+            }}
             color="white"
             onClick={onOpen}
           />
