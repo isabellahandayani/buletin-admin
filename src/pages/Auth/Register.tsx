@@ -113,9 +113,7 @@ const Register = () => {
             value={email}
             onChange={(e) => handleEmail(e.target.value)}
           />
-          {!emailError ? null : (
-            <FormErrorMessage>Invalid Email</FormErrorMessage>
-          )}
+          {emailError && <FormErrorMessage>Invalid Email</FormErrorMessage>}
         </FormControl>
         <FormControl id="name" isRequired>
           <FormLabel>Full Name</FormLabel>
