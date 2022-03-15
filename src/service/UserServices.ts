@@ -30,3 +30,34 @@ export const register = async (
 
   return await res.json();
 };
+
+export const get = async () => {
+  let res = await fetch(`${BASE_URL}/profile`);
+  return await res.json();
+};
+
+export const change = async (
+  email: any,
+  old_password: any,
+  new_password: any
+) => {
+  let res = await fetch(`${BASE_URL}/forgot`, {
+    method: "put",
+    body: JSON.stringify({
+      email: email,
+      old_password: old_password,
+      new_password: new_password,
+    }),
+  });
+
+  return await res.json();
+};
+
+export const forget = async (email: any) => {
+  let res = await fetch(`${BASE_URL}/forget`, {
+    method: "post",
+    body: JSON.stringify({ email: email }),
+  });
+
+  return await res.json();
+};
