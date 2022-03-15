@@ -59,7 +59,7 @@ export const change = async (
 };
 
 export const forget = async (email: any) => {
-  let res = await fetch(`${BASE_URL}/forget`, {
+  let res = await fetch(`${BASE_URL}/forgot`, {
     method: "post",
     body: JSON.stringify({ email: email }),
   });

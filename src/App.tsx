@@ -10,7 +10,6 @@ import Profile from "./pages/Auth/Profile";
 import DetailPlaylist from "./pages/Playlist/DetailPlaylist";
 import DetailVideo from "./pages/Video/DetailVideo";
 import Forget from "./pages/Auth/Forget";
-import Reset from "./pages/Auth/Reset";
 
 import Sidebar from "./components/Sidebar/Sidebar";
 import NotFound from "./components/Common/NotFound";
@@ -66,7 +65,6 @@ function App() {
         </Sidebar>
       ) : (
         <Routes>
-          <Route path="/reset" element={<Reset />} />
           <Route path="/forgot" element={<Forget />} />
           <Route path="/" element={<Login />} />
           <Route path="*" element={<Login />} />

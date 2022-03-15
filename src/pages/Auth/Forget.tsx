@@ -9,9 +9,50 @@ import {
   Stack,
   useColorModeValue,
   Button,
+  FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { forget } from "../../service/UserServices";
 
 const Forget = () => {
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const toast = useToast();
+
+  const handleEmail = (newEmail: any) => {
+    setEmail(newEmail);
+
+    const regex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (regex.test(email)) {
+      setEmailError(false);
+    } else setEmailError(true);
+  };
+
+  const handleSubmit = async () => {
+    let { data } = await forget(email);
+
+    if (data) {
+      toast({
+        title: "Password reset link sent to your email",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
+    } else {
+      toast({
+        title: "Email not found",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
+
   return (
     <Flex
       minH={"100vh"}
@@ -46,7 +87,12 @@ const Forget = () => {
           </Center>
           <FormControl id="email">
             <FormLabel>Email</FormLabel>
-            <Input type="email" />
+            <Input
+              type="email"
+              onChange={(e) => handleEmail(e.target.value)}
+              value={email}
+            />
+            {emailError && <FormErrorMessage>Invalid Email</FormErrorMessage>}
           </FormControl>
           <Button
             w="full"
@@ -56,7 +102,9 @@ const Forget = () => {
             _hover={{
               bg: "blue.500",
             }}
-            h={{lg: "6vh", base: "8vh"}}
+            minH={"40px"}
+            h="6vh"
+            onClick={handleSubmit}
           >
             Forget Password
           </Button>
