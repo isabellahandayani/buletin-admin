@@ -32,7 +32,12 @@ export const register = async (
 };
 
 export const get = async () => {
-  let res = await fetch(`${BASE_URL}/profile`);
+  let res = await fetch(`${BASE_URL}/profile`, {
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
   return await res.json();
 };
 
@@ -41,7 +46,7 @@ export const change = async (
   old_password: any,
   new_password: any
 ) => {
-  let res = await fetch(`${BASE_URL}/forgot`, {
+  let res = await fetch(`${BASE_URL}/user`, {
     method: "put",
     body: JSON.stringify({
       email: email,

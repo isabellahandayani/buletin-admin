@@ -17,7 +17,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiShow, BiHide } from "react-icons/bi";
-import { generatePass } from "../../const";
+import { generatePass } from "../../utils";
 import { register } from "../../service/UserServices";
 
 const Register = () => {
@@ -147,17 +147,22 @@ const Register = () => {
               value={pass}
               onChange={(e) => handlePass(e.target.value)}
             />
-            {!passError ? null : (
-              <FormErrorMessage>
-                Password must be at least 8 characters
-              </FormErrorMessage>
-            )}
             <InputRightElement>
-              <IconButton size="sm" aria-label="show-password" icon={ show ? <BiHide /> : <BiShow />} onClick={() => setShow(!show)}>
+              <IconButton
+                size="sm"
+                aria-label="show-password"
+                icon={show ? <BiHide /> : <BiShow />}
+                onClick={() => setShow(!show)}
+              >
                 {show ? "Hide" : "Show"}
               </IconButton>
             </InputRightElement>
           </InputGroup>
+          {passError && (
+            <FormErrorMessage>
+              Password must be at least 8 characters
+            </FormErrorMessage>
+          )}
         </FormControl>
         <Stack spacing={6} direction={["column", "row"]}>
           <Button

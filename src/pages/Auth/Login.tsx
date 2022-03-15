@@ -12,8 +12,8 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { login } from "../../service/UserServices";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../service/UserServices";
 import LoginImage from "../../assets/login_image.svg";
 
 const Login = () => {
