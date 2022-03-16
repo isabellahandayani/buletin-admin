@@ -67,7 +67,7 @@ const Forget = () => {
         rounded={"xl"}
         boxShadow={"lg"}
         direction="row"
-        h={{ md: "80vh", base: "60vh" }}
+        h="80vh"
       >
         <Box
           flex={3}
@@ -105,6 +105,7 @@ const Forget = () => {
             minH={"40px"}
             h="6vh"
             onClick={handleSubmit}
+            isDisabled={!email}
           >
             Forget Password
           </Button>

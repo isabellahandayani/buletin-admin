@@ -7,14 +7,14 @@ import {
   Heading,
   useToast,
   Link,
-  Image,
   Flex,
   Center,
+  Box,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../service/UserServices";
-import LoginImage from "../../assets/login_image.svg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -45,18 +45,35 @@ const Login = () => {
   };
 
   return (
-    <Stack minH="100vh" direction="row" borderRadius={20}>
-      <Flex flex={2} bg="blue.400">
-        <Image
-          mx="auto"
-          alt={"Login Image"}
-          maxW="70%"
-          objectFit={"scale-down"}
-          src={LoginImage}
+    <Flex
+      minH="100vh"
+      direction="row"
+      borderRadius={20}
+      bg={useColorModeValue("gray.100", "gray.900")}
+      align="center"
+      justify="center"
+    >
+      <Flex
+        bg="white"
+        w={"full"}
+        maxW={{ lg: "70%", base: "100%" }}
+        rounded={"xl"}
+        boxShadow={"lg"}
+        direction="row"
+        h={{ md: "80vh", base: "60vh" }}
+      >
+        <Box
+          flex={3}
+          bg="blue.200"
+          roundedLeft="md"
+          display={{ md: "block", base: "none" }}
         />
-      </Flex>
-      <Flex p={10} flex={1} align={"center"} justify={"center"}>
-        <Stack spacing={4} w={"full"} maxW={"md"}>
+        <Stack
+          p={{ md: 20, base: 5 }}
+          mx="auto"
+          justify={"center"}
+          spacing={10}
+        >
           <Center>
             <Heading fontSize={"2xl"}>Buletin Admin</Heading>
           </Center>
@@ -76,13 +93,18 @@ const Login = () => {
               value={pass}
             />
           </FormControl>
-          <Stack spacing={6}>
+          <Stack spacing={2}>
             <Link color={"blue.500"} onClick={() => navigate("/forgot")}>
               Forgot password?
             </Link>
             <Button
-              colorScheme={"blue"}
+              w="full"
+              bg={"blue.400"}
               variant={"solid"}
+              _hover={{
+                bg: "blue.500",
+              }}
+              color="white"
               onClick={handleSubmit}
               isDisabled={!email || !pass}
             >
@@ -91,7 +113,7 @@ const Login = () => {
           </Stack>
         </Stack>
       </Flex>
-    </Stack>
+    </Flex>
   );
 };
 
