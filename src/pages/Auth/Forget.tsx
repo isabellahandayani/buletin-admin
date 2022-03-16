@@ -12,7 +12,7 @@ import {
   FormErrorMessage,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { forget } from "../../service/UserServices";
 
 const Forget = () => {
@@ -52,6 +52,11 @@ const Forget = () => {
       });
     }
   };
+
+  useEffect(() => {
+    document.title = "Buletin.id | Forget Password"
+  }, [])
+  
 
   return (
     <Flex

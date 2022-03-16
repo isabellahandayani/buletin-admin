@@ -64,14 +64,11 @@ const ListVideo = () => {
     });
   };
 
-
-
   const handleSubmit = async () => {
     if (!getCode(url)) {
       createToast("Error", "Invalid URL");
       return;
     }
-
 
     let { data } = await create(title, desc, url, parseInt(channelId!!));
     if (data) {
@@ -98,8 +95,8 @@ const ListVideo = () => {
 
   const menuControl = {
     handleUpdate: handleUpdate,
-    handleSubmit: handleSubmit
-  }
+    handleSubmit: handleSubmit,
+  };
 
   const fetchList = async () => {
     let { data } = await getVideo(channelId);
@@ -109,7 +106,8 @@ const ListVideo = () => {
 
   useEffect(() => {
     fetchList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    document.title = "Buletin.id | Video";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

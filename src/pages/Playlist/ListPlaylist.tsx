@@ -56,6 +56,7 @@ const ListPlaylist = () => {
 
     fetchList();
     fetchCategory();
+    document.title = "Buletin.id | Playlist";
   }, []);
 
   const handleUpdate = async (playlist_id: any) => {

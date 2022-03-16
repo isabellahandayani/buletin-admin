@@ -76,6 +76,7 @@ const Register = () => {
   };
 
   useEffect(() => {
+    document.title = "Buletin.id | Register";
     setLoading(false);
   }, [loading]);
 

@@ -28,6 +28,7 @@ const DetailVideo = () => {
   useEffect(() => {
     const fetchVideo = async () => {
       let { data } = await get(videoId);
+      document.title = `Buletin.id | ${data.video_title}`      
       setVideo(data);
     };
 

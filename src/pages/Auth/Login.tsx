@@ -12,7 +12,7 @@ import {
   Box,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../service/UserServices";
 
@@ -43,6 +43,11 @@ const Login = () => {
       getToast();
     }
   };
+
+  useEffect(() => {
+    document.title = "Buletin.id | Sign In";
+  }, [])
+  
 
   return (
     <Flex

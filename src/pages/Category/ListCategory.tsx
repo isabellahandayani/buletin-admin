@@ -93,6 +93,7 @@ const ListCategory = () => {
 
   useEffect(() => {
     fetchList();
+    document.title = "Buletin.id | Category";
   }, []);
 
   return (

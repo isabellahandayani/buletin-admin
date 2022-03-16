@@ -106,6 +106,11 @@ const ListChannel = () => {
     fetchList();
   }, []);
 
+  useEffect(() => {
+    document.title = "Buletin.id | Channel";
+  }, [])
+  
+
   return (
     <Center mt={100}>
       {loading ? (

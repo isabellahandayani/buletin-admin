@@ -30,6 +30,7 @@ const Profile = () => {
 
     fetchList();
     setLoading(false);
+    document.title="Buletin.id | Settings";
   }, []);
 
   const handleSubmit = async () => {
