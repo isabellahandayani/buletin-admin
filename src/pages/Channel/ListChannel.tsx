@@ -44,12 +44,11 @@ const ListChannel = () => {
     let { data } = await create(decoded.account_id, channel, "placeholder");
     if (data) {
       createToast("Success", "Channel Successfully Created");
-      fetchList();
-      onClose();
-      setChannel("");
     } else {
       createToast("Error", "Channel Creation Failed");
     }
+    onClose();
+    form.filter((item: any) => item.onChange(""));
   };
 
   const handleUpdate = async (channel_id: any) => {
@@ -64,10 +63,11 @@ const ListChannel = () => {
     if (data) {
       createToast("Success", "Update Successful");
       fetchList();
-      setChannel("");
     } else {
       createToast("Error", "Update Failed");
     }
+    onClose();
+    form.filter((item: any) => item.onChange(""));
   };
 
   const handleDelete = async (channel_id: any) => {

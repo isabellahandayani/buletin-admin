@@ -27,7 +27,7 @@ const VideoCardDetail = (props: any) => {
   }
 
   return (
-    <Skeleton isLoaded={!loading}>
+    <Skeleton isLoaded={!loading} fadeDuration={2}>
       <Link to={`/video/${props.video_id}`}>
         <Box
           mb={5}

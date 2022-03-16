@@ -64,12 +64,11 @@ const ListPlaylist = () => {
     if (data) {
       createToast("Success", "Playlist updated successfully");
       fetchList();
-      onClose();
-      setCurrent("");
-      setName("");
     } else {
       createToast("Error", "Playlist not updated");
     }
+    onClose();
+    form.filter((item: any) => item.onChange(""));
   };
 
   const handleSubmit = async () => {
@@ -77,12 +76,11 @@ const ListPlaylist = () => {
     if (data) {
       createToast("Success", "Playlist has been created");
       fetchList();
-      onClose();
-      setCurrent("");
-      setName("");
     } else {
       createToast("Error", "Create playlist failed");
     }
+    onClose();
+    form.filter((item: any) => item.onChange(""));
   };
 
   const handleDelete = async (playlist_id: any) => {

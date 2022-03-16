@@ -6,15 +6,11 @@ export const getAll = async () => {
   });
 
   return await res.json();
-}
+};
 
-export const getVideoChannel = async (
-  pageNo: number,
-  pageSize: number,
-  channel_id: any
-) => {
+export const getVideoChannel = async (channel_id: any) => {
   let res = await fetch(
-    `${BASE_URL}/video?page_no=${pageNo}&page_size=${pageSize}&channel_id=${channel_id}`,
+    `${BASE_URL}/video?page_no=1&page_size=999&channel_id=${channel_id}`,
     {
       method: "get",
     }
@@ -23,17 +19,27 @@ export const getVideoChannel = async (
   return await res.json();
 };
 
-export const getVideoPlaylist = async (
-  playlist_id: any
-) => {
+export const getVideoPlaylist = async (playlist_id: any) => {
   let res = await fetch(
     `${BASE_URL}/video?page_no=1&page_size=999&playlist_id=${playlist_id}`,
     {
       method: "get",
     }
   );
+  
   return await res.json();
 };
+
+export const getVideoAdmin = async (owner_id: any) => {
+  let res = await fetch(
+    `${BASE_URL}/video?page_no=1&page_size=999&owner_id=${owner_id}`,
+    {
+      method: "get",
+    }
+  );
+
+  return await res.json();
+}
 
 export const get = async (id: any) => {
   let res = await fetch(`${BASE_URL}/video/${id}`, {
