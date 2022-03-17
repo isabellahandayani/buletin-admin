@@ -51,3 +51,25 @@ export const create = async (id: any, name: any) => {
 
   return await res.json();
 };
+
+export const addVideo = async (video_id: any, playlist_id: any) => {
+  let res = await fetch(`${BASE_URL}/playlist/${playlist_id}/add-video`, {
+    method: "POST",
+    body: JSON.stringify({
+      video_id: video_id,
+    }),
+  });
+
+  return await res.json();
+};
+
+export const deleteVideo = async (video_id: any, playlist_id: any) => {
+  let res = await fetch(`${BASE_URL}/playlist/${playlist_id}/delete-video`, {
+    method: "DELETE",
+    body: JSON.stringify({
+      video_id: video_id,
+    }),
+  });
+
+  return await res.json();
+};
