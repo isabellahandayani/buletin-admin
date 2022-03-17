@@ -40,7 +40,8 @@ const Profile = () => {
       setCurrent("");
       setPass("");
       toast({
-        title: "Change Password Success",
+        title: "Success",
+        description: "Change Password Success",
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -48,7 +49,8 @@ const Profile = () => {
       });
     } else {
       toast({
-        title: "Change Password Failed",
+        title: "Error",
+        description: "Change Password Failed",
         status: "error",
         duration: 9000,
         isClosable: true,

@@ -9,14 +9,16 @@ import {
   Link,
   Flex,
   Center,
-  Box,
   useColorModeValue,
+  Image,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../service/UserServices";
+import LOGIN_IMAGE from "../../assets/login_image.svg";
 
 const Login = () => {
+  const [click, setClick] = useState(false);
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const navigate = useNavigate();
@@ -24,9 +26,12 @@ const Login = () => {
   const toast = useToast();
 
   const handleSubmit = async () => {
+    setClick(true);
+
     const getToast = () => {
       toast({
         title: "Login Failed",
+        description: "Email or Password is incorrect",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -42,12 +47,12 @@ const Login = () => {
     } catch (e) {
       getToast();
     }
+    setClick(false);
   };
 
   useEffect(() => {
     document.title = "Buletin.id | Sign In";
-  }, [])
-  
+  }, []);
 
   return (
     <Flex
@@ -67,18 +72,18 @@ const Login = () => {
         direction="row"
         h={{ md: "80vh", base: "60vh" }}
       >
-        <Box
+        <Flex
+          display={{md: "flex", base: "none"}}
+          align={"center"}
+          justify={"center"}
           flex={3}
           bg="blue.200"
           roundedLeft="md"
-          display={{ md: "block", base: "none" }}
-        />
-        <Stack
-          p={{ md: 20, base: 5 }}
-          mx="auto"
-          justify={"center"}
-          spacing={10}
         >
+          <Image src={LOGIN_IMAGE} p={5} h="80vh" />
+        </Flex>
+
+        <Stack p={{ md: 20, base: 5 }} mx="auto" justify={"center"} spacing={6}>
           <Center>
             <Heading fontSize={"2xl"}>Buletin Admin</Heading>
           </Center>
@@ -103,6 +108,8 @@ const Login = () => {
               Forgot password?
             </Link>
             <Button
+              isLoading={click}
+              loadingText='Signing In'
               w="full"
               bg={"blue.400"}
               variant={"solid"}
@@ -110,6 +117,7 @@ const Login = () => {
                 bg: "blue.500",
               }}
               color="white"
+              minH="40px"
               onClick={handleSubmit}
               isDisabled={!email || !pass}
             >
