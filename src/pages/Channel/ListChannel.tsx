@@ -44,6 +44,7 @@ const ListChannel = () => {
     let { data } = await create(decoded.account_id, channel, "placeholder");
     if (data) {
       createToast("Success", "Channel Successfully Created");
+      fetchList();
     } else {
       createToast("Error", "Channel Creation Failed");
     }

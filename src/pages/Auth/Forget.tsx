@@ -10,6 +10,7 @@ import {
   Button,
   useToast,
   Image,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { forget } from "../../service/UserServices";
@@ -79,6 +80,7 @@ const Forget = () => {
       minH={"100vh"}
       align={"center"}
       justify={"center"}
+      borderRadius={20}
       bg={useColorModeValue("gray.100", "gray.900")}
     >
       <Flex
@@ -105,12 +107,12 @@ const Forget = () => {
           mx="auto"
           align={"center"}
           justify={"center"}
-          spacing={10}
+          spacing={6}
         >
           <Center>
             <Heading fontSize={"2xl"}>Forget Password</Heading>
           </Center>
-          <FormControl id="email">
+          <FormControl id="email" isInvalid={emailError}>
             <FormLabel>Email</FormLabel>
             <Input
               placeholder="your-email@example.com"
@@ -118,6 +120,9 @@ const Forget = () => {
               onChange={(e) => handleEmail(e.target.value)}
               value={email}
             />
+            {emailError && (
+              <FormErrorMessage>Email is invalid</FormErrorMessage>
+            )}
           </FormControl>
           <Button
             w="full"

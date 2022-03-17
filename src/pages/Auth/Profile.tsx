@@ -8,18 +8,23 @@ import {
   Button,
   Center,
   Spinner,
-  useToast
+  useToast,
+  IconButton,
+  InputGroup,
+  InputRightElement
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { BiHide, BiShow } from "react-icons/bi";
 import { get, change } from "../../service/UserServices";
 
 const Profile = () => {
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<any>();
+  const [submit, setSubmit] = useState(false);
   const [current, setCurrent] = useState("");
   const [pass, setPass] = useState("");
-  const navigate = useNavigate();
   const toast = useToast();
 
   useEffect(() => {
@@ -34,6 +39,7 @@ const Profile = () => {
   }, []);
 
   const handleSubmit = async () => {
+    setSubmit(true);
     let { data } = await change(profile.account_email, current, pass);
 
     if (data) {
@@ -57,6 +63,7 @@ const Profile = () => {
         position: "top",
       });
     }
+    setSubmit(false);
   };
 
   return !loading && profile ? (
@@ -103,36 +110,45 @@ const Profile = () => {
         </FormControl>
         <FormControl id="password">
           <FormLabel>Current Password</FormLabel>
-          <Input
-            placeholder="********"
-            _placeholder={{ color: "gray.500" }}
-            type="password"
-            value={current}
-            onChange={(e) => setCurrent(e.target.value)}
-          />
+          <InputGroup size="md">
+            <Input
+              placeholder="********"
+              _placeholder={{ color: "gray.500" }}
+              type={showCurrent ? "text" : "password"}
+              value={current}
+              onChange={(e) => setCurrent(e.target.value)}
+            />
+            <InputRightElement>
+              <IconButton
+                size="md"
+                aria-label="show-password"
+                icon={showCurrent ? <BiHide /> : <BiShow />}
+                onClick={() => setShowCurrent(!showCurrent)}
+              />
+            </InputRightElement>
+          </InputGroup>
         </FormControl>
         <FormControl id="password">
           <FormLabel>New Password</FormLabel>
-          <Input
-            placeholder="********"
-            _placeholder={{ color: "gray.500" }}
-            type="password"
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
-          />
+          <InputGroup size="md">
+            <Input
+              placeholder="********"
+              _placeholder={{ color: "gray.500" }}
+              type={showNew ? "text" : "password"}
+              value={pass}
+              onChange={(e) => setPass(e.target.value)}
+            />
+            <InputRightElement>
+              <IconButton
+                size="md"
+                aria-label="show-password"
+                icon={showNew ? <BiHide /> : <BiShow />}
+                onClick={() => setShowNew(!showNew)}
+              />
+            </InputRightElement>
+          </InputGroup>
         </FormControl>
-        <Stack spacing={6} direction={["column", "row"]}>
-          <Button
-            bg={"red.400"}
-            color={"white"}
-            w="full"
-            _hover={{
-              bg: "red.500",
-            }}
-            onClick={() => navigate("/")}
-          >
-            Cancel
-          </Button>
+        <Stack>
           <Button
             bg={"blue.400"}
             color={"white"}
@@ -141,6 +157,9 @@ const Profile = () => {
               bg: "blue.500",
             }}
             onClick={handleSubmit}
+            isDisabled={!current || !pass}
+            isLoading={submit}
+            loadingText={"Submiting"}
           >
             Submit
           </Button>

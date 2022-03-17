@@ -11,14 +11,19 @@ import {
   Center,
   useColorModeValue,
   Image,
+  InputGroup,
+  IconButton,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../service/UserServices";
 import LOGIN_IMAGE from "../../assets/login_image.svg";
+import { BiHide, BiShow } from "react-icons/bi";
 
 const Login = () => {
   const [click, setClick] = useState(false);
+  const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const navigate = useNavigate();
@@ -73,7 +78,7 @@ const Login = () => {
         h={{ md: "80vh", base: "60vh" }}
       >
         <Flex
-          display={{md: "flex", base: "none"}}
+          display={{ md: "flex", base: "none" }}
           align={"center"}
           justify={"center"}
           flex={3}
@@ -91,17 +96,30 @@ const Login = () => {
             <FormLabel>Email</FormLabel>
             <Input
               type="email"
+              placeholder="your-email@example.com"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
           </FormControl>
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              onChange={(e) => setPass(e.target.value)}
-              value={pass}
-            />
+            <InputGroup size="md">
+              <Input
+                placeholder="********"
+                _placeholder={{ color: "gray.500" }}
+                type={show ? "text" : "password"}
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
+              />
+              <InputRightElement>
+                <IconButton
+                  size="md"
+                  aria-label="show-password"
+                  icon={show ? <BiHide /> : <BiShow />}
+                  onClick={() => setShow(!show)}
+                />
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
           <Stack spacing={2}>
             <Link color={"blue.500"} onClick={() => navigate("/forgot")}>
@@ -109,7 +127,7 @@ const Login = () => {
             </Link>
             <Button
               isLoading={click}
-              loadingText='Signing In'
+              loadingText="Signing In"
               w="full"
               bg={"blue.400"}
               variant={"solid"}

@@ -22,24 +22,15 @@ import { register } from "../../service/UserServices";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState(generatePass());
+  const [pass] = useState(generatePass());
   const [name, setName] = useState("");
   const [uname, setUname] = useState("");
   const [number, setNumber] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const [passError, setPassError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
-
-  const handlePass = (pwd: any) => {
-    if (pwd.length < 8) {
-      setPassError(true);
-    } else setPassError(false);
-
-    setPass(pwd);
-  };
 
   const handleEmail = (newEmail: any) => {
     setEmail(newEmail);
@@ -136,7 +127,7 @@ const Register = () => {
             onChange={(e) => setNumber(e.target.value)}
           />
         </FormControl>
-        <FormControl id="password" isRequired isInvalid={passError}>
+        <FormControl id="password" isRequired>
           <FormLabel>Password</FormLabel>
           <InputGroup size="md">
             <Input
@@ -144,37 +135,19 @@ const Register = () => {
               _placeholder={{ color: "gray.500" }}
               type={show ? "text" : "password"}
               value={pass}
-              onChange={(e) => handlePass(e.target.value)}
+              isDisabled
             />
             <InputRightElement>
               <IconButton
-                size="sm"
+                size="md"
                 aria-label="show-password"
                 icon={show ? <BiHide /> : <BiShow />}
                 onClick={() => setShow(!show)}
-              >
-                {show ? "Hide" : "Show"}
-              </IconButton>
+              />
             </InputRightElement>
           </InputGroup>
-          {passError && (
-            <FormErrorMessage>
-              Password must be at least 8 characters
-            </FormErrorMessage>
-          )}
         </FormControl>
-        <Stack spacing={6} direction={["column", "row"]}>
-          <Button
-            bg={"red.400"}
-            color={"white"}
-            w="full"
-            _hover={{
-              bg: "red.500",
-            }}
-            onClick={() => navigate("/")}
-          >
-            Cancel
-          </Button>
+        <Stack>
           <Button
             bg={"blue.400"}
             color={"white"}
@@ -183,15 +156,12 @@ const Register = () => {
               bg: "blue.500",
             }}
             isDisabled={
-              email &&
-              pass &&
-              name &&
-              uname &&
-              number &&
-              !emailError &&
-              !passError
-                ? false
-                : true
+              !email ||
+              !pass ||
+              !name ||
+              !uname ||
+              !number ||
+              emailError
             }
             onClick={handleSubmit}
           >

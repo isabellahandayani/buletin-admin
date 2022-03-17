@@ -72,7 +72,7 @@ function App() {
         <Routes>
           <Route path="/forgot" element={<Forget />} />
           <Route path="/" element={<Login />} />
-          <Route path="*" element={<Login />} />
+          <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       )}
     </div>
