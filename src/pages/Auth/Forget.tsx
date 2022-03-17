@@ -1,5 +1,4 @@
 import {
-  Box,
   Center,
   Flex,
   FormControl,
@@ -9,22 +8,25 @@ import {
   Stack,
   useColorModeValue,
   Button,
-  FormErrorMessage,
   useToast,
+  Image,
+  FormErrorMessage,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { forget } from "../../service/UserServices";
+import LOGIN_IMAGE from "../../assets/login_image.svg";
 
 const Forget = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [timer, setTimer] = useState<any>(null);
   const toast = useToast();
 
   const handleEmail = (newEmail: any) => {
     setEmail(newEmail);
 
     const regex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$/;
 
     if (regex.test(email)) {
       setEmailError(false);
@@ -32,19 +34,22 @@ const Forget = () => {
   };
 
   const handleSubmit = async () => {
+    setTimer(60);
     let { data } = await forget(email);
 
     if (data) {
       toast({
-        title: "Password reset link sent to your email",
+        title: "Success",
         status: "success",
         duration: 9000,
+        description: "Password reset link sent to your email",
         isClosable: true,
         position: "top",
       });
     } else {
       toast({
-        title: "Email not found",
+        title: "Error",
+        description: "Email not found",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -53,11 +58,29 @@ const Forget = () => {
     }
   };
 
+  useEffect(() => {
+    document.title = "Buletin.id | Forget Password";
+
+    if (timer) {
+      if (timer === 0) {
+        setTimer(null);
+        return;
+      }
+
+      const interval = setInterval(() => {
+        setTimer(timer - 1);
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [timer]);
+
   return (
     <Flex
       minH={"100vh"}
       align={"center"}
       justify={"center"}
+      borderRadius={20}
       bg={useColorModeValue("gray.100", "gray.900")}
     >
       <Flex
@@ -67,32 +90,39 @@ const Forget = () => {
         rounded={"xl"}
         boxShadow={"lg"}
         direction="row"
-        h={{ md: "80vh", base: "60vh" }}
+        h="80vh"
       >
-        <Box
+        <Flex
+          display={{ md: "flex", base: "none" }}
+          align={"center"}
+          justify={"center"}
           flex={3}
           bg="blue.200"
           roundedLeft="md"
-          display={{ md: "block", base: "none" }}
-        />
+        >
+          <Image src={LOGIN_IMAGE} p={5} h="80vh" />
+        </Flex>
         <Stack
-          p={{ md: 20, base: 5 }}
+          p={{ md: 20, base: 10 }}
           mx="auto"
           align={"center"}
           justify={"center"}
-          spacing={10}
+          spacing={6}
         >
           <Center>
             <Heading fontSize={"2xl"}>Forget Password</Heading>
           </Center>
-          <FormControl id="email">
+          <FormControl id="email" isInvalid={emailError}>
             <FormLabel>Email</FormLabel>
             <Input
+              placeholder="your-email@example.com"
               type="email"
               onChange={(e) => handleEmail(e.target.value)}
               value={email}
             />
-            {emailError && <FormErrorMessage>Invalid Email</FormErrorMessage>}
+            {emailError && (
+              <FormErrorMessage>Email is invalid</FormErrorMessage>
+            )}
           </FormControl>
           <Button
             w="full"
@@ -105,6 +135,9 @@ const Forget = () => {
             minH={"40px"}
             h="6vh"
             onClick={handleSubmit}
+            loadingText={`Resend in ${timer} seconds`}
+            isLoading={timer ? true : false}
+            isDisabled={!email || emailError}
           >
             Forget Password
           </Button>

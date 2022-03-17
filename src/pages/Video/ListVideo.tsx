@@ -20,6 +20,7 @@ import {
 import VideoEntry from "../../components/Video/VideoEntry";
 import AddButton from "../../components/Common/AddButton";
 import CreateModal from "../../components/Common/CreateModal";
+import { getCode } from "../../utils";
 
 const ListVideo = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,21 +38,18 @@ const ListVideo = () => {
       placeholder: "video-title",
       value: title,
       onChange: setTitle,
-      defaultValue:""
     },
     {
       name: "Description",
       placeholder: "video-description",
       value: desc,
       onChange: setDesc,
-      defaultValue:""
     },
     {
       name: "Video URL",
       placeholder: "www.youtube.com/watch?v=RKueSD3gLJQ&t=15s",
       value: url,
       onChange: setUrl,
-      defaultValue:""
     },
   ];
 
@@ -66,21 +64,21 @@ const ListVideo = () => {
     });
   };
 
-
-
   const handleSubmit = async () => {
+    if (!getCode(url)) {
+      createToast("Error", "Invalid URL");
+      return;
+    }
+
     let { data } = await create(title, desc, url, parseInt(channelId!!));
     if (data) {
       createToast("Success", "Video Successfully Created");
       fetchList();
-      onClose();
     } else {
       createToast("Error", "Video Creation Failed");
     }
-
-    setTitle("");
-    setDesc("");
-    setUrl("");
+    onClose();
+    form.filter((item: any) => item.onChange(""));
   };
 
   const handleUpdate = async (video_id: any) => {
@@ -88,29 +86,28 @@ const ListVideo = () => {
     if (data) {
       createToast("Success", "Update Successful");
       fetchList();
-      onClose();
     } else {
       createToast("Error", "Update Failed");
     }
-    setTitle("");
-    setDesc("");
-    setUrl("");
+    onClose();
+    form.filter((item: any) => item.onChange(""));
   };
 
   const menuControl = {
     handleUpdate: handleUpdate,
-    handleSubmit: handleSubmit
-  }
+    handleSubmit: handleSubmit,
+  };
 
   const fetchList = async () => {
-    let { data } = await getVideo(1, 6, channelId);
+    let { data } = await getVideo(channelId);
     setList(data.videos);
     setLoading(false);
   };
 
   useEffect(() => {
     fetchList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    document.title = "Buletin.id | Video";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

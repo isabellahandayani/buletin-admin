@@ -21,7 +21,7 @@ const CreateModal = (props: any) => {
   };
 
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
+    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered onOverlayClick={handleClose} onEsc={handleClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Add {props.type}</ModalHeader>

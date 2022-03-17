@@ -31,6 +31,7 @@ const DetailPlaylist = () => {
     const fetchPlaylist = async () => {
       let { data } = await get(playlistId);
       setName(data.playlist_name);
+      document.title = `Buletin.id | ${data.playlist_name}`;
     };
 
     fetchList();
