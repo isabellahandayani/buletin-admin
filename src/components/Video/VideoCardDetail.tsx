@@ -25,6 +25,9 @@ const VideoCardDetail = (props: any) => {
   const handleClick = () => {
     setLoading(true);
     navigate(`/video/${props.video_id}`);
+    if(props.handleChange) {
+      props.handleChange();
+    }
   };
 
   return (
@@ -40,11 +43,10 @@ const VideoCardDetail = (props: any) => {
         }}
         onClick={handleClick}
       >
-        <Flex>
+        <Flex justify="space-between">
           <Image
             borderTopLeftRadius="md"
             borderBottomLeftRadius="md"
-            p="relative"
             maxW="40%"
             src={props.video_thumbnail}
             alt={props.video_title}
@@ -52,31 +54,29 @@ const VideoCardDetail = (props: any) => {
             fallbackSrc={FALLBACK_IMG}
           />
 
-          <Center ml={4} maxW="100%" maxH={200}>
-            <Flex flexDirection="row" h="100%" align="center" justify="center">
-              <Stack spacing={4} flex={3}>
+          <Center ml={4} maxH={200} w="full" flexGrow={2}>
+            <Flex flexDirection="row" align="center" flexGrow={2}>
+              <Stack spacing={4} flexGrow={2}>
                 <Heading as="h2" size="md">
                   {props.video_title}
                 </Heading>
                 <Text fontSize="md">{props.channel_info.channel_name}</Text>
               </Stack>
               {props.type === "detail" && (
-                <IconButton
-                  variant="solid"
-                  aria-label="Md"
-                  bg={"red.400"}
-                  icon={<MdDelete />}
-                  m={10}
-                  size="sm"
-                  color="white"
-                  _hover={{
-                    bg: "red.500",
-                  }}
-                  style={{
-                    float: "right",
-                  }}
-                  onClick={(e) => props.handleDelete(e, props.video_id)}
-                />
+                <Box m={10}>
+                  <IconButton
+                    variant="solid"
+                    aria-label="Md"
+                    bg={"red.400"}
+                    icon={<MdDelete />}
+                    size="sm"
+                    color="white"
+                    _hover={{
+                      bg: "red.500",
+                    }}
+                    onClick={(e) => props.handleDelete(e, props.video_id)}
+                  />
+                </Box>
               )}
             </Flex>
           </Center>

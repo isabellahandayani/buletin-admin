@@ -39,7 +39,7 @@ const VideoCardUpload = (props: any) => {
             fallbackSrc={FALLBACK_IMG}
           />
           <Center>
-            <Box ml={4} maxW={280} maxH={200}>
+            <Box ml={4} maxW={240} maxH={200}>
               <Heading as="h2" size="md">
                 {props.video_title}
               </Heading>
