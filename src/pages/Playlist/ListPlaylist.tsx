@@ -56,6 +56,7 @@ const ListPlaylist = () => {
 
     fetchList();
     fetchCategory();
+    document.title = "Buletin.id | Playlist";
   }, []);
 
   const handleUpdate = async (playlist_id: any) => {
@@ -64,12 +65,11 @@ const ListPlaylist = () => {
     if (data) {
       createToast("Success", "Playlist updated successfully");
       fetchList();
-      onClose();
-      setCurrent("");
-      setName("");
     } else {
       createToast("Error", "Playlist not updated");
     }
+    onClose();
+    form.filter((item: any) => item.onChange(""));
   };
 
   const handleSubmit = async () => {
@@ -77,12 +77,11 @@ const ListPlaylist = () => {
     if (data) {
       createToast("Success", "Playlist has been created");
       fetchList();
-      onClose();
-      setCurrent("");
-      setName("");
     } else {
       createToast("Error", "Create playlist failed");
     }
+    onClose();
+    form.filter((item: any) => item.onChange(""));
   };
 
   const handleDelete = async (playlist_id: any) => {

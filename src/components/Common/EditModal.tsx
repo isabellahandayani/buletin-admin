@@ -26,7 +26,7 @@ const EditModal = (props: any) => {
   };
 
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered>
+    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered onOverlayClick={handleClose} onEsc={handleClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Edit {props.type}</ModalHeader>
@@ -48,7 +48,7 @@ const EditModal = (props: any) => {
                         }
                       >
                         {item.selection.map((category: any) => (
-                          <option value={category.category_id}>
+                          <option key={category.category_id} value={category.category_id}>
                             {category.category_name}
                           </option>
                         ))}

@@ -7,16 +7,23 @@ import {
   Heading,
   useToast,
   Link,
-  Image,
   Flex,
   Center,
+  useColorModeValue,
+  Image,
+  InputGroup,
+  IconButton,
+  InputRightElement,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../service/UserServices";
-import LoginImage from "../../assets/login_image.svg";
+import LOGIN_IMAGE from "../../assets/login_image.svg";
+import { BiHide, BiShow } from "react-icons/bi";
 
 const Login = () => {
+  const [click, setClick] = useState(false);
+  const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const navigate = useNavigate();
@@ -24,9 +31,12 @@ const Login = () => {
   const toast = useToast();
 
   const handleSubmit = async () => {
+    setClick(true);
+
     const getToast = () => {
       toast({
         title: "Login Failed",
+        description: "Email or Password is incorrect",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -42,21 +52,43 @@ const Login = () => {
     } catch (e) {
       getToast();
     }
+    setClick(false);
   };
 
+  useEffect(() => {
+    document.title = "Buletin.id | Sign In";
+  }, []);
+
   return (
-    <Stack minH="100vh" direction="row" borderRadius={20}>
-      <Flex flex={2} bg="blue.400">
-        <Image
-          mx="auto"
-          alt={"Login Image"}
-          maxW="70%"
-          objectFit={"scale-down"}
-          src={LoginImage}
-        />
-      </Flex>
-      <Flex p={10} flex={1} align={"center"} justify={"center"}>
-        <Stack spacing={4} w={"full"} maxW={"md"}>
+    <Flex
+      minH="100vh"
+      direction="row"
+      borderRadius={20}
+      bg={useColorModeValue("gray.100", "gray.900")}
+      align="center"
+      justify="center"
+    >
+      <Flex
+        bg="white"
+        w={"full"}
+        maxW={{ lg: "70%", base: "100%" }}
+        rounded={"xl"}
+        boxShadow={"lg"}
+        direction="row"
+        h={{ md: "80vh", base: "60vh" }}
+      >
+        <Flex
+          display={{ md: "flex", base: "none" }}
+          align={"center"}
+          justify={"center"}
+          flex={3}
+          bg="blue.200"
+          roundedLeft="md"
+        >
+          <Image src={LOGIN_IMAGE} p={5} h="80vh" />
+        </Flex>
+
+        <Stack p={{ md: 20, base: 5 }} mx="auto" justify={"center"} spacing={6}>
           <Center>
             <Heading fontSize={"2xl"}>Buletin Admin</Heading>
           </Center>
@@ -64,25 +96,46 @@ const Login = () => {
             <FormLabel>Email</FormLabel>
             <Input
               type="email"
+              placeholder="your-email@example.com"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
           </FormControl>
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
-            <Input
-              type="password"
-              onChange={(e) => setPass(e.target.value)}
-              value={pass}
-            />
+            <InputGroup size="md">
+              <Input
+                placeholder="********"
+                _placeholder={{ color: "gray.500" }}
+                type={show ? "text" : "password"}
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
+              />
+              <InputRightElement>
+                <IconButton
+                  size="md"
+                  aria-label="show-password"
+                  icon={show ? <BiHide /> : <BiShow />}
+                  onClick={() => setShow(!show)}
+                />
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
-          <Stack spacing={6}>
+          <Stack spacing={2}>
             <Link color={"blue.500"} onClick={() => navigate("/forgot")}>
               Forgot password?
             </Link>
             <Button
-              colorScheme={"blue"}
+              isLoading={click}
+              loadingText="Signing In"
+              w="full"
+              bg={"blue.400"}
               variant={"solid"}
+              _hover={{
+                bg: "blue.500",
+              }}
+              color="white"
+              minH="40px"
               onClick={handleSubmit}
               isDisabled={!email || !pass}
             >
@@ -91,7 +144,7 @@ const Login = () => {
           </Stack>
         </Stack>
       </Flex>
-    </Stack>
+    </Flex>
   );
 };
 

@@ -15,7 +15,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import NotFound from "./components/Common/NotFound";
 
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 function App() {
@@ -40,24 +40,29 @@ function App() {
       {currentUser ? (
         <Sidebar>
           <Routes>
-            {role === "superadmin" ? (
+            {role === "superadmin" && (
               <>
-                <Route path="playlist/:playlistId" element={<DetailPlaylist />} />
+                <Route
+                  path="playlist/:playlistId"
+                  element={<DetailPlaylist />}
+                />
                 <Route path="video/:videoId" element={<DetailVideo />} />
                 <Route path="register" element={<Register />} />
                 <Route path="category" element={<ListCategory />} />
                 <Route path="playlist" element={<ListPlaylist />} />
                 <Route path="settings" element={<Profile />} />
-                <Route path="/" element={<ListCategory />} />
+                <Route path="/" element={<Navigate replace to="/category" />} />
                 <Route path="*" element={<NotFound />} />
               </>
-            ) : (
+            )}
+
+            {role === "admin" && (
               <>
                 <Route path="video/:videoId" element={<DetailVideo />} />
                 <Route path="channel/:channelId/" element={<ListVideo />} />
                 <Route path="channel" element={<ListChannel />} />
                 <Route path="settings" element={<Profile />} />
-                <Route path="/" element={<ListChannel />} />
+                <Route path="/" element={<Navigate replace to="/channel" />} />
                 <Route path="*" element={<NotFound />} />
               </>
             )}
@@ -67,7 +72,7 @@ function App() {
         <Routes>
           <Route path="/forgot" element={<Forget />} />
           <Route path="/" element={<Login />} />
-          <Route path="*" element={<Login />} />
+          <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       )}
     </div>

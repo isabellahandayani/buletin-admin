@@ -45,11 +45,11 @@ const ListCategory = () => {
     let { data } = await create(category, "placeholder");
     if (data) {
       createToast("Success", "Category Successfully Created");
-      onClose();
       fetchList();
     } else {
       createToast("Error", "Category Creation Failed");
     }
+    onClose();
     setCategory("");
   };
 
@@ -57,22 +57,22 @@ const ListCategory = () => {
     let { data } = await deleteCategory(category_id);
     if (data) {
       createToast("Success", "Category Successfully Deleted");
-      onClose();
       fetchList();
     } else {
       createToast("Error", "Category Deletion Failed");
     }
+    onClose();
   };
 
   const handleUpdate = async (category_id: any) => {
     let { data } = await update(category, "placeholder", category_id);
     if (data) {
       createToast("Success", "Update Successful");
-      onClose();
       fetchList();
     } else {
       createToast("Error", "Update Failed");
     }
+    onClose();
     setCategory("");
   };
 
@@ -93,6 +93,7 @@ const ListCategory = () => {
 
   useEffect(() => {
     fetchList();
+    document.title = "Buletin.id | Category";
   }, []);
 
   return (

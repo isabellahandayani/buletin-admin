@@ -4,16 +4,20 @@ import {
   Flex,
   Text,
   Avatar,
-  AspectRatio,
   Center,
   Spinner,
-  Skeleton,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { useParams } from "react-router-dom";
-import { get, getAll } from "../../service/VideoServices";
+import {
+  get,
+  getVideoAdmin as getVideo,
+  getAll,
+} from "../../service/VideoServices";
 import { useEffect, useState } from "react";
 import VideoCard from "../../components/Video/VideoCardDetail";
+import jwtDecode from "jwt-decode";
+import VideoFrame from "../../components/Video/VideoFrame";
 
 const DetailVideo = () => {
   const { videoId } = useParams();
@@ -24,15 +28,21 @@ const DetailVideo = () => {
   useEffect(() => {
     const fetchVideo = async () => {
       let { data } = await get(videoId);
+      document.title = `Buletin.id | ${data.video_title}`      
       setVideo(data);
     };
 
     const fetchList = async () => {
-      let { data } = await getAll();
-      var filteredData = data["videos"].filter(
-        (item: any) => item.video_id !== videoId
+      let decoded: any = jwtDecode(localStorage.getItem("token")!!);
+      let { data } =
+        decoded.role === "admin"
+          ? await getVideo(decoded.account_id)
+          : await getAll();
+
+      let filteredData = data.videos.filter(
+        (item: any) => parseInt(item.video_id) !== parseInt(videoId!!)
       );
-      setList(filteredData.slice(0, 5));
+      setList(filteredData.splice(0, 5));
     };
 
     fetchVideo();
@@ -44,7 +54,7 @@ const DetailVideo = () => {
     setLoading(true);
     setVideo(null);
     setList([]);
-  }
+  };
 
   return video && !loading ? (
     <Box mt={10} ml={20}>
@@ -79,8 +89,19 @@ const DetailVideo = () => {
           </Heading>
           {list &&
             list.map((video) => {
-              return <VideoCard key={video.video_id} {...video} handleChange={handleChange} />;
+              return (
+                <VideoCard
+                  key={video.video_id}
+                  {...video}
+                  handleChange={handleChange}
+                />
+              );
             })}
+          {list && list.length === 0 && (
+            <Center>
+              <Text>Upload more videos</Text>
+            </Center>
+          )}
         </Box>
       </Flex>
     </Box>
@@ -88,27 +109,6 @@ const DetailVideo = () => {
     <Center mt={300}>
       <Spinner size="xl" />
     </Center>
-  );
-};
-
-const VideoFrame = (props: any) => {
-  const getCode = (url: string) => {
-    return url.split("=")[1];
-  };
-
-  return (
-    <Skeleton isLoaded>
-      <AspectRatio ratio={16 / 9}>
-        <iframe
-          height={window.innerHeight - 300}
-          src={`https://www.youtube.com/embed/${getCode(props.url)}`}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </AspectRatio>
-    </Skeleton>
   );
 };
 
