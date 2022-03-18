@@ -1,9 +1,20 @@
 import { BASE_URL } from "../const";
 
 export const getAll = async () => {
-  let res = await fetch(`${BASE_URL}/video?page_no=1&page_size=100`, {
+  let res = await fetch(`${BASE_URL}/video?page_no=1&page_size=999`, {
     method: "get",
   });
+
+  return await res.json();
+};
+
+export const getAllExcept = async (playlist_id: any) => {
+  let res = await fetch(
+    `${BASE_URL}/video?page_no=1&page_size=999&playlist_id_except=${playlist_id}`,
+    {
+      method: "get",
+    }
+  );
 
   return await res.json();
 };
@@ -26,7 +37,7 @@ export const getVideoPlaylist = async (playlist_id: any) => {
       method: "get",
     }
   );
-  
+
   return await res.json();
 };
 
@@ -39,7 +50,7 @@ export const getVideoAdmin = async (owner_id: any) => {
   );
 
   return await res.json();
-}
+};
 
 export const get = async (id: any) => {
   let res = await fetch(`${BASE_URL}/video/${id}`, {
