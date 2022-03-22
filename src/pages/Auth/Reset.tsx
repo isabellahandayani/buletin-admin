@@ -9,9 +9,58 @@ import {
   Stack,
   useColorModeValue,
   Button,
+  useToast,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { reset, validate } from "../../service/UserServices";
 
 const Reset = () => {
+  const [searchParams] = useSearchParams();
+  const [email, setEmail] = useState<any>();
+  const [pass, setPass] = useState<any>();
+  const [confirmPass, setConfirm] = useState<any>();
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  const handleSubmit = async () => {
+    let { data } = await reset(searchParams.get("token"), pass, email);
+    console.log(data);
+    if (data) {
+      toast({
+        title: "Success",
+        description: "Password Reset Successful",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
+      navigate("/login");
+    } else {
+      toast({
+        title: "Error",
+        description: "Password Reset Failed",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
+
+  useEffect(() => {
+    const check = async () => {
+      let { data } = await validate(searchParams.get("token"));
+      if (data) {
+        setEmail(data.email);
+      } else {
+        navigate("../");
+      }
+    };
+    check();
+  }, [navigate, searchParams]);
+
   return (
     <Flex
       minH={"100vh"}
@@ -46,11 +95,14 @@ const Reset = () => {
           </Center>
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
-            <Input type="password" />
+            <Input type="password" onChange={(e) => setPass(e.target.value)} />
           </FormControl>
           <FormControl id="confirm-password">
             <FormLabel>Confirm Password</FormLabel>
-            <Input type="password" />
+            <Input
+              type="password"
+              onChange={(e) => setConfirm(e.target.value)}
+            />
           </FormControl>
           <Button
             w="full"
@@ -60,7 +112,9 @@ const Reset = () => {
             _hover={{
               bg: "blue.500",
             }}
-            h={{md: "6vh", base: "8vh"}}
+            h={{ md: "6vh", base: "8vh" }}
+            isDisabled={!pass || !confirmPass || pass !== confirmPass}
+            onClick={handleSubmit}
           >
             Reset Password
           </Button>
