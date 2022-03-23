@@ -12,9 +12,9 @@ import {
 import moment from "moment";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { deleteVideo } from "../../service/VideoServices";
-import EditModal from "../Common/EditModal";
 import { Link } from "react-router-dom";
 import { FALLBACK_IMG } from "../../const";
+import VideoModal from "../../components/Video/VideoModal";
 
 const VideoEntry = (props: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,15 +47,12 @@ const VideoEntry = (props: any) => {
 
   return (
     <>
-      <EditModal
-        id={props.id}
-        form={props.form}
-        isOpen={isOpen}
-        onOpen={onOpen}
-        onClose={onClose}
-        type="Video"
-        handleSubmit={props.menuControl.handleUpdate}
-      />
+    <VideoModal type="Edit" 
+      onOpen={onOpen}
+      onClose={onClose}
+      isOpen={isOpen}
+      {...props}
+    />
       <Tr
         _hover={{
           boxShadow: "lg",

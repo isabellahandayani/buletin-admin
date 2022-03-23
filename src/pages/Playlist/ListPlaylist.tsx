@@ -16,7 +16,7 @@ import {
 import { getList as getCategory } from "../../service/CategoryServices";
 import Card from "../../components/Common/Card";
 import AddButton from "../../components/Common/AddButton";
-import CreateModal from "../../components/Common/CreateModal";
+import Modal from "../../components/Common/Modal";
 
 const ListPlaylist = () => {
   const toast = useToast();
@@ -25,6 +25,7 @@ const ListPlaylist = () => {
   const [list, setList] = useState<any[]>([]);
   const [category, setCategory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [image, setImage] = useState<any>()
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const createToast = (status: string, message: string) => {
@@ -103,6 +104,12 @@ const ListPlaylist = () => {
 
   const form = [
     {
+      name: "Playlist Thumbnail",
+      type: "Avatar",
+      onChange: setImage,
+      value: image,
+    },
+    {
       name: "Playlist Name",
       placeholder: "playlist-name",
       value: name,
@@ -110,6 +117,7 @@ const ListPlaylist = () => {
     },
     {
       name: "Category",
+      type: "Select",
       onChange: setCurrent,
       value: current,
       selection: category,
@@ -134,7 +142,7 @@ const ListPlaylist = () => {
               <Card
                 key={item.playlist_id}
                 id={item.playlist_id}
-                type="Playlist"
+                type="Edit Playlist"
                 menuControl={menuControl}
                 name={item.playlist_name}
                 category={getName(item.category_id)}
@@ -146,13 +154,13 @@ const ListPlaylist = () => {
         </Grid>
       )}
       <AddButton onOpen={onOpen} />
-      <CreateModal
+      <Modal
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
         form={form}
-        menuControl={menuControl}
-        type="Playlist"
+        {...menuControl}
+        type="Add Playlist"
       />
     </Center>
   );

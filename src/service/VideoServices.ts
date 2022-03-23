@@ -72,8 +72,10 @@ export const create = async (
   video_title: String,
   video_desc: String,
   video_url: String,
-  channel_id: Number
+  channel_id: Number,
+  video_interest_id: any
 ) => {
+  let interest = video_interest_id.join(", ")
   let res = await fetch(`${BASE_URL}/video`, {
     method: "post",
     body: JSON.stringify({
@@ -81,6 +83,7 @@ export const create = async (
       video_desc: video_desc,
       video_url: video_url,
       channel_id: channel_id,
+      video_interest_id: interest,
     }),
   });
 
@@ -91,14 +94,17 @@ export const update = async (
   video_title: String,
   video_desc: String,
   video_url: String,
-  video_id: Number
+  video_id: Number,
+  video_interest_id: any
 ) => {
+  let interest = video_interest_id.join(", ")
   let res = await fetch(`${BASE_URL}/video/${video_id}`, {
     method: "put",
     body: JSON.stringify({
       video_title: video_title,
       video_desc: video_desc,
       video_url: video_url,
+      video_interest_id: interest,
     }),
   });
 
