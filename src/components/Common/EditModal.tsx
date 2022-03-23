@@ -48,7 +48,7 @@ const EditModal = (props: any) => {
                         }
                       >
                         {item.selection.map((category: any) => (
-                          <option key={category.category_id} value={category.category_id}>
+                          <option key={category.category_name} value={category.category_id}>
                             {category.category_name}
                           </option>
                         ))}
