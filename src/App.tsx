@@ -10,6 +10,7 @@ import Profile from "./pages/Auth/Profile";
 import DetailPlaylist from "./pages/Playlist/DetailPlaylist";
 import DetailVideo from "./pages/Video/DetailVideo";
 import Forget from "./pages/Auth/Forget";
+import Reset from "./pages/Auth/Reset";
 
 import Sidebar from "./components/Sidebar/Sidebar";
 import NotFound from "./components/Common/NotFound";
@@ -17,6 +18,7 @@ import NotFound from "./components/Common/NotFound";
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import Test from "./pages/Test";
 
 function App() {
   const [currentUser] = useState(localStorage.getItem("token"));
@@ -70,7 +72,9 @@ function App() {
         </Sidebar>
       ) : (
         <Routes>
-          <Route path="/forgot" element={<Forget />} />
+          <Route path="forgot" element={<Forget />} />
+          <Route path="reset" element={<Reset />} />
+          <Route path="test" element={<Test />} />
           <Route path="/" element={<Login />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>

@@ -66,3 +66,25 @@ export const forget = async (email: any) => {
 
   return await res.json();
 };
+
+export const validate = async (token: any) => {
+  let res = await fetch(`${BASE_URL}/user/reset/check`, {
+    method: "post",
+    body: JSON.stringify({ token: token }),
+  });
+
+  return await res.json();
+};
+
+export const reset = async (token: any, password: any, email: any) => {
+  let res = await fetch(`${BASE_URL}/user/reset`, {
+    method: "put",
+    body: JSON.stringify({
+      token: token,
+      new_password: password,
+      email: email,
+    }),
+  });
+
+  return await res.json();
+};
