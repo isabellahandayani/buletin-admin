@@ -14,7 +14,7 @@ import {
 } from "../../service/CategoryServices";
 import { useState, useEffect } from "react";
 import AddButton from "../../components/Common/AddButton";
-import CreateModal from "../../components/Common/CreateModal";
+import Modal from "../../components/Common/Modal";
 import Card from "../../components/Common/Card";
 
 const ListCategory = () => {
@@ -22,6 +22,7 @@ const ListCategory = () => {
   const [category, setCategory] = useState("");
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [image, setImage] = useState<any>();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetchList = async () => {
@@ -78,6 +79,12 @@ const ListCategory = () => {
 
   const form = [
     {
+      name: "Category Picture",
+      type: "Avatar",
+      value: image,
+      onChange: setImage,
+    },
+    {
       name: "Category Name",
       placeholder: "category-name",
       value: category,
@@ -97,38 +104,38 @@ const ListCategory = () => {
   }, []);
 
   return (
-      <Center mt={100}>
-        {loading ? (
-          <Spinner mt={200} size="xl" />
-        ) : list && list.length === 0 ? (
-          <Heading as="h2">No Category Yet</Heading>
-        ) : (
-          <Grid templateColumns="repeat(3, 1fr)" gap={10}>
-            {list &&
-              list.map((item: any) => (
-                <Card
-                  key={item.category_id}
-                  id={item.category_id}
-                  type="Category"
-                  name={item.category_name}
-                  picture={item.category_picture}
-                  form={form}
-                  link="#"
-                  menuControl={menuControl}
-                />
-              ))}
-          </Grid>
-        )}
+    <Center mt={100}>
+      {loading ? (
+        <Spinner mt={200} size="xl" />
+      ) : list && list.length === 0 ? (
+        <Heading as="h2">No Category Yet</Heading>
+      ) : (
+        <Grid templateColumns="repeat(3, 1fr)" gap={10}>
+          {list &&
+            list.map((item: any) => (
+              <Card
+                key={item.category_id}
+                id={item.category_id}
+                type="Edit Category"
+                name={item.category_name}
+                picture={item.category_picture}
+                form={form}
+                link="#"
+                menuControl={menuControl}
+              />
+            ))}
+        </Grid>
+      )}
       <AddButton onOpen={onOpen} />
-      <CreateModal
-        type="Category"
+      <Modal
+        type="Add Category"
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
         form={form}
-        menuControl={menuControl}
+        {...menuControl}
       />
-      </Center>
+    </Center>
   );
 };
 

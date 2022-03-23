@@ -9,7 +9,7 @@ import {
   Skeleton,
 } from "@chakra-ui/react";
 import { HiDotsVertical } from "react-icons/hi";
-import EditModal from "./EditModal";
+import Modal from "./Modal";
 
 const CardMenu = (props: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,7 +33,7 @@ const CardMenu = (props: any) => {
           </MenuList>
         </Menu>
       </Box>
-      <EditModal
+      <Modal
         id={props.id}
         form={props.form}
         isOpen={isOpen}
@@ -41,8 +41,6 @@ const CardMenu = (props: any) => {
         onClose={onClose}
         handleSubmit={props.handleUpdate}
         type={props.type}
-        name={props.name}
-        category={props.category}
       />
     </Skeleton>
   );

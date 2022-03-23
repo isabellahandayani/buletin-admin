@@ -11,7 +11,7 @@ import jwt_decode from "jwt-decode";
 
 import AddButton from "../../components/Common/AddButton";
 import Card from "../../components/Common/Card";
-import CreateModal from "../../components/Common/CreateModal";
+import Modal from "../../components/Common/Modal";
 
 import {
   create,
@@ -23,6 +23,7 @@ import {
 const ListChannel = () => {
   const toast = useToast();
   const [list, setList] = useState<any[]>([]);
+  const [image, setImage] = useState<any>();
   const [channel, setChannel] = useState("");
   const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -83,6 +84,12 @@ const ListChannel = () => {
 
   const form = [
     {
+      name: "Channel Thumbnail",
+      placeholder: "channel-thumbnail",
+      onChange: setImage,
+      value: image,
+    },
+    {
       name: "Channel Name",
       placeholder: "channel-name",
       onChange: setChannel,
@@ -98,7 +105,7 @@ const ListChannel = () => {
 
   const fetchList = async () => {
     let decoded: any = jwt_decode(localStorage.getItem("token")!!);
-    let { data } = await getList( decoded.account_id);
+    let { data } = await getList(decoded.account_id);
     setList(data.channels);
     setLoading(false);
   };
@@ -109,8 +116,7 @@ const ListChannel = () => {
 
   useEffect(() => {
     document.title = "Buletin.id | Channel";
-  }, [])
-  
+  }, []);
 
   return (
     <Center mt={100}>
@@ -123,7 +129,7 @@ const ListChannel = () => {
               <Card
                 key={item.channel_id}
                 id={item.channel_id}
-                type="Channel"
+                type="Edit Channel"
                 menuControl={menuControl}
                 name={item.channel_name}
                 picture={item.channel_picture}
@@ -137,13 +143,13 @@ const ListChannel = () => {
         <Heading as="h2">No Channel Yet</Heading>
       )}
       <AddButton onOpen={onOpen} />
-      <CreateModal
+      <Modal
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
         form={form}
-        menuControl={menuControl}
-        type="Channel"
+        {...menuControl}
+        type="Add Channel"
       />
     </Center>
   );
