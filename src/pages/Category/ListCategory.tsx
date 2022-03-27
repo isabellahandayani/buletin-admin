@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 import AddButton from "../../components/Common/AddButton";
 import Modal from "../../components/Common/Modal";
 import Card from "../../components/Common/Card";
-import { ID } from "../../const";
+import { ID, DRIVE_URL } from "../../const";
 import { upload } from "../../service/GoogleServices";
 
 const ListCategory = () => {
@@ -45,6 +45,11 @@ const ListCategory = () => {
     });
   };
 
+  const handleClose = () => {
+    setPreview(undefined);
+    form.filter((item: any) => item.onChange(undefined));
+    onClose();
+  };
 
   const handleSubmit = async () => {
     let res: any = await upload(image, ID.CATEGORY);
@@ -55,10 +60,7 @@ const ListCategory = () => {
     } else {
       createToast("Error", "Category Creation Failed");
     }
-    onClose();
-    setCategory("");
-    setImage(undefined)
-    setPreview(undefined)
+    handleClose();
   };
 
   const handleDelete = async (category_id: any) => {
@@ -80,8 +82,7 @@ const ListCategory = () => {
     } else {
       createToast("Error", "Update Failed");
     }
-    onClose();
-    setCategory("");
+    handleClose();
   };
 
   const form = [
@@ -104,6 +105,7 @@ const ListCategory = () => {
     handleDelete: handleDelete,
     handleUpdate: handleUpdate,
     handleSubmit: handleSubmit,
+    handleClose: handleClose,
   };
 
   useEffect(() => {
@@ -124,9 +126,9 @@ const ListCategory = () => {
               <Card
                 key={item.category_id}
                 id={item.category_id}
-                type="Edit Category"
+                type="Category"
                 name={item.category_name}
-                picture={item.category_picture}
+                picture={`${DRIVE_URL}${item.category_picture}`}
                 form={form}
                 link="#"
                 menuControl={menuControl}
@@ -136,7 +138,7 @@ const ListCategory = () => {
       )}
       <AddButton onOpen={onOpen} />
       <Modal
-        type="Add Category"
+        type="Category"
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}

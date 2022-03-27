@@ -17,6 +17,8 @@ import { getList as getCategory } from "../../service/CategoryServices";
 import Card from "../../components/Common/Card";
 import AddButton from "../../components/Common/AddButton";
 import Modal from "../../components/Common/Modal";
+import { upload } from "../../service/GoogleServices";
+import { DRIVE_URL, ID } from "../../const";
 
 const ListPlaylist = () => {
   const toast = useToast();
@@ -25,7 +27,8 @@ const ListPlaylist = () => {
   const [list, setList] = useState<any[]>([]);
   const [category, setCategory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [image, setImage] = useState<any>()
+  const [image, setImage] = useState<any>();
+  const [preview, setPreview] = useState<any>();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const createToast = (status: string, message: string) => {
@@ -39,9 +42,15 @@ const ListPlaylist = () => {
     });
   };
 
+  const handleClose = () => {
+    setPreview(undefined);
+    form.filter((item: any) => item.onChange(undefined));
+    onClose();
+  };
+
   const fetchList = async () => {
     let { data } = await getList();
-    if(data.playlists) {
+    if (data.playlists) {
       setList(data.playlists);
     } else {
       setList([]);
@@ -69,20 +78,21 @@ const ListPlaylist = () => {
     } else {
       createToast("Error", "Playlist not updated");
     }
-    onClose();
-    form.filter((item: any) => item.onChange(""));
+    handleClose();
   };
 
   const handleSubmit = async () => {
-    let { data } = await create(current, name);
+    let res: any = await upload(image, ID.PLAYLIST);
+    let { data } = await create(current, name, res ? res.id : "placeholder");
+
     if (data) {
       createToast("Success", "Playlist has been created");
       fetchList();
     } else {
       createToast("Error", "Create playlist failed");
     }
-    onClose();
-    form.filter((item: any) => item.onChange(""));
+
+    handleClose();
   };
 
   const handleDelete = async (playlist_id: any) => {
@@ -100,9 +110,17 @@ const ListPlaylist = () => {
     handleUpdate: handleUpdate,
     handleSubmit: handleSubmit,
     handleDelete: handleDelete,
+    handleClose: handleClose,
   };
 
   const form = [
+    {
+      type: "Avatar",
+      value: preview,
+      image: image,
+      onChange: setImage,
+      setPreview: setPreview,
+    },
     {
       name: "Playlist Name",
       placeholder: "playlist-name",
@@ -116,12 +134,6 @@ const ListPlaylist = () => {
       value: current,
       selection: category,
     },
-    {
-      name: "Playlist Thumbnail",
-      type: "Avatar",
-      onChange: setImage,
-      value: image,
-    },
   ];
 
   const getName = (id: number) => {
@@ -134,19 +146,22 @@ const ListPlaylist = () => {
       {loading ? (
         <Spinner mt={200} size="xl" />
       ) : category && list && list.length === 0 ? (
-        <Heading mt={200} as="h2">No Playlists Yet</Heading>
+        <Heading mt={200} as="h2">
+          No Playlists Yet
+        </Heading>
       ) : (
         <Grid templateColumns="repeat(3, 1fr)" gap={10}>
-          {category && list &&
+          {category &&
+            list &&
             list.map((item: any) => (
               <Card
                 key={item.playlist_id}
                 id={item.playlist_id}
-                type="Edit Playlist"
+                type="Playlist"
                 menuControl={menuControl}
                 name={item.playlist_name}
                 category={getName(item.category_id)}
-                picture={item.playlist_picture}
+                picture={`${DRIVE_URL}${item.playlist_picture}`}
                 link={`/playlist/${item.playlist_id}`}
                 form={form}
               />
@@ -160,7 +175,7 @@ const ListPlaylist = () => {
         onClose={onClose}
         form={form}
         {...menuControl}
-        type="Add Playlist"
+        type="Playlist"
       />
     </Center>
   );

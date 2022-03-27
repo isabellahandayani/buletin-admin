@@ -11,3 +11,5 @@ export const ID = {
 };
 
 export const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
+
+export const DRIVE_URL = "https://drive.google.com/uc?id=";

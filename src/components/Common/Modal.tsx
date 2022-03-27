@@ -21,15 +21,6 @@ import { useRef } from "react";
 const ComonModal = (props: any) => {
   const inputFile = useRef<HTMLInputElement | null>(null);
 
-  const handleClose = () => {
-    if (props.form[0].value) {
-      props.form[0].setPreview(undefined);
-    }
-
-    props.form.filter((item: any) => item.onChange(undefined));
-    props.onClose();
-  };
-
   const renderInput = (item: any) => {
     switch (item.type) {
       case "Avatar":
@@ -93,8 +84,8 @@ const ComonModal = (props: any) => {
       isOpen={props.isOpen}
       onClose={props.onClose}
       isCentered
-      onOverlayClick={handleClose}
-      onEsc={handleClose}
+      onOverlayClick={props.handleclose}
+      onEsc={props.handleclose}
     >
       <ModalOverlay />
       <ModalContent>
@@ -124,7 +115,7 @@ const ComonModal = (props: any) => {
               _hover={{
                 bg: "red.500",
               }}
-              onClick={handleClose}
+              onClick={props.handleclose}
             >
               Cancel
             </Button>
