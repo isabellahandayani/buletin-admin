@@ -16,6 +16,8 @@ import { useState, useEffect } from "react";
 import AddButton from "../../components/Common/AddButton";
 import Modal from "../../components/Common/Modal";
 import Card from "../../components/Common/Card";
+import { ID } from "../../const";
+import { upload } from "../../service/GoogleServices";
 
 const ListCategory = () => {
   const toast = useToast();
@@ -23,6 +25,7 @@ const ListCategory = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState<any>();
+  const [preview, setPreview] = useState<any>();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetchList = async () => {
@@ -42,8 +45,10 @@ const ListCategory = () => {
     });
   };
 
+
   const handleSubmit = async () => {
-    let { data } = await create(category, "placeholder");
+    let res: any = await upload(image, ID.CATEGORY);
+    let { data } = await create(category, res.id ? res.id : "placeholder");
     if (data) {
       createToast("Success", "Category Successfully Created");
       fetchList();
@@ -52,6 +57,8 @@ const ListCategory = () => {
     }
     onClose();
     setCategory("");
+    setImage(undefined)
+    setPreview(undefined)
   };
 
   const handleDelete = async (category_id: any) => {
@@ -79,10 +86,11 @@ const ListCategory = () => {
 
   const form = [
     {
-      name: "Category Picture",
       type: "Avatar",
-      value: image,
+      value: preview,
+      image: image,
       onChange: setImage,
+      setPreview: setPreview,
     },
     {
       name: "Category Name",

@@ -104,12 +104,6 @@ const ListPlaylist = () => {
 
   const form = [
     {
-      name: "Playlist Thumbnail",
-      type: "Avatar",
-      onChange: setImage,
-      value: image,
-    },
-    {
       name: "Playlist Name",
       placeholder: "playlist-name",
       value: name,
@@ -121,6 +115,12 @@ const ListPlaylist = () => {
       onChange: setCurrent,
       value: current,
       selection: category,
+    },
+    {
+      name: "Playlist Thumbnail",
+      type: "Avatar",
+      onChange: setImage,
+      value: image,
     },
   ];
 

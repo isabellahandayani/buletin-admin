@@ -9,3 +9,5 @@ export const ID = {
   PLAYLIST: process.env.REACT_APP_PLAYLIST_FOLDER,
   CHANNEL: process.env.REACT_APP_CHANNEL_FOLDER,
 };
+
+export const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;

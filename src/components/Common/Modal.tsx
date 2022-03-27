@@ -12,14 +12,21 @@ import {
   ButtonGroup,
   Stack,
   Select,
-  Image,
   Center,
+  Image,
 } from "@chakra-ui/react";
 import { FALLBACK_IMG } from "../../const";
+import { useRef } from "react";
 
 const ComonModal = (props: any) => {
+  const inputFile = useRef<HTMLInputElement | null>(null);
+
   const handleClose = () => {
-    props.form.filter((item: any) => item.onChange(""));
+    if (props.form[0].value) {
+      props.form[0].setPreview(undefined);
+    }
+
+    props.form.filter((item: any) => item.onChange(undefined));
     props.onClose();
   };
 
@@ -32,11 +39,25 @@ const ComonModal = (props: any) => {
               maxH={200}
               fallbackSrc={FALLBACK_IMG}
               borderRadius={10}
-              objectFit="cover"
               src={item.value}
+              objectFit="cover"
               opacity={0.5}
               _hover={{
                 opacity: 1,
+              }}
+              cursor="pointer"
+              onClick={() => inputFile?.current?.click()}
+            />
+            <Input
+              type="file"
+              id="file-input"
+              style={{ display: "none" }}
+              ref={inputFile}
+              onChange={(e) => {
+                if (e.target.files) {
+                  item.setPreview(URL.createObjectURL(e.target.files[0]));
+                  item.onChange(e.target.files[0]);
+                }
               }}
             />
           </Center>
