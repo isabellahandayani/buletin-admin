@@ -7,7 +7,7 @@ import {
   Spacer,
   Skeleton,
   Tag,
-  Stack
+  Stack,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -69,6 +69,7 @@ const Card = (props: any) => {
             id={props.id}
             form={props.form}
             name={props.name}
+            picture={props.picture}
             category={props.category}
           />
         </Flex>

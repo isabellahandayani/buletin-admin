@@ -22,7 +22,7 @@ import LOGIN_IMAGE from "../../assets/login_image.svg";
 import { BiHide, BiShow } from "react-icons/bi";
 
 const Login = () => {
-  const [click, setClick] = useState(false);
+  const [submit, setSubmit] = useState(false);
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -31,7 +31,7 @@ const Login = () => {
   const toast = useToast();
 
   const handleSubmit = async () => {
-    setClick(true);
+    setSubmit(true);
 
     const getToast = () => {
       toast({
@@ -52,7 +52,7 @@ const Login = () => {
     } catch (e) {
       getToast();
     }
-    setClick(false);
+    setSubmit(false);
   };
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const Login = () => {
               Forgot password?
             </Link>
             <Button
-              isLoading={click}
+              isLoading={submit}
               loadingText="Signing In"
               w="full"
               bg={"blue.400"}

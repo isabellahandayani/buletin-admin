@@ -41,6 +41,8 @@ const CardMenu = (props: any) => {
         onClose={onClose}
         handleSubmit={props.handleUpdate}
         type={props.type}
+        name={props.name}
+        picture={props.picture}
       />
     </Skeleton>
   );
