@@ -40,12 +40,13 @@ export const deleteList = async (id: any) => {
   return await res.json();
 };
 
-export const create = async (id: any, name: any) => {
+export const create = async (id: any, name: any, picture: any) => {
   let res = await fetch(`${BASE_URL}/playlist`, {
     method: "POST",
     body: JSON.stringify({
       category_id: id,
       playlist_name: name,
+      playlist_picture: picture
     }),
   });
 

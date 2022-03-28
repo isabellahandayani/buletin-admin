@@ -16,6 +16,8 @@ import { useState, useEffect } from "react";
 import AddButton from "../../components/Common/AddButton";
 import Modal from "../../components/Common/Modal";
 import Card from "../../components/Common/Card";
+import { ID, DRIVE_URL } from "../../const";
+import { upload } from "../../service/GoogleServices";
 
 const ListCategory = () => {
   const toast = useToast();
@@ -23,6 +25,7 @@ const ListCategory = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState<any>();
+  const [preview, setPreview] = useState<any>();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetchList = async () => {
@@ -42,16 +45,22 @@ const ListCategory = () => {
     });
   };
 
+  const handleClose = () => {
+    setPreview(undefined);
+    form.filter((item: any) => item.onChange(undefined));
+    onClose();
+  };
+
   const handleSubmit = async () => {
-    let { data } = await create(category, "placeholder");
+    let res: any = await upload(image, ID.CATEGORY);
+    let { data } = await create(category, res.id ? res.id : "placeholder");
     if (data) {
       createToast("Success", "Category Successfully Created");
       fetchList();
     } else {
       createToast("Error", "Category Creation Failed");
     }
-    onClose();
-    setCategory("");
+    handleClose();
   };
 
   const handleDelete = async (category_id: any) => {
@@ -73,16 +82,16 @@ const ListCategory = () => {
     } else {
       createToast("Error", "Update Failed");
     }
-    onClose();
-    setCategory("");
+    handleClose();
   };
 
   const form = [
     {
-      name: "Category Picture",
       type: "Avatar",
-      value: image,
+      value: preview,
+      image: image,
       onChange: setImage,
+      setPreview: setPreview,
     },
     {
       name: "Category Name",
@@ -96,6 +105,7 @@ const ListCategory = () => {
     handleDelete: handleDelete,
     handleUpdate: handleUpdate,
     handleSubmit: handleSubmit,
+    handleClose: handleClose,
   };
 
   useEffect(() => {
@@ -116,9 +126,9 @@ const ListCategory = () => {
               <Card
                 key={item.category_id}
                 id={item.category_id}
-                type="Edit Category"
+                type="Category"
                 name={item.category_name}
-                picture={item.category_picture}
+                picture={`${DRIVE_URL}${item.category_picture}`}
                 form={form}
                 link="#"
                 menuControl={menuControl}
@@ -128,7 +138,7 @@ const ListCategory = () => {
       )}
       <AddButton onOpen={onOpen} />
       <Modal
-        type="Add Category"
+        type="Category"
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}

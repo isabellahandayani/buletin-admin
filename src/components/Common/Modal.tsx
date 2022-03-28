@@ -12,16 +12,14 @@ import {
   ButtonGroup,
   Stack,
   Select,
-  Image,
   Center,
+  Image,
 } from "@chakra-ui/react";
 import { FALLBACK_IMG } from "../../const";
+import { useRef } from "react";
 
 const ComonModal = (props: any) => {
-  const handleClose = () => {
-    props.form.filter((item: any) => item.onChange(""));
-    props.onClose();
-  };
+  const inputFile = useRef<HTMLInputElement | null>(null);
 
   const renderInput = (item: any) => {
     switch (item.type) {
@@ -32,11 +30,25 @@ const ComonModal = (props: any) => {
               maxH={200}
               fallbackSrc={FALLBACK_IMG}
               borderRadius={10}
-              objectFit="cover"
               src={item.value}
+              objectFit="cover"
               opacity={0.5}
               _hover={{
                 opacity: 1,
+              }}
+              cursor="pointer"
+              onClick={() => inputFile?.current?.click()}
+            />
+            <Input
+              type="file"
+              id="file-input"
+              style={{ display: "none" }}
+              ref={inputFile}
+              onChange={(e) => {
+                if (e.target.files) {
+                  item.setPreview(URL.createObjectURL(e.target.files[0]));
+                  item.onChange(e.target.files[0]);
+                }
               }}
             />
           </Center>
@@ -72,8 +84,8 @@ const ComonModal = (props: any) => {
       isOpen={props.isOpen}
       onClose={props.onClose}
       isCentered
-      onOverlayClick={handleClose}
-      onEsc={handleClose}
+      onOverlayClick={props.handleclose}
+      onEsc={props.handleclose}
     >
       <ModalOverlay />
       <ModalContent>
@@ -103,7 +115,7 @@ const ComonModal = (props: any) => {
               _hover={{
                 bg: "red.500",
               }}
-              onClick={handleClose}
+              onClick={props.handleclose}
             >
               Cancel
             </Button>

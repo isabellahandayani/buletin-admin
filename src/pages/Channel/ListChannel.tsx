@@ -19,11 +19,14 @@ import {
   getList,
   update,
 } from "../../service/ChannelServices";
+import { DRIVE_URL, ID } from "../../const";
+import { upload } from "../../service/GoogleServices";
 
 const ListChannel = () => {
   const toast = useToast();
   const [list, setList] = useState<any[]>([]);
   const [image, setImage] = useState<any>();
+  const [preview, setPreview] = useState<any>();
   const [channel, setChannel] = useState("");
   const [loading, setLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,18 +42,28 @@ const ListChannel = () => {
     });
   };
 
+  const handleClose = () => {
+    onClose();
+    setPreview(undefined);
+    form.filter((item: any) => item.onChange(""));
+  };
+
   const handleSubmit = async () => {
+    let res: any = await upload(image, ID.CHANNEL);
     let decoded: any = jwt_decode(localStorage.getItem("token")!!);
 
-    let { data } = await create(decoded.account_id, channel, "placeholder");
+    let { data } = await create(
+      decoded.account_id,
+      channel,
+      res ? res.id : "placeholder"
+    );
     if (data) {
       createToast("Success", "Channel Successfully Created");
       fetchList();
     } else {
       createToast("Error", "Channel Creation Failed");
     }
-    onClose();
-    form.filter((item: any) => item.onChange(""));
+    handleClose();
   };
 
   const handleUpdate = async (channel_id: any) => {
@@ -68,8 +81,7 @@ const ListChannel = () => {
     } else {
       createToast("Error", "Update Failed");
     }
-    onClose();
-    form.filter((item: any) => item.onChange(""));
+    handleClose();
   };
 
   const handleDelete = async (channel_id: any) => {
@@ -80,14 +92,16 @@ const ListChannel = () => {
     } else {
       createToast("Error", "Deletion Failed");
     }
+    onClose();
   };
 
   const form = [
     {
-      name: "Channel Thumbnail",
-      placeholder: "channel-thumbnail",
+      type: "Avatar",
+      value: preview,
+      image: image,
       onChange: setImage,
-      value: image,
+      setPreview: setPreview,
     },
     {
       name: "Channel Name",
@@ -101,6 +115,7 @@ const ListChannel = () => {
     handleDelete: handleDelete,
     handleUpdate: handleUpdate,
     handleSubmit: handleSubmit,
+    handleClose: handleClose,
   };
 
   const fetchList = async () => {
@@ -132,7 +147,7 @@ const ListChannel = () => {
                 type="Edit Channel"
                 menuControl={menuControl}
                 name={item.channel_name}
-                picture={item.channel_picture}
+                picture={`${DRIVE_URL}${item.channel_picture}`}
                 created_at={item.created_at}
                 link={`/channel/${item.channel_id}`}
                 form={form}

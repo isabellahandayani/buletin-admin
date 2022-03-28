@@ -1,26 +1,23 @@
-import { SCRIPT_URL } from "../const";
+import { ACCESS_TOKEN } from "../const";
 
-export const upload = (file: any, type: any) => {
-  let reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = () => {
-    let rawLog = (reader!!.result!! as string).split(",")[1];
-    let dataSend = {
-      dataReq: {
-        data: rawLog,
-        name: file.name,
-        type: file.type,
-      },
-      fname: type,
-    };
-
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify(dataSend),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .catch((err) => console.log(err));
+export const upload = async (file: any, folder: any) => {
+  let result;
+  let windowObj = window as any;
+  let ResumeableUpload = windowObj.ResumableUploadToGoogleDrive2;
+  let resource = {
+    file: file,
+    accessToken: ACCESS_TOKEN,
+    folderId: folder,
   };
+
+  let ru = new ResumeableUpload();
+
+  await ru.Do(resource, (res: any, err: any) => {
+    if (err) return;
+    if (res.status === "Done") {
+      result = res.result;
+    }
+  });
+  
+  return result;
 };
