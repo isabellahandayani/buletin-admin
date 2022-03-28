@@ -71,7 +71,7 @@ export const deleteVideo = async (id: number) => {
 export const create = async (
   video_title: String,
   video_desc: String,
-  video_url: String,
+  video_file_id: String,
   channel_id: Number,
   video_interest_id: any
 ) => {
@@ -81,7 +81,7 @@ export const create = async (
     body: JSON.stringify({
       video_title: video_title,
       video_desc: video_desc,
-      video_url: video_url,
+      video_file_id: video_file_id,
       channel_id: channel_id,
       video_interest_id: interest,
     }),
