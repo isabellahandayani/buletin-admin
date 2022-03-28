@@ -75,6 +75,7 @@ function App() {
           <Route path="reset" element={<Reset />} />
           <Route path="/" element={<Login />} />
           <Route path="*" element={<Navigate replace to="/" />} />
+          <Route path="register" element={<Register />} />
         </Routes>
       )}
     </div>

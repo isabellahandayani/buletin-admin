@@ -3,13 +3,10 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalBody,
-  ModalFooter,
   FormControl,
   FormLabel,
   Input,
-  ButtonGroup,
   useToast,
   Textarea,
   Stack,
@@ -17,9 +14,17 @@ import {
   Tag,
   TagLabel,
   TagCloseButton,
+  Center,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { ID } from "../../const";
+import { upload } from "../../service/GoogleServices";
 import { create, update } from "../../service/VideoServices";
 
 const VideoModal = (props: any) => {
@@ -29,7 +34,8 @@ const VideoModal = (props: any) => {
   const [list, setList] = useState<any[]>([]);
   const [title, setTitle] = useState<string>(props.video_title || "");
   const [desc, setDesc] = useState(props.video_desc || "");
-  const [url, setUrl] = useState(props.video_url || "");
+  const [tabIndex, setIndex] = useState(0);
+  const [video, setVideo] = useState<any>();
 
   const handleChange = (interest: any) => {
     if (interest) {
@@ -50,11 +56,13 @@ const VideoModal = (props: any) => {
   };
 
   const handleSubmit = async () => {
+    let resVideo: any = await upload(video, ID.VIDEO);
+
     if (props.type === "Add") {
       var { data } = await create(
         title,
         desc,
-        url,
+        resVideo ? resVideo.id : "placeholder",
         parseInt(channelId!!),
         chosen.map((item: any) => item.interest_id)
       );
@@ -63,13 +71,13 @@ const VideoModal = (props: any) => {
       var { data } = await update(
         title,
         desc,
-        url,
+        resVideo ? resVideo.id : "placeholder",
         props.video_id,
         chosen.map((item: any) => item.interest_id)
       );
     }
 
-    if (data) {
+    if (data && resVideo) {
       toast({
         title: "Success",
         description: "Video successfully created",
@@ -81,11 +89,8 @@ const VideoModal = (props: any) => {
       props.fetchList();
       props.onClose();
 
-      if(props.type === "Add") {
-        setTitle("");
-        setDesc("");
-        setUrl("");
-        setChosen([]);
+      if (props.type === "Add") {
+        handleClose();
       }
       setList(
         Object.entries(props.interest).map(([k, v]) => ({
@@ -103,6 +108,21 @@ const VideoModal = (props: any) => {
         position: "top",
       });
     }
+  };
+
+  const handleClose = () => {
+    setList(
+      Object.entries(props.interest).map(([k, v]) => ({
+        interest_id: k,
+        interest_name: v,
+      }))
+    );
+    setChosen([]);
+    setTitle("");
+    setDesc("");
+    setVideo(undefined);
+    setIndex(0);
+    props.onClose();
   };
 
   useEffect(() => {
@@ -130,105 +150,133 @@ const VideoModal = (props: any) => {
   }, [props.interest]);
 
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered size="lg">
+    <Modal
+      isOpen={props.isOpen}
+      onClose={handleClose}
+      isCentered
+      size="lg"
+      onOverlayClick={handleClose}
+      onEsc={handleClose}
+    >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{props.type} Video</ModalHeader>
         <ModalBody>
-          <Stack spacing={4}>
-            <FormControl id="title">
-              <FormLabel>Video Title</FormLabel>
-              <Input
-                placeholder="video-title"
-                _placeholder={{ color: "gray.500" }}
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="desc">
-              <FormLabel>Video Description</FormLabel>
-              <Textarea
-                value={desc}
-                placeholder="video-description"
-                onChange={(e) => setDesc(e.target.value)}
-                _placeholder={{ color: "gray.500" }}
-                size="md"
-                resize="none"
-              />
-            </FormControl>
-            <FormControl id="interest">
-              <FormLabel>Video Interest</FormLabel>
-              <Select
-                placeholder="Select Interest"
-                onChange={(e) => handleChange(e.target.value)}
-              >
-                {list &&
-                  list.map((item: any) => (
-                    <option key={item.interest_id} value={item.interest_id}>
-                      {item.interest_name}
-                    </option>
-                  ))}
-
-              </Select>
-
-              {chosen &&
-                chosen.map((item: any) => (
-                  <Tag
-                    key={item.interest_id}
-                    colorScheme="telegram"
-                    mt={2}
-                    mr={2}
-                  >
-                    <TagLabel>{item.interest_name}</TagLabel>
-                    <TagCloseButton
-                      sx={{
-                        width: "1.5rem",
-                      }}
-                      onClick={() => handleDelete(item.interest_id)}
+          <Tabs isFitted variant="line" size="md" index={tabIndex}>
+            <TabList>
+              <Tab _focus={{ boxShadow: "none" }} />
+              <Tab _focus={{ boxShadow: "none" }} />
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Stack spacing={4}>
+                  <FormControl id="title">
+                    <FormLabel>Video Title</FormLabel>
+                    <Input
+                      placeholder="video-title"
+                      _placeholder={{ color: "gray.500" }}
+                      type="text"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
                     />
-                  </Tag>
-                ))}
-            </FormControl>
-            <FormControl id="uploader">
-              <FormLabel>Video Uploader</FormLabel>
-              <Input
-                placeholder="www.youtube.com/watch?v=RKueSD3gLJQ&t=15s"
-                _placeholder={{ color: "gray.500" }}
-                type="text"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-              />
-            </FormControl>
-          </Stack>
+                  </FormControl>
+                  <FormControl id="desc">
+                    <FormLabel>Video Description</FormLabel>
+                    <Textarea
+                      value={desc}
+                      placeholder="video-description"
+                      onChange={(e) => setDesc(e.target.value)}
+                      _placeholder={{ color: "gray.500" }}
+                      resize="none"
+                    />
+                  </FormControl>
+                  <FormControl id="interest">
+                    <FormLabel>Video Interest</FormLabel>
+                    <Select
+                      placeholder="Select Interest"
+                      onChange={(e) => handleChange(e.target.value)}
+                    >
+                      {list &&
+                        list.map((item: any) => (
+                          <option
+                            key={item.interest_id}
+                            value={item.interest_id}
+                          >
+                            {item.interest_name}
+                          </option>
+                        ))}
+                    </Select>
+
+                    {chosen &&
+                      chosen.map((item: any) => (
+                        <Tag
+                          key={`${item.interest_id}-chosen`}
+                          colorScheme="telegram"
+                          mt={2}
+                          mr={2}
+                        >
+                          <TagLabel>{item.interest_name}</TagLabel>
+                          <TagCloseButton
+                            sx={{
+                              width: "1.5rem",
+                            }}
+                            onClick={() => handleDelete(item.interest_id)}
+                          />
+                        </Tag>
+                      ))}
+                  </FormControl>
+                  <Button
+                    bg={"blue.400"}
+                    color={"white"}
+                    w="full"
+                    _hover={{
+                      bg: "blue.500",
+                    }}
+                    onClick={() => setIndex(1)}
+                    isDisabled={!title || !desc || chosen.length === 0}
+                  >
+                    Next
+                  </Button>
+                </Stack>
+              </TabPanel>
+              <TabPanel>
+                <Stack spacing={2}>
+                  <FormControl>
+                    <FormLabel>Video Uploader</FormLabel>
+                    <Center>
+                      <Input
+                        type="file"
+                        onChange={(e) => {
+                          if (e.target.files) {
+                            setVideo(e.target.files[0]);
+                          }
+                        }}
+                      />
+                    </Center>
+                  </FormControl>
+                  <Button
+                    bg={"blue.400"}
+                    color={"white"}
+                    w="full"
+                    _hover={{
+                      bg: "blue.500",
+                    }}
+                    onClick={handleSubmit}
+                    isDisabled={!video}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    variant="outline"
+                    w="full"
+                    onClick={() => setIndex(0)}
+                  >
+                    Back
+                  </Button>
+                </Stack>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </ModalBody>
-        <ModalFooter mx="auto">
-          <ButtonGroup>
-            <Button
-              bg={"red.400"}
-              color={"white"}
-              w="full"
-              _hover={{
-                bg: "red.500",
-              }}
-              onClick={props.onClose}
-            >
-              Cancel
-            </Button>
-            <Button
-              bg={"blue.400"}
-              color={"white"}
-              w="full"
-              _hover={{
-                bg: "blue.500",
-              }}
-              onClick={handleSubmit}
-              isDisabled={!url || !title || !desc || desc.length > 200}
-            >
-              Save
-            </Button>
-          </ButtonGroup>
-        </ModalFooter>
       </ModalContent>
     </Modal>
   );

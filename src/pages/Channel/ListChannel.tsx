@@ -144,7 +144,7 @@ const ListChannel = () => {
               <Card
                 key={item.channel_id}
                 id={item.channel_id}
-                type="Edit Channel"
+                type="Channel"
                 menuControl={menuControl}
                 name={item.channel_name}
                 picture={`${DRIVE_URL}${item.channel_picture}`}
@@ -164,7 +164,7 @@ const ListChannel = () => {
         onClose={onClose}
         form={form}
         {...menuControl}
-        type="Add Channel"
+        type="Channel"
       />
     </Center>
   );

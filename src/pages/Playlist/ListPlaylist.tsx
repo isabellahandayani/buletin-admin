@@ -123,6 +123,7 @@ const ListPlaylist = () => {
     },
     {
       name: "Playlist Name",
+      type: "Input",
       placeholder: "playlist-name",
       value: name,
       onChange: setName,

@@ -5,15 +5,14 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   FormControl,
   FormLabel,
   Input,
-  ButtonGroup,
   Stack,
   Select,
   Center,
   Image,
+  ModalFooter
 } from "@chakra-ui/react";
 import { FALLBACK_IMG } from "../../const";
 import { useRef } from "react";
@@ -82,7 +81,7 @@ const ComonModal = (props: any) => {
   return (
     <Modal
       isOpen={props.isOpen}
-      onClose={props.onClose}
+      onClose={props.handleClose}
       isCentered
       onOverlayClick={props.handleclose}
       onEsc={props.handleclose}
@@ -91,7 +90,7 @@ const ComonModal = (props: any) => {
       <ModalContent>
         <ModalHeader>{props.type}</ModalHeader>
         <ModalBody>
-          <Stack spacing={2}>
+          <Stack spacing={4}>
             {props &&
               props.form.map((item: any) => {
                 return (
@@ -104,22 +103,11 @@ const ComonModal = (props: any) => {
                   </FormControl>
                 );
               })}
+
           </Stack>
         </ModalBody>
-        <ModalFooter mx="auto">
-          <ButtonGroup>
-            <Button
-              bg={"red.400"}
-              color={"white"}
-              w="full"
-              _hover={{
-                bg: "red.500",
-              }}
-              onClick={props.handleclose}
-            >
-              Cancel
-            </Button>
-            <Button
+        <ModalFooter>
+        <Button
               bg={"blue.400"}
               color={"white"}
               w="full"
@@ -131,7 +119,6 @@ const ComonModal = (props: any) => {
             >
               Save
             </Button>
-          </ButtonGroup>
         </ModalFooter>
       </ModalContent>
     </Modal>

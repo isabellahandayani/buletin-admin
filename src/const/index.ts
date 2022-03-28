@@ -5,6 +5,7 @@ export const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbymjj26TnGSX0lK4opE_OTwYnjxGALe0kGOqMzv-76CyF7n6gY86krfyDUwqujLDAa3/exec";
 export const ID = {
   CATEGORY: process.env.REACT_APP_CATEGORY_FOLDER,
+  VIDEO_THUMBNAIL: process.env.REACT_APP_VIDEO_THUMBNAIL_FOLDER,
   VIDEO: process.env.REACT_APP_VIDEO_FOLDER,
   PLAYLIST: process.env.REACT_APP_PLAYLIST_FOLDER,
   CHANNEL: process.env.REACT_APP_CHANNEL_FOLDER,
