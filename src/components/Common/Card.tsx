@@ -19,8 +19,11 @@ const Card = (props: any) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    if(props) {
+      setLoading(false);
+      console.log(props)
+    }
+  }, [props]);
 
   return (
     <Skeleton isLoaded={!loading}>
@@ -71,6 +74,7 @@ const Card = (props: any) => {
             name={props.name}
             picture={props.picture}
             category={props.category}
+            submit={props.submit}
           />
         </Flex>
       </Box>

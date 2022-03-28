@@ -22,7 +22,7 @@ const ComonModal = (props: any) => {
 
   const handleClose = () => {
     props.onClose();
-    props.form[0].onChange(undefined);
+    props.form[0].setPreview(undefined);
     props.form.filter((item: any) => item.onChange(undefined));
   };
 

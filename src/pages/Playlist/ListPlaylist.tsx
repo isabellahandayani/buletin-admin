@@ -29,6 +29,7 @@ const ListPlaylist = () => {
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState<any>();
   const [preview, setPreview] = useState<any>();
+  const [submit, setSubmit] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const createToast = (status: string, message: string) => {
@@ -40,12 +41,6 @@ const ListPlaylist = () => {
       isClosable: true,
       position: "top",
     });
-  };
-
-  const handleClose = () => {
-    setPreview(undefined);
-    form.filter((item: any) => item.onChange(undefined));
-    onClose();
   };
 
   const fetchList = async () => {
@@ -69,8 +64,19 @@ const ListPlaylist = () => {
     document.title = "Buletin.id | Playlist";
   }, []);
 
-  const handleUpdate = async (playlist_id: any) => {
-    let { data } = await update(playlist_id, name, current);
+  const handleUpdate = async (id: any, picture: any, pName: any) => {
+    let res: any;
+
+    setSubmit(true);
+    if (image) {
+      res = await upload(image, ID.CATEGORY);
+    }
+    let { data } = await update(
+      id,
+      name ? name : pName,
+      current,
+      res ? res.id : picture
+    );
 
     if (data) {
       createToast("Success", "Playlist updated successfully");
@@ -78,10 +84,12 @@ const ListPlaylist = () => {
     } else {
       createToast("Error", "Playlist not updated");
     }
-    handleClose();
+    
+    setSubmit(false);
   };
 
   const handleSubmit = async () => {
+    setSubmit(true);
     let res: any = await upload(image, ID.PLAYLIST);
     let { data } = await create(current, name, res ? res.id : "placeholder");
 
@@ -91,8 +99,7 @@ const ListPlaylist = () => {
     } else {
       createToast("Error", "Create playlist failed");
     }
-
-    handleClose();
+    setSubmit(false);
   };
 
   const handleDelete = async (playlist_id: any) => {
@@ -110,13 +117,13 @@ const ListPlaylist = () => {
     handleUpdate: handleUpdate,
     handleSubmit: handleSubmit,
     handleDelete: handleDelete,
-    handleClose: handleClose,
   };
 
   const form = [
     {
       type: "Avatar",
       value: preview,
+      placeholder: "playlist-thumbnail",
       image: image,
       onChange: setImage,
       setPreview: setPreview,
@@ -165,6 +172,7 @@ const ListPlaylist = () => {
                 picture={`${DRIVE_URL}${item.playlist_picture}`}
                 link={`/playlist/${item.playlist_id}`}
                 form={form}
+                submit={submit}
               />
             ))}
         </Grid>
@@ -177,6 +185,7 @@ const ListPlaylist = () => {
         form={form}
         {...menuControl}
         type="Playlist"
+        submit={submit}
       />
     </Center>
   );

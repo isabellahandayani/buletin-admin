@@ -43,6 +43,7 @@ const CardMenu = (props: any) => {
         type={props.type}
         name={props.name}
         picture={props.picture}
+        submit={props.submit}
       />
     </Skeleton>
   );
