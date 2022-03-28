@@ -106,6 +106,7 @@ const ListChannel = () => {
     {
       type: "Avatar",
       value: preview,
+      placeholder: "channel-thumbnail",
       image: image,
       onChange: setImage,
       setPreview: setPreview,

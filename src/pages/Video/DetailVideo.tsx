@@ -8,6 +8,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import moment from "moment";
+import jwtDecode from "jwt-decode";
 import { useParams } from "react-router-dom";
 import {
   get,
@@ -16,8 +17,8 @@ import {
 } from "../../service/VideoServices";
 import { useEffect, useState } from "react";
 import VideoCard from "../../components/Video/VideoCardDetail";
-import jwtDecode from "jwt-decode";
 import VideoFrame from "../../components/Video/VideoFrame";
+import { DRIVE_URL } from "../../const";
 
 const DetailVideo = () => {
   const { videoId } = useParams();
@@ -60,7 +61,7 @@ const DetailVideo = () => {
     <Box mt={10} ml={20}>
       <Flex>
         <Box w="70%" mr={10}>
-          <VideoFrame url={video.video_url} />
+          <VideoFrame url={`${DRIVE_URL}video.video_file_id`} />
           <Heading as="h2" size="lg" mt={4}>
             {video.video_title}
           </Heading>

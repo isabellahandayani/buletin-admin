@@ -21,7 +21,6 @@ const Card = (props: any) => {
   useEffect(() => {
     if(props) {
       setLoading(false);
-      console.log(props)
     }
   }, [props]);
 

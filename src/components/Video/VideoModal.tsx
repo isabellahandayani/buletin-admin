@@ -20,22 +20,27 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Image,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { ID } from "../../const";
+import { DRIVE_URL, FALLBACK_IMG, ID } from "../../const";
 import { upload } from "../../service/GoogleServices";
 import { create, update } from "../../service/VideoServices";
 
 const VideoModal = (props: any) => {
-  const toast = useToast();
-  const { channelId } = useParams();
   const [chosen, setChosen] = useState<any[]>([]);
   const [list, setList] = useState<any[]>([]);
-  const [title, setTitle] = useState<string>(props.video_title || "");
-  const [desc, setDesc] = useState(props.video_desc || "");
+  const [title, setTitle] = useState<any>();
+  const [desc, setDesc] = useState<any>();
+  const [image, setImage] = useState<any>();
+  const [preview, setPreview] = useState<any>();
   const [tabIndex, setIndex] = useState(0);
   const [video, setVideo] = useState<any>();
+
+  const inputFile = useRef<HTMLInputElement | null>(null);
+  const toast = useToast();
+  const { channelId } = useParams();
 
   const handleChange = (interest: any) => {
     if (interest) {
@@ -56,28 +61,35 @@ const VideoModal = (props: any) => {
   };
 
   const handleSubmit = async () => {
+    let resImg: any;
+    if (image) {
+      resImg = await upload(image, ID.VIDEO_THUMBNAIL);
+    }
+
     let resVideo: any = await upload(video, ID.VIDEO);
 
     if (props.type === "Add") {
       var { data } = await create(
         title,
         desc,
-        resVideo ? resVideo.id : "placeholder",
+        resVideo.id,
         parseInt(channelId!!),
-        chosen.map((item: any) => item.interest_id)
+        chosen.map((item: any) => item.interest_id),
+        resImg.id
       );
     } else {
       // eslint-disable-next-line @typescript-eslint/no-redeclare
       var { data } = await update(
         title,
         desc,
-        resVideo ? resVideo.id : "placeholder",
+        props.video_file_id,
         props.video_id,
-        chosen.map((item: any) => item.interest_id)
+        chosen.map((item: any) => item.interest_id),
+        resImg ? resImg.id : props.video_thumbnail
       );
     }
 
-    if (data && resVideo) {
+    if (data) {
       toast({
         title: "Success",
         description: "Video successfully created",
@@ -118,9 +130,10 @@ const VideoModal = (props: any) => {
       }))
     );
     setChosen([]);
-    setTitle("");
-    setDesc("");
+    setTitle(undefined);
+    setDesc(undefined);
     setVideo(undefined);
+    setPreview(undefined);
     setIndex(0);
     props.onClose();
   };
@@ -139,6 +152,9 @@ const VideoModal = (props: any) => {
             interest_name: v,
           }))
         );
+        setPreview(props.video_thumbnail);
+        setTitle(props.video_title);
+        setDesc(props.video_desc);
 
         data = data.filter(
           (item) => !chosen.find((row) => row.interest_id === item.interest_id)
@@ -147,7 +163,7 @@ const VideoModal = (props: any) => {
       setList(data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.interest]);
+  }, [props]);
 
   return (
     <Modal
@@ -241,6 +257,41 @@ const VideoModal = (props: any) => {
               <TabPanel>
                 <Stack spacing={2}>
                   <FormControl>
+                    <FormLabel>Video Thumbnail</FormLabel>
+                    <Center>
+                      <Image
+                        maxH={200}
+                        fallbackSrc={FALLBACK_IMG}
+                        borderRadius={10}
+                        src={
+                          props.video_thumbnail === preview
+                            ? `${DRIVE_URL}${preview}`
+                            : preview
+                        }
+                        objectFit="cover"
+                        opacity={0.5}
+                        _hover={{
+                          opacity: 1,
+                        }}
+                        cursor="pointer"
+                        onClick={() => inputFile?.current?.click()}
+                      />
+                      <Input
+                        type="file"
+                        ref={inputFile}
+                        display="none"
+                        onChange={(e) => {
+                          if (e.target.files) {
+                            setPreview(URL.createObjectURL(e.target.files[0]));
+                            setImage(e.target.files[0]);
+                          }
+                        }}
+                      />
+                    </Center>
+                  </FormControl>
+                  <FormControl
+                    display={props.type === "Add" ? "block" : "none"}
+                  >
                     <FormLabel>Video Uploader</FormLabel>
                     <Center>
                       <Input
@@ -261,7 +312,9 @@ const VideoModal = (props: any) => {
                       bg: "blue.500",
                     }}
                     onClick={handleSubmit}
-                    isDisabled={!video}
+                    isDisabled={
+                      props.type === "Add" ? !video || !preview : !preview
+                    }
                   >
                     Save
                   </Button>
