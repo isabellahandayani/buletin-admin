@@ -27,8 +27,9 @@ const ListChannel = () => {
   const [list, setList] = useState<any[]>([]);
   const [image, setImage] = useState<any>();
   const [preview, setPreview] = useState<any>();
-  const [channel, setChannel] = useState("");
+  const [channel, setChannel] = useState<any>();
   const [loading, setLoading] = useState(true);
+  const [submit, setSubmit] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const createToast = (status: string, message: string) => {
@@ -42,13 +43,8 @@ const ListChannel = () => {
     });
   };
 
-  const handleClose = () => {
-    onClose();
-    setPreview(undefined);
-    form.filter((item: any) => item.onChange(""));
-  };
-
   const handleSubmit = async () => {
+    setSubmit(true);
     let res: any = await upload(image, ID.CHANNEL);
     let decoded: any = jwt_decode(localStorage.getItem("token")!!);
 
@@ -63,15 +59,26 @@ const ListChannel = () => {
     } else {
       createToast("Error", "Channel Creation Failed");
     }
-    handleClose();
+    setSubmit(false);
   };
 
-  const handleUpdate = async (channel_id: any) => {
+  const handleUpdate = async (
+    channel_id: any,
+    channel_picture: any,
+    channel_name: any
+  ) => {
+    setSubmit(true);
+    let res: any;
+
+    if (image) {
+      res = await upload(image, ID.CATEGORY);
+    }
+
     let decoded: any = jwt_decode(localStorage.getItem("token")!!);
     let { data } = await update(
       decoded.account_id,
-      channel,
-      "placeholder",
+      channel ? channel : channel_name,
+      res ? res.id : channel_picture,
       channel_id
     );
 
@@ -81,7 +88,8 @@ const ListChannel = () => {
     } else {
       createToast("Error", "Update Failed");
     }
-    handleClose();
+
+    setSubmit(false);
   };
 
   const handleDelete = async (channel_id: any) => {
@@ -92,7 +100,6 @@ const ListChannel = () => {
     } else {
       createToast("Error", "Deletion Failed");
     }
-    onClose();
   };
 
   const form = [
@@ -115,7 +122,6 @@ const ListChannel = () => {
     handleDelete: handleDelete,
     handleUpdate: handleUpdate,
     handleSubmit: handleSubmit,
-    handleClose: handleClose,
   };
 
   const fetchList = async () => {
@@ -151,6 +157,7 @@ const ListChannel = () => {
                 created_at={item.created_at}
                 link={`/channel/${item.channel_id}`}
                 form={form}
+                submit={submit}
               />
             ))}
         </Grid>
@@ -165,6 +172,7 @@ const ListChannel = () => {
         form={form}
         {...menuControl}
         type="Channel"
+        submit={submit}
       />
     </Center>
   );
