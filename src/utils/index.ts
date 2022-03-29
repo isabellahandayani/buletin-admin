@@ -7,3 +7,7 @@ export const generatePass = () => {
 export const getCode = (url: string) => {
   return url.split("=")[1];
 };
+
+export const getId = (url: any) => {
+  return url.split("=")[1];
+}

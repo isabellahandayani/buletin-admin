@@ -7,7 +7,7 @@ import {
   Spacer,
   Skeleton,
   Tag,
-  Stack
+  Stack,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { useEffect, useState } from "react";
@@ -19,8 +19,10 @@ const Card = (props: any) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(false);
-  }, []);
+    if(props) {
+      setLoading(false);
+    }
+  }, [props]);
 
   return (
     <Skeleton isLoaded={!loading}>
@@ -69,7 +71,9 @@ const Card = (props: any) => {
             id={props.id}
             form={props.form}
             name={props.name}
+            picture={props.picture}
             category={props.category}
+            submit={props.submit}
           />
         </Flex>
       </Box>

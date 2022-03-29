@@ -12,13 +12,19 @@ import {
   Select,
   Center,
   Image,
-  ModalFooter
+  ModalFooter,
 } from "@chakra-ui/react";
 import { FALLBACK_IMG } from "../../const";
 import { useRef } from "react";
 
 const ComonModal = (props: any) => {
   const inputFile = useRef<HTMLInputElement | null>(null);
+
+  const handleClose = () => {
+    props.onClose();
+    props.form[0].setPreview(undefined);
+    props.form.filter((item: any) => item.onChange(undefined));
+  };
 
   const renderInput = (item: any) => {
     switch (item.type) {
@@ -29,7 +35,7 @@ const ComonModal = (props: any) => {
               maxH={200}
               fallbackSrc={FALLBACK_IMG}
               borderRadius={10}
-              src={item.value}
+              src={item.value ? item.value : props.picture}
               objectFit="cover"
               opacity={0.5}
               _hover={{
@@ -59,7 +65,10 @@ const ComonModal = (props: any) => {
             onChange={(e) => item.onChange(parseInt(e.target.value))}
           >
             {item.selection.map((item: any) => (
-              <option key={item.category_id} value={item.category_id}>
+              <option
+                key={`category-${item.category_id}`}
+                value={item.category_id}
+              >
                 {item.category_name}
               </option>
             ))}
@@ -68,10 +77,10 @@ const ComonModal = (props: any) => {
       default:
         return (
           <Input
-            placeholder={item.placeholder}
+            placeholder={props.name ? props.name : item.placeholder}
             _placeholder={{ color: "gray.500" }}
             type="text"
-            value={item.value}
+            value={item.value ? item.value : ""}
             onChange={(e) => item.onChange(e.target.value)}
           />
         );
@@ -81,10 +90,10 @@ const ComonModal = (props: any) => {
   return (
     <Modal
       isOpen={props.isOpen}
-      onClose={props.handleClose}
+      onClose={handleClose}
       isCentered
-      onOverlayClick={props.handleclose}
-      onEsc={props.handleclose}
+      onOverlayClick={handleClose}
+      onEsc={handleClose}
     >
       <ModalOverlay />
       <ModalContent>
@@ -103,22 +112,33 @@ const ComonModal = (props: any) => {
                   </FormControl>
                 );
               })}
-
           </Stack>
         </ModalBody>
         <ModalFooter>
-        <Button
-              bg={"blue.400"}
-              color={"white"}
-              w="full"
-              _hover={{
-                bg: "blue.500",
-              }}
-              isDisabled={props.form.some((item: any) => item.value === "")}
-              onClick={props.handleSubmit}
-            >
-              Save
-            </Button>
+          <Button
+            isLoading={props.submit}
+            loadingText="Submitting"
+            bg={"blue.400"}
+            color={"white"}
+            w="full"
+            _hover={{
+              bg: "blue.500",
+            }}
+            isDisabled={props.form.some(
+              (item: any) =>
+                (item.value === undefined && item.type !== "Avatar") ||
+                (item.type === "Avatar" &&
+                  item.value === undefined &&
+                  item.image === undefined &&
+                  !props.picture)
+            )}
+            onClick={async () => {
+              await props.handleSubmit(props.id, props.picture, props.name);
+              handleClose();
+            }}
+          >
+            Save
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

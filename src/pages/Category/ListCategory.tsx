@@ -18,10 +18,12 @@ import Modal from "../../components/Common/Modal";
 import Card from "../../components/Common/Card";
 import { ID, DRIVE_URL } from "../../const";
 import { upload } from "../../service/GoogleServices";
+import { getId } from "../../utils";
 
 const ListCategory = () => {
   const toast = useToast();
-  const [category, setCategory] = useState("");
+  const [submit, setSubmit] = useState(false);
+  const [category, setCategory] = useState<any>();
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState<any>();
@@ -45,22 +47,17 @@ const ListCategory = () => {
     });
   };
 
-  const handleClose = () => {
-    setPreview(undefined);
-    form.filter((item: any) => item.onChange(undefined));
-    onClose();
-  };
-
   const handleSubmit = async () => {
+    setSubmit(true);
     let res: any = await upload(image, ID.CATEGORY);
-    let { data } = await create(category, res.id ? res.id : "placeholder");
+    let { data } = await create(category, res ? res.id : "placeholder");
     if (data) {
       createToast("Success", "Category Successfully Created");
       fetchList();
     } else {
       createToast("Error", "Category Creation Failed");
     }
-    handleClose();
+    setSubmit(false);
   };
 
   const handleDelete = async (category_id: any) => {
@@ -71,24 +68,35 @@ const ListCategory = () => {
     } else {
       createToast("Error", "Category Deletion Failed");
     }
-    onClose();
   };
 
-  const handleUpdate = async (category_id: any) => {
-    let { data } = await update(category, "placeholder", category_id);
+  const handleUpdate = async (id: any, picture: any, name: any) => {
+    setSubmit(true);
+    let res: any;
+
+    if (image) {
+      res = await upload(image, ID.CATEGORY);
+    }
+
+    let { data } = await update(
+      category ? category : name,
+      res ? res.id : getId(picture),
+      id
+    );
     if (data) {
       createToast("Success", "Update Successful");
       fetchList();
     } else {
       createToast("Error", "Update Failed");
     }
-    handleClose();
+    setSubmit(false);
   };
 
   const form = [
     {
       type: "Avatar",
       value: preview,
+      placeholder: "thumbnail",
       image: image,
       onChange: setImage,
       setPreview: setPreview,
@@ -105,7 +113,6 @@ const ListCategory = () => {
     handleDelete: handleDelete,
     handleUpdate: handleUpdate,
     handleSubmit: handleSubmit,
-    handleClose: handleClose,
   };
 
   useEffect(() => {
@@ -143,6 +150,7 @@ const ListCategory = () => {
         onOpen={onOpen}
         onClose={onClose}
         form={form}
+        submit={submit}
         {...menuControl}
       />
     </Center>

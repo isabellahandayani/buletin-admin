@@ -19,13 +19,15 @@ export const get = async (id: any) => {
 export const update = async (
   playlist_id: any,
   playlist_name: any,
-  category_id: any
+  category_id: any,
+  playlist_picture: any
 ) => {
   let res = await fetch(`${BASE_URL}/playlist/${playlist_id}`, {
     method: "PUT",
     body: JSON.stringify({
       category_id: category_id,
       playlist_name: playlist_name,
+      playlist_picture: playlist_picture,
     }),
   });
 
@@ -46,7 +48,7 @@ export const create = async (id: any, name: any, picture: any) => {
     body: JSON.stringify({
       category_id: id,
       playlist_name: name,
-      playlist_picture: picture
+      playlist_picture: picture,
     }),
   });
 

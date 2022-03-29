@@ -73,7 +73,8 @@ export const create = async (
   video_desc: String,
   video_file_id: String,
   channel_id: Number,
-  video_interest_id: any
+  video_interest_id: any,
+  video_thumbnail: any
 ) => {
   let interest = video_interest_id.join(", ")
   let res = await fetch(`${BASE_URL}/video`, {
@@ -84,6 +85,7 @@ export const create = async (
       video_file_id: video_file_id,
       channel_id: channel_id,
       video_interest_id: interest,
+      video_thumbnail: video_thumbnail
     }),
   });
 
@@ -93,9 +95,10 @@ export const create = async (
 export const update = async (
   video_title: String,
   video_desc: String,
-  video_url: String,
+  video_file_id: String,
   video_id: Number,
-  video_interest_id: any
+  video_interest_id: any,
+  video_thumbnail: any
 ) => {
   let interest = video_interest_id.join(", ")
   let res = await fetch(`${BASE_URL}/video/${video_id}`, {
@@ -103,8 +106,9 @@ export const update = async (
     body: JSON.stringify({
       video_title: video_title,
       video_desc: video_desc,
-      video_url: video_url,
+      video_file_id: video_file_id,
       video_interest_id: interest,
+      video_thumbnail: video_thumbnail
     }),
   });
 

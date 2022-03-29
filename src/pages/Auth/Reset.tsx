@@ -1,5 +1,5 @@
 import {
-  Box,
+  Image,
   Center,
   Flex,
   FormControl,
@@ -12,21 +12,23 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-
-import { useSearchParams, useNavigate } from "react-router-dom";
 import { reset, validate } from "../../service/UserServices";
+import { useSearchParams, useNavigate } from "react-router-dom";
+
+import LOGIN_IMAGE from "../../assets/login_image.svg";
 
 const Reset = () => {
   const [searchParams] = useSearchParams();
   const [email, setEmail] = useState<any>();
   const [pass, setPass] = useState<any>();
   const [confirmPass, setConfirm] = useState<any>();
+  const [submit, setSubmit] = useState(true);
   const navigate = useNavigate();
   const toast = useToast();
 
   const handleSubmit = async () => {
+    setSubmit(true);
     let { data } = await reset(searchParams.get("token"), pass, email);
-    console.log(data);
     if (data) {
       toast({
         title: "Success",
@@ -47,6 +49,7 @@ const Reset = () => {
         position: "top",
       });
     }
+    setSubmit(false);
   };
 
   useEffect(() => {
@@ -77,12 +80,16 @@ const Reset = () => {
         direction="row"
         h="80vh"
       >
-        <Box
+        <Flex
+          display={{ md: "flex", base: "none" }}
+          align={"center"}
+          justify={"center"}
           flex={3}
           bg="blue.200"
           roundedLeft="md"
-          display={{ md: "block", base: "none" }}
-        />
+        >
+          <Image src={LOGIN_IMAGE} p={5} h="80vh" />
+        </Flex>
         <Stack
           p={{ md: 20, base: 5 }}
           mx="auto"
@@ -105,6 +112,8 @@ const Reset = () => {
             />
           </FormControl>
           <Button
+            isLoading={submit}
+            loadingText="Signing In"
             w="full"
             color="white"
             bg={"blue.400"}
