@@ -50,10 +50,14 @@ const ListCategory = () => {
   const handleSubmit = async () => {
     setSubmit(true);
     let res: any = await upload(image, ID.CATEGORY);
-    let { data } = await create(category, res ? res.id : "placeholder");
-    if (data) {
-      createToast("Success", "Category Successfully Created");
-      fetchList();
+    if (res) {
+      let { data } = await create(category, res.id);
+      if (data) {
+        createToast("Success", "Category Successfully Created");
+        fetchList();
+      } else {
+        createToast("Error", "Category Creation Failed");
+      }
     } else {
       createToast("Error", "Category Creation Failed");
     }

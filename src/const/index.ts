@@ -14,3 +14,11 @@ export const ID = {
 export const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
 
 export const DRIVE_URL = "https://drive.google.com/uc?id=";
+
+export const TOKEN_URL = "https://www.googleapis.com/oauth2/v4/token";
+
+export const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+
+export const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
+
+export const REFRESH_TOKEN = process.env.REACT_APP_REFRESH_TOKEN;
