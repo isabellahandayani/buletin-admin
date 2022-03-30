@@ -19,7 +19,7 @@ const Card = (props: any) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if(props) {
+    if (props) {
       setLoading(false);
     }
   }, [props]);

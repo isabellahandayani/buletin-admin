@@ -8,6 +8,8 @@ import {
   IconButton,
   useToast,
   useDisclosure,
+  ButtonGroup,
+  Tooltip
 } from "@chakra-ui/react";
 import moment from "moment";
 import { MdDelete, MdEdit } from "react-icons/md";
@@ -47,21 +49,20 @@ const VideoEntry = (props: any) => {
 
   return (
     <>
-    <VideoModal type="Edit" 
-      onOpen={onOpen}
-      onClose={onClose}
-      isOpen={isOpen}
-      {...props}
-    />
+      <VideoModal
+        type="Edit"
+        onOpen={onOpen}
+        onClose={onClose}
+        isOpen={isOpen}
+        {...props}
+      />
       <Tr
         _hover={{
           boxShadow: "lg",
         }}
       >
         <Td maxW={500}>
-          <Link
-            to={`/video/${props.video_id}`}
-          >
+          <Link to={`/video/${props.video_id}`}>
             <Flex>
               <Image
                 maxW={200}
@@ -84,27 +85,33 @@ const VideoEntry = (props: any) => {
         <Td>{moment(props.date_posted).format("D MMM YYYY")}</Td>
         <Td isNumeric>{props.video_view_count}</Td>
         <Td isNumeric>
-          <IconButton
-            mr={2}
-            aria-label="delete"
-            icon={<MdDelete />}
-            onClick={handleDelete}
-            bg={"red.400"}
-            _hover={{
-              bg: "red.500",
-            }}
-            color="white"
-          />
-          <IconButton
-            aria-label="edit"
-            icon={<MdEdit />}
-            bg={"blue.400"}
-            _hover={{
-              bg: "blue.500",
-            }}
-            color="white"
-            onClick={onOpen}
-          />
+          <ButtonGroup>
+            <Tooltip label="Delete Video" size="md">
+              <IconButton
+                mr={2}
+                aria-label="delete"
+                icon={<MdDelete />}
+                onClick={handleDelete}
+                bg={"red.400"}
+                _hover={{
+                  bg: "red.500",
+                }}
+                color="white"
+              />
+            </Tooltip>
+            <Tooltip label="Edit Video" size="md">
+              <IconButton
+                aria-label="edit"
+                icon={<MdEdit />}
+                bg={"blue.400"}
+                _hover={{
+                  bg: "blue.500",
+                }}
+                color="white"
+                onClick={onOpen}
+              />
+            </Tooltip>
+          </ButtonGroup>
         </Td>
       </Tr>
     </>

@@ -79,7 +79,7 @@ const ListVideo = () => {
       ) : (
         <Heading mt={300}>There's no video yet</Heading>
       )}
-      <AddButton onOpen={onOpen} />
+      <AddButton onOpen={onOpen} type="Video" />
       {interest && (
         <VideoModal
           type="Add"

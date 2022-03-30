@@ -8,6 +8,7 @@ import {
   Stack,
   IconButton,
   Skeleton,
+  Tooltip
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
@@ -64,6 +65,7 @@ const VideoCardDetail = (props: any) => {
               </Stack>
               {props.type === "detail" && (
                 <Box m={10}>
+                  <Tooltip label="Remove Video" size="md">
                   <IconButton
                     variant="solid"
                     aria-label="Md"
@@ -76,6 +78,7 @@ const VideoCardDetail = (props: any) => {
                     }}
                     onClick={(e) => props.handleDelete(e, props.video_id)}
                   />
+                  </Tooltip>
                 </Box>
               )}
             </Flex>

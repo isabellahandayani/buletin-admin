@@ -10,11 +10,16 @@ import {
   useColorModeValue,
   Button,
   useToast,
+  InputGroup,
+  InputRightElement,
+  Tooltip,
+  IconButton,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { reset, validate } from "../../service/UserServices";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { BiHide, BiShow } from "react-icons/bi";
 
+import { reset, validate } from "../../service/UserServices";
 import LOGIN_IMAGE from "../../assets/login_image.svg";
 
 const Reset = () => {
@@ -22,7 +27,9 @@ const Reset = () => {
   const [email, setEmail] = useState<any>();
   const [pass, setPass] = useState<any>();
   const [confirmPass, setConfirm] = useState<any>();
-  const [submit, setSubmit] = useState(true);
+  const [submit, setSubmit] = useState(false);
+  const [show, setShow] = useState(false);
+  const [showNew, setShowNew] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -102,14 +109,43 @@ const Reset = () => {
           </Center>
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
-            <Input type="password" onChange={(e) => setPass(e.target.value)} />
+            <InputGroup>
+              <Input
+                onChange={(e) => setPass(e.target.value)}
+                type={show ? "text" : "password"}
+              />
+              <InputRightElement>
+                <Tooltip label="Show Password" size="md">
+                  <IconButton
+                    size="md"
+                    aria-label="show-password"
+                    icon={show ? <BiHide /> : <BiShow />}
+                    onClick={() => setShow(!show)}
+                    style={{ textDecoration: "none"}}
+                  />
+                </Tooltip>
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
           <FormControl id="confirm-password">
             <FormLabel>Confirm Password</FormLabel>
-            <Input
-              type="password"
-              onChange={(e) => setConfirm(e.target.value)}
-            />
+            <InputGroup>
+              <Input
+                onChange={(e) => setConfirm(e.target.value)}
+                type={showNew ? "text" : "password"}
+              />
+              <InputRightElement>
+                <Tooltip label="Show Password" size="md">
+                  <IconButton
+                    size="md"
+                    aria-label="show-password"
+                    icon={showNew ? <BiHide /> : <BiShow />}
+                    onClick={() => setShowNew(!showNew)}
+                    style={{ textDecoration: "none"}}
+                  />
+                </Tooltip>
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
           <Button
             isLoading={submit}

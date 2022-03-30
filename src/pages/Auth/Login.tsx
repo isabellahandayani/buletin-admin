@@ -14,6 +14,7 @@ import {
   InputGroup,
   IconButton,
   InputRightElement,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -112,12 +113,15 @@ const Login = () => {
                 onChange={(e) => setPass(e.target.value)}
               />
               <InputRightElement>
-                <IconButton
-                  size="md"
-                  aria-label="show-password"
-                  icon={show ? <BiHide /> : <BiShow />}
-                  onClick={() => setShow(!show)}
-                />
+                <Tooltip label="Show Password" size="md">
+                  <IconButton
+                    size="md"
+                    aria-label="show-password"
+                    icon={show ? <BiHide /> : <BiShow />}
+                    onClick={() => setShow(!show)}
+                    style={{ textDecoration: "None" }}
+                  />
+                </Tooltip>
               </InputRightElement>
             </InputGroup>
           </FormControl>

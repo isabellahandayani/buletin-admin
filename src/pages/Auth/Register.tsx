@@ -13,6 +13,7 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -86,7 +87,7 @@ const Register = () => {
         <Heading lineHeight={1.1} fontSize={{ base: "2xl", sm: "3xl" }}>
           Register Admin
         </Heading>
-        <FormControl id="userName" isRequired>
+        <FormControl id="userName">
           <FormLabel>Username</FormLabel>
           <Input
             placeholder="Username"
@@ -96,7 +97,7 @@ const Register = () => {
             onChange={(e) => setUname(e.target.value)}
           />
         </FormControl>
-        <FormControl id="email" isRequired isInvalid={emailError}>
+        <FormControl id="email" isInvalid={emailError}>
           <FormLabel>Email</FormLabel>
           <Input
             placeholder="your-email@example.com"
@@ -107,7 +108,7 @@ const Register = () => {
           />
           {emailError && <FormErrorMessage>Invalid Email</FormErrorMessage>}
         </FormControl>
-        <FormControl id="name" isRequired>
+        <FormControl id="name">
           <FormLabel>Full Name</FormLabel>
           <Input
             placeholder="your-name"
@@ -117,7 +118,7 @@ const Register = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </FormControl>
-        <FormControl id="number" isRequired>
+        <FormControl id="number">
           <FormLabel>Phone Number</FormLabel>
           <Input
             placeholder="081234567890"
@@ -127,7 +128,7 @@ const Register = () => {
             onChange={(e) => setNumber(e.target.value)}
           />
         </FormControl>
-        <FormControl id="password" isRequired>
+        <FormControl id="password">
           <FormLabel>Password</FormLabel>
           <InputGroup size="md">
             <Input
@@ -138,12 +139,15 @@ const Register = () => {
               isDisabled
             />
             <InputRightElement>
-              <IconButton
-                size="md"
-                aria-label="show-password"
-                icon={show ? <BiHide /> : <BiShow />}
-                onClick={() => setShow(!show)}
-              />
+              <Tooltip label="Show Password" size="md">
+                <IconButton
+                  size="md"
+                  aria-label="show-password"
+                  icon={show ? <BiHide /> : <BiShow />}
+                  onClick={() => setShow(!show)}
+                  style={{ textDecoration: "None" }}
+                />
+              </Tooltip>
             </InputRightElement>
           </InputGroup>
         </FormControl>
@@ -156,12 +160,7 @@ const Register = () => {
               bg: "blue.500",
             }}
             isDisabled={
-              !email ||
-              !pass ||
-              !name ||
-              !uname ||
-              !number ||
-              emailError
+              !email || !pass || !name || !uname || !number || emailError
             }
             onClick={handleSubmit}
           >

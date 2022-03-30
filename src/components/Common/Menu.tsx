@@ -7,6 +7,7 @@ import {
   MenuItem,
   useDisclosure,
   Skeleton,
+  Tooltip,
 } from "@chakra-ui/react";
 import { HiDotsVertical } from "react-icons/hi";
 import Modal from "./Modal";
@@ -18,13 +19,15 @@ const CardMenu = (props: any) => {
     <Skeleton isLoaded={props}>
       <Box mt={25}>
         <Menu direction="rtl">
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={<HiDotsVertical />}
-            variant="link"
-            _focus={{ boxShadow: "none" }}
-          />
+          <Tooltip label="Open Menu" size="md">
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              icon={<HiDotsVertical />}
+              variant="link"
+              _focus={{ boxShadow: "none" }}
+            />
+          </Tooltip>
           <MenuList>
             <MenuItem onClick={onOpen}>Edit {props.type}</MenuItem>
             <MenuItem onClick={() => props.handleDelete(props.id)}>

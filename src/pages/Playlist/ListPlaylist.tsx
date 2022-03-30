@@ -177,7 +177,7 @@ const ListPlaylist = () => {
             ))}
         </Grid>
       )}
-      <AddButton onOpen={onOpen} />
+      <AddButton onOpen={onOpen} type="Playlist" />
       <Modal
         isOpen={isOpen}
         onOpen={onOpen}
