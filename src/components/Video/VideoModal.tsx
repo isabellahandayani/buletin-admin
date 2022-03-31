@@ -26,7 +26,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
-import { DRIVE_URL, FALLBACK_IMG, ID } from "../../const";
+import { DRIVE_URL, ID, THUMBNAIL_PLACEHOLDER } from "../../const";
 import { upload } from "../../service/GoogleServices";
 import { create, update } from "../../service/VideoServices";
 
@@ -278,7 +278,7 @@ const VideoModal = (props: any) => {
                     <Center>
                       <Image
                         maxH={200}
-                        fallbackSrc={FALLBACK_IMG}
+                        fallbackSrc={THUMBNAIL_PLACEHOLDER}
                         borderRadius={10}
                         src={
                           props.video_thumbnail === preview

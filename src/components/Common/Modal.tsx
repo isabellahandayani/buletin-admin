@@ -14,7 +14,7 @@ import {
   Image,
   ModalFooter,
 } from "@chakra-ui/react";
-import { FALLBACK_IMG } from "../../const";
+import { THUMBNAIL_PLACEHOLDER } from "../../const";
 import { useRef } from "react";
 
 const ComonModal = (props: any) => {
@@ -33,7 +33,7 @@ const ComonModal = (props: any) => {
           <Center>
             <Image
               maxH={200}
-              fallbackSrc={FALLBACK_IMG}
+              fallbackSrc={THUMBNAIL_PLACEHOLDER}
               borderRadius={10}
               src={item.value ? item.value : props.picture}
               objectFit="cover"

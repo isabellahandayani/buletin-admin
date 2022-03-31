@@ -1,7 +1,11 @@
+import FALLBACK from "../assets/fallback.svg";
+import THUMBNAIL from "../assets/thumbnail.svg";
+
 export const BASE_URL = process.env.API_URL || "http://localhost:8080";
 
-export const FALLBACK_IMG =
-  "https://cdn.dribbble.com/users/17914/screenshots/4902225/video-placeholder.png";
+export const FALLBACK_IMG = FALLBACK;
+
+export const THUMBNAIL_PLACEHOLDER = THUMBNAIL;
 
 export const ID = {
   CATEGORY: process.env.REACT_APP_CATEGORY_FOLDER,
