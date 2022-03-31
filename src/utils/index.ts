@@ -10,4 +10,8 @@ export const getCode = (url: string) => {
 
 export const getId = (url: any) => {
   return url.split("=")[1];
-}
+};
+
+export const getLink = (id: any) => {
+  return `https://drive.google.com/file/d/${id}/preview`;
+};

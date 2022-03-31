@@ -1,5 +1,5 @@
 import { Skeleton, AspectRatio } from "@chakra-ui/react";
-import { getCode } from "../../utils";
+import { getLink } from "../../utils";
 
 const VideoFrame = (props: any) => {
   return (
@@ -7,7 +7,7 @@ const VideoFrame = (props: any) => {
       <AspectRatio ratio={16 / 9}>
         <iframe
           height={window.innerHeight - 300}
-          src={`https://www.youtube.com/embed/${getCode(props.url)}`}
+          src={getLink(props.id)}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

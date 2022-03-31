@@ -18,7 +18,6 @@ import {
 import { useEffect, useState } from "react";
 import VideoCard from "../../components/Video/VideoCardDetail";
 import VideoFrame from "../../components/Video/VideoFrame";
-import { DRIVE_URL } from "../../const";
 
 const DetailVideo = () => {
   const { videoId } = useParams();
@@ -61,7 +60,7 @@ const DetailVideo = () => {
     <Box mt={10} ml={20}>
       <Flex>
         <Box w="70%" mr={10}>
-          <VideoFrame url={`${DRIVE_URL}video.video_file_id`} />
+          <VideoFrame id={video.video_file_id} />
           <Heading as="h2" size="lg" mt={4}>
             {video.video_title}
           </Heading>

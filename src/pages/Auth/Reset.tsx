@@ -14,6 +14,7 @@ import {
   InputRightElement,
   Tooltip,
   IconButton,
+  FormErrorMessage
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
@@ -57,6 +58,7 @@ const Reset = () => {
       });
     }
     setSubmit(false);
+    navigate("../login")
   };
 
   useEffect(() => {
@@ -127,7 +129,7 @@ const Reset = () => {
               </InputRightElement>
             </InputGroup>
           </FormControl>
-          <FormControl id="confirm-password">
+          <FormControl id="confirm-password" isInvalid={(confirmPass !== pass) && pass && confirmPass}>
             <FormLabel>Confirm Password</FormLabel>
             <InputGroup>
               <Input
@@ -146,10 +148,11 @@ const Reset = () => {
                 </Tooltip>
               </InputRightElement>
             </InputGroup>
+            <FormErrorMessage>Confirmation Password Doesn't Match</FormErrorMessage>
           </FormControl>
           <Button
             isLoading={submit}
-            loadingText="Signing In"
+            loadingText="Resetting"
             w="full"
             color="white"
             bg={"blue.400"}
