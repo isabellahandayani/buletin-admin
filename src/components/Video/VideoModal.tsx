@@ -21,26 +21,37 @@ import {
   TabPanels,
   Tabs,
   Image,
+  Text,
 } from "@chakra-ui/react";
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { DRIVE_URL, FALLBACK_IMG, ID } from "../../const";
+import { useDropzone } from "react-dropzone";
+import { DRIVE_URL, ID, THUMBNAIL_PLACEHOLDER } from "../../const";
 import { upload } from "../../service/GoogleServices";
 import { create, update } from "../../service/VideoServices";
 
 const VideoModal = (props: any) => {
   const [chosen, setChosen] = useState<any[]>([]);
   const [list, setList] = useState<any[]>([]);
-  const [title, setTitle] = useState<any>();
-  const [desc, setDesc] = useState<any>();
+  const [title, setTitle] = useState<any>("");
+  const [desc, setDesc] = useState<any>("");
   const [image, setImage] = useState<any>();
   const [preview, setPreview] = useState<any>();
   const [tabIndex, setIndex] = useState(0);
   const [video, setVideo] = useState<any>();
+  const [submit, setSubmit] = useState(false);
 
   const inputFile = useRef<HTMLInputElement | null>(null);
   const toast = useToast();
   const { channelId } = useParams();
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: "video/*",
+    multiple: false,
+    onDrop: (acceptedFiles: any) => {
+      setVideo(acceptedFiles[0]);
+    },
+  });
 
   const handleChange = (interest: any) => {
     if (interest) {
@@ -61,6 +72,8 @@ const VideoModal = (props: any) => {
   };
 
   const handleSubmit = async () => {
+    setSubmit(true);
+
     let resImg: any;
     if (image) {
       resImg = await upload(image, ID.VIDEO_THUMBNAIL);
@@ -120,6 +133,8 @@ const VideoModal = (props: any) => {
         position: "top",
       });
     }
+
+    setSubmit(false);
   };
 
   const handleClose = () => {
@@ -130,8 +145,8 @@ const VideoModal = (props: any) => {
       }))
     );
     setChosen([]);
-    setTitle(undefined);
-    setDesc(undefined);
+    setTitle("");
+    setDesc("");
     setVideo(undefined);
     setPreview(undefined);
     setIndex(0);
@@ -162,6 +177,8 @@ const VideoModal = (props: any) => {
       }
       setList(data);
     }
+
+    URL.revokeObjectURL(preview);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
@@ -261,7 +278,7 @@ const VideoModal = (props: any) => {
                     <Center>
                       <Image
                         maxH={200}
-                        fallbackSrc={FALLBACK_IMG}
+                        fallbackSrc={THUMBNAIL_PLACEHOLDER}
                         borderRadius={10}
                         src={
                           props.video_thumbnail === preview
@@ -293,18 +310,29 @@ const VideoModal = (props: any) => {
                     display={props.type === "Add" ? "block" : "none"}
                   >
                     <FormLabel>Video Uploader</FormLabel>
-                    <Center>
-                      <Input
-                        type="file"
-                        onChange={(e) => {
-                          if (e.target.files) {
-                            setVideo(e.target.files[0]);
-                          }
-                        }}
-                      />
+                    <Center
+                      {...getRootProps({ className: "dropzone" })}
+                      minH={150}
+                      h="full"
+                      border={3}
+                      borderColor="gray.200"
+                      borderStyle="dashed"
+                      backgroundColor="gray.100"
+                      borderRadius={5}
+                    >
+                      <input type="file" {...getInputProps()} />
+                      <Text>Drop the files here or click to upload video</Text>
                     </Center>
                   </FormControl>
+                  <FormControl>
+                    <FormLabel>Files</FormLabel>
+                    <Text color="gray.500">
+                      {video ? video.name : "There's No File Yet"}
+                    </Text>
+                  </FormControl>
                   <Button
+                    isLoading={submit}
+                    loadingText="Submitting"
                     bg={"blue.400"}
                     color={"white"}
                     w="full"

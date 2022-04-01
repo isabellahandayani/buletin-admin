@@ -11,7 +11,8 @@ import {
   useToast,
   IconButton,
   InputGroup,
-  InputRightElement
+  InputRightElement,
+  Tooltip
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BiHide, BiShow } from "react-icons/bi";
@@ -35,7 +36,7 @@ const Profile = () => {
 
     fetchList();
     setLoading(false);
-    document.title="Buletin.id | Settings";
+    document.title = "Buletin.id | Settings";
   }, []);
 
   const handleSubmit = async () => {
@@ -119,12 +120,15 @@ const Profile = () => {
               onChange={(e) => setCurrent(e.target.value)}
             />
             <InputRightElement>
-              <IconButton
-                size="md"
-                aria-label="show-password"
-                icon={showCurrent ? <BiHide /> : <BiShow />}
-                onClick={() => setShowCurrent(!showCurrent)}
-              />
+              <Tooltip label="Show Password" size="md">
+                <IconButton
+                  size="md"
+                  aria-label="show-password"
+                  icon={showCurrent ? <BiHide /> : <BiShow />}
+                  onClick={() => setShowCurrent(!showCurrent)}
+                  style={{ textDecoration: "None" }} 
+                />
+              </Tooltip>
             </InputRightElement>
           </InputGroup>
         </FormControl>
@@ -139,12 +143,15 @@ const Profile = () => {
               onChange={(e) => setPass(e.target.value)}
             />
             <InputRightElement>
-              <IconButton
-                size="md"
-                aria-label="show-password"
-                icon={showNew ? <BiHide /> : <BiShow />}
-                onClick={() => setShowNew(!showNew)}
-              />
+              <Tooltip label="Show Password" size="md">
+                <IconButton
+                  size="md"
+                  aria-label="show-password"
+                  icon={showNew ? <BiHide /> : <BiShow />}
+                  onClick={() => setShowNew(!showNew)}
+                  style={{ textDecoration: "None" }} 
+                />
+              </Tooltip>
             </InputRightElement>
           </InputGroup>
         </FormControl>

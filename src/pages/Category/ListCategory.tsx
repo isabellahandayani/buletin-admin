@@ -147,7 +147,7 @@ const ListCategory = () => {
             ))}
         </Grid>
       )}
-      <AddButton onOpen={onOpen} />
+      <AddButton onOpen={onOpen} type="Category" />
       <Modal
         type="Category"
         isOpen={isOpen}

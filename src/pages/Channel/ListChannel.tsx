@@ -165,7 +165,7 @@ const ListChannel = () => {
       ) : (
         <Heading as="h2">No Channel Yet</Heading>
       )}
-      <AddButton onOpen={onOpen} />
+      <AddButton onOpen={onOpen} type="Channel" />
       <Modal
         isOpen={isOpen}
         onOpen={onOpen}

@@ -97,7 +97,7 @@ const DetailPlaylist = () => {
           <Heading>No Video Yet</Heading>
         </Center>
       )}
-      <AddButton onOpen={onOpen} />
+      <AddButton onOpen={onOpen} type="Video" />
       <AddVideo
         isOpen={isOpen}
         onOpen={onOpen}
