@@ -306,9 +306,7 @@ const VideoModal = (props: any) => {
                       />
                     </Center>
                   </FormControl>
-                  <FormControl
-                    display={props.type === "Add" ? "block" : "none"}
-                  >
+                  <FormControl>
                     <FormLabel>Video Uploader</FormLabel>
                     <Center
                       {...getRootProps({ className: "dropzone" })}
@@ -341,7 +339,7 @@ const VideoModal = (props: any) => {
                     }}
                     onClick={handleSubmit}
                     isDisabled={
-                      props.type === "Add" ? !video || !preview : !preview
+                      props.type === "Add" ? (!video || !preview) : !preview
                     }
                   >
                     Save
