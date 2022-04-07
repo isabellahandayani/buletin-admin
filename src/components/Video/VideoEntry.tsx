@@ -15,7 +15,7 @@ import moment from "moment";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { deleteVideo } from "../../service/VideoServices";
 import { Link } from "react-router-dom";
-import { FALLBACK_IMG } from "../../const";
+import { DRIVE_URL, FALLBACK_IMG } from "../../const";
 import VideoModal from "../../components/Video/VideoModal";
 
 const VideoEntry = (props: any) => {
@@ -66,10 +66,13 @@ const VideoEntry = (props: any) => {
             <Flex>
               <Image
                 maxW={200}
-                src={props.video_thumbnail}
+                w="full"
+                src={`${DRIVE_URL}${props.video_thumbnail}`}
                 mr={10}
                 boxShadow="sm"
                 fallbackSrc={FALLBACK_IMG}
+                height={150}
+                objectFit="cover"
               />
               <Center>
                 <Flex direction="column">
