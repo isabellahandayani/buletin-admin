@@ -11,6 +11,9 @@ export const create = async (name: any) => {
     body: JSON.stringify({
       interest_name: name,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
   return res.json();
 };
@@ -21,6 +24,9 @@ export const update = async (id: any, name: any) => {
     body: JSON.stringify({
       interest_name: name,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
   return res.json();
 };
@@ -28,6 +34,9 @@ export const update = async (id: any, name: any) => {
 export const deleteInterest = async (id: any) => {
   let res = await fetch(`${BASE_URL}/interest/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
   return res.json();
 };

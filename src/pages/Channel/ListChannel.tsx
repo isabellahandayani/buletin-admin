@@ -74,9 +74,7 @@ const ListChannel = () => {
       res = await upload(image, ID.CATEGORY);
     }
 
-    let decoded: any = jwt_decode(localStorage.getItem("token")!!);
     let { data } = await update(
-      decoded.account_id,
       channel ? channel : channel_name,
       res ? res.id : channel_picture,
       channel_id

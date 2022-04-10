@@ -143,6 +143,7 @@ const ListCategory = () => {
                 form={form}
                 link="#"
                 menuControl={menuControl}
+                submit={submit}
               />
             ))}
         </Grid>

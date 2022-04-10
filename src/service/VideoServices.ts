@@ -63,6 +63,9 @@ export const get = async (id: any) => {
 export const deleteVideo = async (id: number) => {
   let res = await fetch(`${BASE_URL}/video/${id}`, {
     method: "delete",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await res.json();
@@ -76,7 +79,7 @@ export const create = async (
   video_interest_id: any,
   video_thumbnail: any
 ) => {
-  let interest = video_interest_id.join(", ")
+  let interest = video_interest_id.join(", ");
   let res = await fetch(`${BASE_URL}/video`, {
     method: "post",
     body: JSON.stringify({
@@ -85,8 +88,11 @@ export const create = async (
       video_file_id: video_file_id,
       channel_id: channel_id,
       video_interest_id: interest,
-      video_thumbnail: video_thumbnail
+      video_thumbnail: video_thumbnail,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await res.json();
@@ -100,7 +106,7 @@ export const update = async (
   video_interest_id: any,
   video_thumbnail: any
 ) => {
-  let interest = video_interest_id.join(", ")
+  let interest = video_interest_id.join(", ");
   let res = await fetch(`${BASE_URL}/video/${video_id}`, {
     method: "put",
     body: JSON.stringify({
@@ -108,8 +114,11 @@ export const update = async (
       video_desc: video_desc,
       video_file_id: video_file_id,
       video_interest_id: interest,
-      video_thumbnail: video_thumbnail
+      video_thumbnail: video_thumbnail,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await res.json();
