@@ -29,6 +29,9 @@ export const update = async (
       playlist_name: playlist_name,
       playlist_picture: playlist_picture,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await res.json();
@@ -37,6 +40,9 @@ export const update = async (
 export const deleteList = async (id: any) => {
   let res = await fetch(`${BASE_URL}/playlist/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await res.json();
@@ -50,6 +56,9 @@ export const create = async (id: any, name: any, picture: any) => {
       playlist_name: name,
       playlist_picture: picture,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await res.json();
@@ -61,6 +70,9 @@ export const addVideo = async (video_id: any, playlist_id: any) => {
     body: JSON.stringify({
       video_id: video_id,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await res.json();
@@ -72,6 +84,9 @@ export const deleteVideo = async (video_id: any, playlist_id: any) => {
     body: JSON.stringify({
       video_id: video_id,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await res.json();

@@ -30,6 +30,7 @@ const Register = () => {
   const [emailError, setEmailError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
+  const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -45,6 +46,7 @@ const Register = () => {
   };
 
   const handleSubmit = async () => {
+    setSubmit(true);
     let { data } = await register(email, pass, uname, name, number);
 
     if (data) {
@@ -65,6 +67,7 @@ const Register = () => {
         position: "top",
       });
     }
+    setSubmit(false);
   };
 
   useEffect(() => {
@@ -153,6 +156,8 @@ const Register = () => {
         </FormControl>
         <Stack>
           <Button
+            loadingText="Submitting"
+            isLoading={submit}
             bg={"blue.400"}
             color={"white"}
             w="full"

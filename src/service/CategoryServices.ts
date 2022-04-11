@@ -1,12 +1,9 @@
 import { BASE_URL } from "../const";
 
 export const getList = async () => {
-  let res = await fetch(
-    `${BASE_URL}/category`,
-    {
-      method: "get",
-    }
-  );
+  let res = await fetch(`${BASE_URL}/category`, {
+    method: "get",
+  });
 
   return await res.json();
 };
@@ -30,6 +27,9 @@ export const update = async (
       category_name: category_name,
       category_picture: category_picture,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await rest.json();
@@ -38,6 +38,9 @@ export const update = async (
 export const deleteCategory = async (id: number) => {
   let res = await fetch(`${BASE_URL}/category/${id}`, {
     method: "delete",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
   return await res.json();
@@ -51,8 +54,11 @@ export const create = async (
     method: "post",
     body: JSON.stringify({
       category_name: category_name,
-	  category_picture: category_picture
+      category_picture: category_picture,
     }),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
   return await res.json();
 };
