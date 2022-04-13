@@ -1,14 +1,24 @@
 import { BASE_URL } from "../const";
 
 export const getList = async (owner_id: number) => {
-  let res = await fetch(
-    `${BASE_URL}/channel?page_no=1&page_size=999&owner_id=${owner_id}`,
-    {
-      method: "get",
-    }
-  );
+  let arr: any[] = [];
 
-  return await res.json();
+  let i = 1;
+  while (true) {
+    let res = await fetch(
+      `${BASE_URL}/channel?page_no=${i}&page_size=20&owner_id=${owner_id}`,
+      {
+        method: "get",
+      }
+    );
+
+    i++;
+    let { data } = await res.json();
+    if (!data.channels) break;
+    arr = arr.concat(data.channels);
+  }
+
+  return arr;
 };
 
 export const get = async (id: any) => {

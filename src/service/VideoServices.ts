@@ -1,55 +1,93 @@
 import { BASE_URL } from "../const";
 
 export const getAll = async () => {
-  let res = await fetch(`${BASE_URL}/video?page_no=1&page_size=999`, {
-    method: "get",
-  });
+  let arr: any[] = [];
 
-  return await res.json();
+  let i = 1;
+  while(true) {
+    let res = await fetch(`${BASE_URL}/video?page_no=${i}&page_size=20`, {
+      method: "get",
+    });
+
+    i++;
+    let { data } = await res.json();
+    if(!data.videos) break;
+    arr = arr.concat(data.videos);
+  }
+
+  return arr
 };
 
 export const getAllExcept = async (playlist_id: any) => {
-  let res = await fetch(
-    `${BASE_URL}/video?page_no=1&page_size=999&playlist_id_except=${playlist_id}`,
-    {
-      method: "get",
-    }
-  );
+  let arr: any[] = [];
 
-  return await res.json();
+  let i = 1;
+  while(true) {
+    let res = await fetch(`${BASE_URL}/video?page_no=${i}&page_size=20&playlist_id_except=${playlist_id}`, {
+      method: "get",
+    });
+
+    i++;
+    let { data } = await res.json();
+    if(!data.videos) break;
+    arr = arr.concat(data.videos);
+  }
+
+  return arr;
 };
 
 export const getVideoChannel = async (channel_id: any) => {
-  let res = await fetch(
-    `${BASE_URL}/video?page_no=1&page_size=999&channel_id=${channel_id}`,
-    {
-      method: "get",
-    }
-  );
+  let arr: any[] = [];
 
-  return await res.json();
+  let i = 1;
+  while(true) {
+    let res = await fetch(`${BASE_URL}/video?page_no=${i}&page_size=20&channel_id=${channel_id}`, {
+      method: "get",
+    });
+
+    i++;
+    let { data } = await res.json();
+    if(!data.videos) break;
+    arr = arr.concat(data.videos);
+  }
+
+  return arr;
 };
 
 export const getVideoPlaylist = async (playlist_id: any) => {
-  let res = await fetch(
-    `${BASE_URL}/video?page_no=1&page_size=999&playlist_id=${playlist_id}`,
-    {
-      method: "get",
-    }
-  );
+  let arr: any[] = [];
 
-  return await res.json();
+  let i = 1;
+  while(true) {
+    let res = await fetch(`${BASE_URL}/video?page_no=${i}&page_size=20&playlist_id=${playlist_id}`, {
+      method: "get",
+    });
+
+    i++;
+    let { data } = await res.json();
+    if(!data.videos) break;
+    arr = arr.concat(data.videos);
+  }
+
+  return arr;
 };
 
 export const getVideoAdmin = async (owner_id: any) => {
-  let res = await fetch(
-    `${BASE_URL}/video?page_no=1&page_size=999&owner_id=${owner_id}`,
-    {
-      method: "get",
-    }
-  );
+  let arr: any[] = [];
 
-  return await res.json();
+  let i = 1;
+  while(true) {
+    let res = await fetch(`${BASE_URL}/video?page_no=${i}&page_size=20&owner_id=${owner_id}`, {
+      method: "get",
+    });
+
+    i++;
+    let { data } = await res.json();
+    if(!data.videos) break;
+    arr = arr.concat(data.videos);
+  }
+
+  return arr;
 };
 
 export const get = async (id: any) => {

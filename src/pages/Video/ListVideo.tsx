@@ -30,8 +30,8 @@ const ListVideo = () => {
   };
 
   const fetchList = async () => {
-    let { data } = await getVideo(channelId);
-    setList(data.videos);
+    let data = await getVideo(channelId);
+    setList(data);
     setLoading(false);
   };
 
