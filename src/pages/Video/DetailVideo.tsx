@@ -34,12 +34,12 @@ const DetailVideo = () => {
 
     const fetchList = async () => {
       let decoded: any = jwtDecode(localStorage.getItem("token")!!);
-      let { data } =
+      let data =
         decoded.role === "admin"
           ? await getVideo(decoded.account_id)
           : await getAll();
 
-      let filteredData = data.videos.filter(
+      let filteredData = data.filter(
         (item: any) => parseInt(item.video_id) !== parseInt(videoId!!)
       );
       setList(filteredData.splice(0, 5));

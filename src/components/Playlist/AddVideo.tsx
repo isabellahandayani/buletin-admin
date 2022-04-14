@@ -52,9 +52,9 @@ const AddVideo = (props: any) => {
   };
 
   const fetchList = async () => {
-    var { data } = await getAllExcept(props.playlistId);
-    setList(data.videos);
-    setSearch(data.videos);
+    let data = await getAllExcept(props.playlistId);
+    setList(data);
+    setSearch(data);
   };
 
   useEffect(() => {

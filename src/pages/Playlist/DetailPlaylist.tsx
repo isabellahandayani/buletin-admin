@@ -6,7 +6,7 @@ import {
   Heading,
   Grid,
   useDisclosure,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -18,23 +18,26 @@ import AddVideo from "../../components/Playlist/AddVideo";
 
 const DetailPlaylist = () => {
   const [loading, setLoading] = useState(true);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<any[]>([]);
   const [name, setName] = useState("");
   const { playlistId } = useParams();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
   const fetchList = async () => {
-    let { data } = await getVideo(playlistId);
-    setList(data.videos);
+    let data = await getVideo(playlistId);
+    setList(data);
   };
 
-  const handleDelete = async (e: React.MouseEvent<HTMLElement>, video_id: any) => {
+  const handleDelete = async (
+    e: React.MouseEvent<HTMLElement>,
+    video_id: any
+  ) => {
     e.stopPropagation();
-    
+
     let res = await deleteVideo(video_id, playlistId);
 
-    if(res.data) {
+    if (res.data) {
       toast({
         title: "Success",
         description: res.data,
@@ -54,7 +57,7 @@ const DetailPlaylist = () => {
         position: "top",
       });
     }
-  }
+  };
 
   useEffect(() => {
     const fetchPlaylist = async () => {
@@ -89,7 +92,12 @@ const DetailPlaylist = () => {
         <Grid templateColumns="repeat(2, 1fr)" gap={10} mt={10}>
           {list &&
             list.map((item: any) => (
-              <VideoCard key={item.video_id} {...item} type="detail" handleDelete={handleDelete} />
+              <VideoCard
+                key={item.video_id}
+                {...item}
+                type="detail"
+                handleDelete={handleDelete}
+              />
             ))}
         </Grid>
       ) : (

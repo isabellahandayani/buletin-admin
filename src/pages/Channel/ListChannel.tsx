@@ -125,8 +125,8 @@ const ListChannel = () => {
 
   const fetchList = async () => {
     let decoded: any = jwt_decode(localStorage.getItem("token")!!);
-    let { data } = await getList(decoded.account_id);
-    setList(data.channels);
+    let data = await getList(decoded.account_id);
+    setList(data);
     setLoading(false);
   };
 
