@@ -10,7 +10,6 @@ import {
   Button,
   useToast,
   Image,
-  FormErrorMessage,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { forget } from "../../service/UserServices";
@@ -18,21 +17,8 @@ import LOGIN_IMAGE from "../../assets/login_image.svg";
 
 const Forget = () => {
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
   const [timer, setTimer] = useState<any>(null);
   const toast = useToast();
-
-  const handleEmail = (newEmail: any) => {
-    setEmail(newEmail);
-
-    const regex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$/;
-
-    if (regex.test(email)) {
-      setEmailError(false);
-    } else setEmailError(true);
-  };
-
   const handleSubmit = async () => {
     setTimer(60);
     let { data } = await forget(email);
@@ -78,6 +64,7 @@ const Forget = () => {
   return (
     <Flex
       minH={"100vh"}
+      direction="row"
       align={"center"}
       justify={"center"}
       borderRadius={20}
@@ -90,7 +77,7 @@ const Forget = () => {
         rounded={"xl"}
         boxShadow={"lg"}
         direction="row"
-        h="80vh"
+        h={{ md: "80vh", base: "60vh" }}
       >
         <Flex
           display={{ md: "flex", base: "none" }}
@@ -112,17 +99,14 @@ const Forget = () => {
           <Center>
             <Heading fontSize={"2xl"}>Forget Password</Heading>
           </Center>
-          <FormControl id="email" isInvalid={emailError}>
+          <FormControl id="email">
             <FormLabel>Email</FormLabel>
             <Input
               placeholder="your-email@example.com"
               type="email"
-              onChange={(e) => handleEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
-            {emailError && (
-              <FormErrorMessage>Email is invalid</FormErrorMessage>
-            )}
           </FormControl>
           <Button
             w="full"
@@ -137,7 +121,7 @@ const Forget = () => {
             onClick={handleSubmit}
             loadingText={`Resend in ${timer} seconds`}
             isLoading={timer ? true : false}
-            isDisabled={!email || emailError}
+            isDisabled={!email}
           >
             Forget Password
           </Button>

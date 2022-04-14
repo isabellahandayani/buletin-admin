@@ -18,7 +18,7 @@ import Card from "../../components/Common/Card";
 import AddButton from "../../components/Common/AddButton";
 import Modal from "../../components/Common/Modal";
 import { upload } from "../../service/GoogleServices";
-import { DRIVE_URL, ID } from "../../const";
+import { ID } from "../../const";
 
 const ListPlaylist = () => {
   const toast = useToast();
@@ -169,7 +169,7 @@ const ListPlaylist = () => {
                 menuControl={menuControl}
                 name={item.playlist_name}
                 category={getName(item.category_id)}
-                picture={`${DRIVE_URL}${item.playlist_picture}`}
+                picture={`${item.playlist_picture}`}
                 link={`/playlist/${item.playlist_id}`}
                 form={form}
                 submit={submit}

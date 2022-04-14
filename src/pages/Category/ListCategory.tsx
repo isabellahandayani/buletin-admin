@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 import AddButton from "../../components/Common/AddButton";
 import Modal from "../../components/Common/Modal";
 import Card from "../../components/Common/Card";
-import { ID, DRIVE_URL } from "../../const";
+import { ID } from "../../const";
 import { upload } from "../../service/GoogleServices";
 import { getId } from "../../utils";
 
@@ -139,7 +139,7 @@ const ListCategory = () => {
                 id={item.category_id}
                 type="Category"
                 name={item.category_name}
-                picture={`${DRIVE_URL}${item.category_picture}`}
+                picture={item.category_picture}
                 form={form}
                 link="#"
                 menuControl={menuControl}

@@ -12,7 +12,7 @@ import {
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FALLBACK_IMG } from "../../const";
+import { DRIVE_URL, FALLBACK_IMG } from "../../const";
 import Menu from "./Menu";
 
 const Card = (props: any) => {
@@ -40,7 +40,7 @@ const Card = (props: any) => {
           <Image
             h={"120px"}
             w={"full"}
-            src={props.picture}
+            src={`${DRIVE_URL}${props.picture}`}
             fallbackSrc={FALLBACK_IMG}
             objectFit={"cover"}
             cursor="pointer"

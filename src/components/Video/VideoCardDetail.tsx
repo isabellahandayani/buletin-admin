@@ -8,12 +8,12 @@ import {
   Stack,
   IconButton,
   Skeleton,
-  Tooltip
+  Tooltip,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { FALLBACK_IMG } from "../../const";
+import { DRIVE_URL, FALLBACK_IMG } from "../../const";
 
 const VideoCardDetail = (props: any) => {
   const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ const VideoCardDetail = (props: any) => {
   const handleClick = () => {
     setLoading(true);
     navigate(`/video/${props.video_id}`);
-    if(props.handleChange) {
+    if (props.handleChange) {
       props.handleChange();
     }
   };
@@ -43,19 +43,20 @@ const VideoCardDetail = (props: any) => {
           boxShadow: "lg",
         }}
         onClick={handleClick}
+        minH={150}
       >
         <Flex justify="space-between">
           <Image
             borderTopLeftRadius="md"
             borderBottomLeftRadius="md"
             maxW="40%"
-            src={props.video_thumbnail}
+            src={`${DRIVE_URL}${props.video_thumbnail}`}
             alt={props.video_title}
             objectFit="cover"
             fallbackSrc={FALLBACK_IMG}
           />
 
-          <Center ml={4} maxH={200} w="full" flexGrow={2}>
+          <Center ml={4} minH={150} w="full" flexGrow={2}>
             <Flex flexDirection="row" align="center" flexGrow={2}>
               <Stack spacing={4} flexGrow={2}>
                 <Heading as="h2" size="md">
@@ -66,18 +67,18 @@ const VideoCardDetail = (props: any) => {
               {props.type === "detail" && (
                 <Box m={10}>
                   <Tooltip label="Remove Video" size="md">
-                  <IconButton
-                    variant="solid"
-                    aria-label="Md"
-                    bg={"red.400"}
-                    icon={<MdDelete />}
-                    size="sm"
-                    color="white"
-                    _hover={{
-                      bg: "red.500",
-                    }}
-                    onClick={(e) => props.handleDelete(e, props.video_id)}
-                  />
+                    <IconButton
+                      variant="solid"
+                      aria-label="Md"
+                      bg={"red.400"}
+                      icon={<MdDelete />}
+                      size="sm"
+                      color="white"
+                      _hover={{
+                        bg: "red.500",
+                      }}
+                      onClick={(e) => props.handleDelete(e, props.video_id)}
+                    />
                   </Tooltip>
                 </Box>
               )}
