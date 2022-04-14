@@ -14,7 +14,7 @@ import {
   Image,
   ModalFooter,
 } from "@chakra-ui/react";
-import { THUMBNAIL_PLACEHOLDER } from "../../const";
+import { DRIVE_URL, THUMBNAIL_PLACEHOLDER } from "../../const";
 import { useRef } from "react";
 
 const ComonModal = (props: any) => {
@@ -35,7 +35,7 @@ const ComonModal = (props: any) => {
               maxH={200}
               fallbackSrc={THUMBNAIL_PLACEHOLDER}
               borderRadius={10}
-              src={item.value ? item.value : props.picture}
+              src={item.value ? item.value : `${DRIVE_URL}${props.picture}`}
               objectFit="cover"
               opacity={0.5}
               _hover={{
@@ -46,6 +46,7 @@ const ComonModal = (props: any) => {
             />
             <Input
               type="file"
+              accept="image/*"
               id="file-input"
               style={{ display: "none" }}
               ref={inputFile}

@@ -2,13 +2,12 @@ import {
   Box,
   Heading,
   Image,
-  Center,
   Flex,
   Text,
   Skeleton,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { FALLBACK_IMG } from "../../const";
+import { DRIVE_URL, FALLBACK_IMG } from "../../const";
 
 const VideoCardUpload = (props: any) => {
   const [loading, setLoading] = useState(true);
@@ -26,6 +25,7 @@ const VideoCardUpload = (props: any) => {
         boxShadow={props.selected === props.video_id ? "outline" : "md"}
         cursor="pointer"
         onClick={() => props.setSelected(props.video_id)}
+        maxH={100}
       >
         <Flex>
           <Image
@@ -33,19 +33,19 @@ const VideoCardUpload = (props: any) => {
             borderBottomLeftRadius="md"
             p="relative"
             maxW="40%"
-            src={props.video_thumbnail}
+            src={`${DRIVE_URL}${props.video_thumbnail}`}
             alt={props.video_title}
             objectFit="cover"
             fallbackSrc={FALLBACK_IMG}
+            maxH={100}
+            w="full"
           />
-          <Center>
-            <Box ml={4} maxW={240} maxH={200}>
+            <Flex ml={4} maxH={100} align="baseline" justify="center" direction="column">
               <Heading as="h2" size="md">
                 {props.video_title}
               </Heading>
               <Text fontSize="md">{props.channel_info.channel_name}</Text>
-            </Box>
-          </Center>
+            </Flex>
         </Flex>
       </Box>
     </Skeleton>

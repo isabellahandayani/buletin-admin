@@ -2,7 +2,6 @@ import {
   Button,
   Flex,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -100,7 +99,7 @@ const Register = () => {
             onChange={(e) => setUname(e.target.value)}
           />
         </FormControl>
-        <FormControl id="email" isInvalid={emailError}>
+        <FormControl id="email">
           <FormLabel>Email</FormLabel>
           <Input
             placeholder="your-email@example.com"
@@ -109,7 +108,6 @@ const Register = () => {
             value={email}
             onChange={(e) => handleEmail(e.target.value)}
           />
-          {emailError && <FormErrorMessage>Invalid Email</FormErrorMessage>}
         </FormControl>
         <FormControl id="name">
           <FormLabel>Full Name</FormLabel>

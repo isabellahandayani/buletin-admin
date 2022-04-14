@@ -19,7 +19,7 @@ import {
   getList,
   update,
 } from "../../service/ChannelServices";
-import { DRIVE_URL, ID } from "../../const";
+import { ID } from "../../const";
 import { upload } from "../../service/GoogleServices";
 
 const ListChannel = () => {
@@ -152,7 +152,7 @@ const ListChannel = () => {
                 type="Channel"
                 menuControl={menuControl}
                 name={item.channel_name}
-                picture={`${DRIVE_URL}${item.channel_picture}`}
+                picture={`${item.channel_picture}`}
                 created_at={item.created_at}
                 link={`/channel/${item.channel_id}`}
                 form={form}

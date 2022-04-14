@@ -89,7 +89,12 @@ const Login = () => {
           <Image src={LOGIN_IMAGE} p={5} h="80vh" />
         </Flex>
 
-        <Stack p={{ md: 20, base: 5 }} mx="auto" justify={"center"} spacing={6}>
+        <Stack
+          p={{ md: 20, base: 10 }}
+          mx="auto"
+          justify={"center"}
+          spacing={6}
+        >
           <Center>
             <Heading fontSize={"2xl"}>Buletin Admin</Heading>
           </Center>
@@ -140,6 +145,7 @@ const Login = () => {
               }}
               color="white"
               minH="40px"
+              h="6vh"
               onClick={handleSubmit}
               isDisabled={!email || !pass}
             >
