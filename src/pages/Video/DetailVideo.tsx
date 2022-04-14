@@ -99,7 +99,7 @@ const DetailVideo = () => {
             })}
           {list && list.length === 0 && (
             <Center>
-              <Text>Upload more videos</Text>
+              <Text>No Videos Found</Text>
             </Center>
           )}
         </Box>

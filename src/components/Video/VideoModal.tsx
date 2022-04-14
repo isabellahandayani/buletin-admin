@@ -105,7 +105,7 @@ const VideoModal = (props: any) => {
     if (data) {
       toast({
         title: "Success",
-        description: "Video successfully created",
+        description: props.type === "Add" ? "Video successfully created" : "Video successfully updated",
         status: "success",
         duration: 9000,
         isClosable: true,
@@ -325,7 +325,11 @@ const VideoModal = (props: any) => {
                   <FormControl>
                     <FormLabel>Files</FormLabel>
                     <Text color="gray.500">
-                      {video ? video.name : "There's No File Yet"}
+                      {video
+                        ? video.name
+                        : props.video_title
+                        ? props.video_title
+                        : "There's No File Yet"}
                     </Text>
                   </FormControl>
                   <Button
@@ -339,7 +343,7 @@ const VideoModal = (props: any) => {
                     }}
                     onClick={handleSubmit}
                     isDisabled={
-                      props.type === "Add" ? (!video || !preview) : !preview
+                      props.type === "Add" ? !video || !preview : !preview
                     }
                   >
                     Save

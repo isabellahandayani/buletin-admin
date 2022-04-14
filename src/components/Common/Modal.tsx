@@ -46,6 +46,7 @@ const ComonModal = (props: any) => {
             />
             <Input
               type="file"
+              accept="image/*"
               id="file-input"
               style={{ display: "none" }}
               ref={inputFile}
