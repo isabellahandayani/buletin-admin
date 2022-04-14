@@ -51,6 +51,11 @@ const AddVideo = (props: any) => {
     }
   };
 
+  const handleClose = () => {
+    props.onClose();
+    setSelected(null);
+  };
+
   const fetchList = async () => {
     let data = await getAllExcept(props.playlistId);
     setList(data);
@@ -59,11 +64,11 @@ const AddVideo = (props: any) => {
 
   useEffect(() => {
     fetchList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.playlistId]);
 
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose} isCentered size="lg">
+    <Modal isOpen={props.isOpen} onClose={handleClose} isCentered size="lg">
       <ModalOverlay />
       <ModalContent maxH="80%" h="full">
         <ModalHeader>
