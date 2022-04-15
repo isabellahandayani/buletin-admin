@@ -147,6 +147,7 @@ const VideoModal = (props: any) => {
     setChosen([]);
     setTitle("");
     setDesc("");
+    setImage(undefined);
     setVideo(undefined);
     setPreview(undefined);
     setIndex(0);
