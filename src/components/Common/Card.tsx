@@ -13,6 +13,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DRIVE_URL, FALLBACK_IMG } from "../../const";
+import { ellipsis } from "../../utils";
 import Menu from "./Menu";
 
 const Card = (props: any) => {
@@ -51,7 +52,7 @@ const Card = (props: any) => {
           <Flex flexDirection="column" p={30} h="100%">
             <Stack spacing={2}>
               <Heading fontSize={"2xl"} as="h2">
-                {props.name}
+                {ellipsis(props.name, 13)}
               </Heading>
               {props.created_at && (
                 <Text>
@@ -59,7 +60,7 @@ const Card = (props: any) => {
                 </Text>
               )}
               {props.category && (
-                <Tag colorScheme="telegram">{props.category}</Tag>
+                <Tag colorScheme="telegram">{ellipsis(props.category, 13)}</Tag>
               )}
             </Stack>
           </Flex>

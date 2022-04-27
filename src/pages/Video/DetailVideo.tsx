@@ -18,6 +18,7 @@ import {
 import { useEffect, useState } from "react";
 import VideoCard from "../../components/Video/VideoCardDetail";
 import VideoFrame from "../../components/Video/VideoFrame";
+import { DRIVE_URL } from "../../const";
 
 const DetailVideo = () => {
   const { videoId } = useParams();
@@ -71,7 +72,7 @@ const DetailVideo = () => {
 
           <Flex mt="3%">
             <Avatar
-              src={video.channel_info.channel_picture}
+              src={`${DRIVE_URL}${video.channel_info.channel_picture}`}
               name={video.channel_info.channel_name}
             />
             <Center ml="3">

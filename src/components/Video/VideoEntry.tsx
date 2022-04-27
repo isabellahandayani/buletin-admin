@@ -17,6 +17,7 @@ import { deleteVideo } from "../../service/VideoServices";
 import { Link } from "react-router-dom";
 import { DRIVE_URL, FALLBACK_IMG } from "../../const";
 import VideoModal from "../../components/Video/VideoModal";
+import { ellipsis } from "../../utils";
 
 const VideoEntry = (props: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -65,8 +66,7 @@ const VideoEntry = (props: any) => {
           <Link to={`/video/${props.video_id}`}>
             <Flex>
               <Image
-                maxW={200}
-                w="full"
+                w="200px"
                 src={`${DRIVE_URL}${props.video_thumbnail}`}
                 mr={10}
                 boxShadow="sm"
@@ -79,7 +79,7 @@ const VideoEntry = (props: any) => {
                   <Text color="blackAlpha.800" fontWeight="bold">
                     {props.video_title}
                   </Text>
-                  <Text fontWeight="thin">{props.video_desc}</Text>
+                  <Text fontWeight="thin">{ellipsis(props.video_desc, 200)}</Text>
                 </Flex>
               </Center>
             </Flex>

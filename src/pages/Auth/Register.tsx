@@ -26,23 +26,11 @@ const Register = () => {
   const [name, setName] = useState("");
   const [uname, setUname] = useState("");
   const [number, setNumber] = useState("");
-  const [emailError, setEmailError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [show, setShow] = useState(false);
   const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
-
-  const handleEmail = (newEmail: any) => {
-    setEmail(newEmail);
-
-    const regex =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{1,}))$/;
-
-    if (regex.test(email)) {
-      setEmailError(false);
-    } else setEmailError(true);
-  };
 
   const handleSubmit = async () => {
     setSubmit(true);
@@ -106,7 +94,7 @@ const Register = () => {
             _placeholder={{ color: "gray.500" }}
             type="email"
             value={email}
-            onChange={(e) => handleEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </FormControl>
         <FormControl id="name">
@@ -163,7 +151,7 @@ const Register = () => {
               bg: "blue.500",
             }}
             isDisabled={
-              !email || !pass || !name || !uname || !number || emailError
+              !email || !pass || !name || !uname || !number
             }
             onClick={handleSubmit}
           >

@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { DRIVE_URL, FALLBACK_IMG } from "../../const";
+import { ellipsis } from "../../utils";
 
 const VideoCardUpload = (props: any) => {
   const [loading, setLoading] = useState(true);
@@ -42,9 +43,9 @@ const VideoCardUpload = (props: any) => {
           />
             <Flex ml={4} maxH={100} align="baseline" justify="center" direction="column">
               <Heading as="h2" size="md">
-                {props.video_title}
+                {ellipsis(props.video_title, 40)}
               </Heading>
-              <Text fontSize="md">{props.channel_info.channel_name}</Text>
+              <Text fontSize="md">{ellipsis(props.channel_info.channel_name, 30)}</Text>
             </Flex>
         </Flex>
       </Box>

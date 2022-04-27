@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { DRIVE_URL, FALLBACK_IMG } from "../../const";
+import { ellipsis } from "../../utils";
 
 const VideoCardDetail = (props: any) => {
   const [loading, setLoading] = useState(true);
@@ -60,9 +61,9 @@ const VideoCardDetail = (props: any) => {
             <Flex flexDirection="row" align="center" flexGrow={2}>
               <Stack spacing={4} flexGrow={2}>
                 <Heading as="h2" size="md">
-                  {props.video_title}
+                  {ellipsis(props.video_title, 40)}
                 </Heading>
-                <Text fontSize="md">{props.channel_info.channel_name}</Text>
+                <Text fontSize="md">{ellipsis(props.channel_info.channel_name, 30)}</Text>
               </Stack>
               {props.type === "detail" && (
                 <Box m={10}>
