@@ -14,7 +14,7 @@ import {
   InputRightElement,
   Tooltip,
   IconButton,
-  FormErrorMessage
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
@@ -25,9 +25,9 @@ import LOGIN_IMAGE from "../../assets/login_image.svg";
 
 const Reset = () => {
   const [searchParams] = useSearchParams();
-  const [email, setEmail] = useState<any>();
-  const [pass, setPass] = useState<any>();
-  const [confirmPass, setConfirm] = useState<any>();
+  const [email, setEmail] = useState<any>("");
+  const [pass, setPass] = useState<any>("");
+  const [confirmPass, setConfirm] = useState<any>("");
   const [submit, setSubmit] = useState(false);
   const [show, setShow] = useState(false);
   const [showNew, setShowNew] = useState(false);
@@ -58,18 +58,19 @@ const Reset = () => {
       });
     }
     setSubmit(false);
-    navigate("../login")
+    navigate("../login");
   };
 
   useEffect(() => {
     const check = async () => {
       let { data } = await validate(searchParams.get("token"));
-      if (data) {
+      if (data && searchParams.get("token")) {
         setEmail(data.email);
       } else {
         navigate("../");
       }
     };
+
     check();
   }, [navigate, searchParams]);
 
@@ -123,13 +124,16 @@ const Reset = () => {
                     aria-label="show-password"
                     icon={show ? <BiHide /> : <BiShow />}
                     onClick={() => setShow(!show)}
-                    style={{ textDecoration: "none"}}
+                    style={{ textDecoration: "none" }}
                   />
                 </Tooltip>
               </InputRightElement>
             </InputGroup>
           </FormControl>
-          <FormControl id="confirm-password" isInvalid={(confirmPass !== pass) && pass && confirmPass}>
+          <FormControl
+            id="confirm-password"
+            isInvalid={confirmPass !== pass && pass && confirmPass}
+          >
             <FormLabel>Confirm Password</FormLabel>
             <InputGroup>
               <Input
@@ -143,12 +147,14 @@ const Reset = () => {
                     aria-label="show-password"
                     icon={showNew ? <BiHide /> : <BiShow />}
                     onClick={() => setShowNew(!showNew)}
-                    style={{ textDecoration: "none"}}
+                    style={{ textDecoration: "none" }}
                   />
                 </Tooltip>
               </InputRightElement>
             </InputGroup>
-            <FormErrorMessage>Confirmation Password Doesn't Match</FormErrorMessage>
+            <FormErrorMessage>
+              Confirmation Password Doesn't Match
+            </FormErrorMessage>
           </FormControl>
           <Button
             isLoading={submit}
